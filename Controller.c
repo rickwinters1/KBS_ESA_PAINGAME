@@ -16,7 +16,7 @@ void task1(void* pdata){
 			hoogte--;
 		}
 
-		OSTimeDlyHMSM(0,0,0,63);
+		OSTimeDlyHMSM(0,0,0,64);
 	}
 
 
@@ -47,11 +47,15 @@ void moveUp(int ID, int current){
 	int boven = current;
 
 	if(ID == 1){
-		VGA_box(15, boven, 20, boven + 1, 0x3333CC);
-		VGA_box(15, boven +50, 20, boven + 51, 0);
+		if(hoogte >= 4){
+			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
+			VGA_box(15, boven +50, 20, boven + 51, 0);
+		}
 	}else if(ID == 2){
-		VGA_box(300, boven, 305, boven + 1, 0x3333CC);
-		VGA_box(300, boven +50, 305, boven + 51, 0);
+		if(hoogte >= 4){
+			VGA_box(300, boven, 305, boven + 1, 0x3333CC);
+			VGA_box(300, boven +50, 305, boven + 51, 0);
+		}
 	}
 
 }
@@ -59,6 +63,7 @@ void moveDown(int ID, int current){
 	int boven = current;
 
 	if(ID == 1){
+		if(hoogte <= )
 		VGA_box(15, boven + 50, 20, boven + 51, 0x3333CC);
 		VGA_box(15, boven, 20, boven + 1, 0);
 	}else if(ID == 2){
