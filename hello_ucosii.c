@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "includes.h"
 
+OS_EVENT* controllerSem;
+
 /* Definition of Task Stacks */
 #define   TASK_STACKSIZE       2048
 OS_STK    task1_stk[TASK_STACKSIZE];
@@ -16,10 +18,16 @@ void task1(void* pdata);
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
-	volatile int * KEY_ptr			= (int *) 0x10000050;	// pushbutton KEY address
-	VGA_box (0, 0, 319, 239, 0);					//clear screen
-	OSTaskCreateExt(task1,2,(void *)&task1_stk[TASK_STACKSIZE-1],TASK1_PRIORITY,TASK1_PRIORITY,task1_stk,TASK_STACKSIZE,NULL,0);
-  	OSTaskCreateExt(task1,1,(void *)&task1_stk[TASK_STACKSIZE-1],TASK2_PRIORITY,TASK1_PRIORITY,task1_stk,TASK_STACKSIZE,NULL,0);
+	controllerSem = OSSemCreate(1);
+	VGA_box (15, 100, 20, 150, 0x3333CC);				// links
+	VGA_box (300, 0, 305, 50, 0x3333CC);				// rechts
+	VGA_box (0, 0, 319, 239, 0);						//clear screen
+	VGA_box (0, 0, 319, 3, 0xFFFFFF);					// boven
+	VGA_box (0, 236, 319, 239, 0xFFFFFF);				// onder
+
+	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
+
+	OSTaskCreate(task1,(void*) 1,&task1_stk[TASK_STACKSIZE-1],TASK1_PRIORITY);
 
                
   OSStart();
