@@ -18,7 +18,7 @@ void task1(void* pdata){
 
 		}
 
-		OSTimeDlyHMSM(0,0,0,62);
+		OSTimeDlyHMSM(0,0,0,0);
 	}
 
 
@@ -53,12 +53,16 @@ void moveUp(int ID, int current){
 			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
 			VGA_box(15, boven +50, 20, boven + 51, 0);
 			hoogte--;
+		}else if(boven >= 184){
+			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
 		}
 	}else if(ID == 2){
 		if(boven >= 4){
 			VGA_box(300, boven, 305, boven + 1, 0x3333CC);
 			VGA_box(300, boven +50, 305, boven + 51, 0);
 			hoogte--;
+		}else if(boven >= 184){
+			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
 		}
 	}
 
