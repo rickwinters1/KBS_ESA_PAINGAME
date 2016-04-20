@@ -1329,23 +1329,23 @@ int main(void)
      570:	01000044 	movi	r4,1
      574:	0005fc00 	call	5fc0 <OSSemCreate>
      578:	d0a6c315 	stw	r2,-25844(gp)
-	VGA_box (15, 4, 20, 54, 0x3333CC);					// links
+	VGA_box (15, 100, 20, 150, 0x3333CC);				// links
      57c:	00800cf4 	movhi	r2,51
      580:	108cf304 	addi	r2,r2,13260
      584:	d8800015 	stw	r2,0(sp)
      588:	010003c4 	movi	r4,15
-     58c:	01400104 	movi	r5,4
+     58c:	01401904 	movi	r5,100
      590:	01800504 	movi	r6,20
-     594:	01c00d84 	movi	r7,54
+     594:	01c02584 	movi	r7,150
      598:	000066c0 	call	66c <VGA_box>
-	VGA_box (300, 4, 305, 54, 0x3333CC);				// rechts
+	VGA_box (300, 100, 305, 150, 0x3333CC);				// rechts
      59c:	00800cf4 	movhi	r2,51
      5a0:	108cf304 	addi	r2,r2,13260
      5a4:	d8800015 	stw	r2,0(sp)
      5a8:	01004b04 	movi	r4,300
-     5ac:	01400104 	movi	r5,4
+     5ac:	01401904 	movi	r5,100
      5b0:	01804c44 	movi	r6,305
-     5b4:	01c00d84 	movi	r7,54
+     5b4:	01c02584 	movi	r7,150
      5b8:	000066c0 	call	66c <VGA_box>
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
      5bc:	d8000015 	stw	zero,0(sp)
