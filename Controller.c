@@ -4,19 +4,21 @@
 
 OS_EVENT* controllerSem;
 
+int hoogte = 50;
+
 void task1(void* pdata){
 	int ID = (int*)pdata;
-	int hoogte = 0;
+
 	while (1){
 		if (controller(ID) == 1){
 			moveDown(ID, hoogte);
-			hoogte++;
+
 		}else if(controller(ID) == 0){
 			moveUp(ID, hoogte);
-			hoogte--;
+
 		}
 
-		OSTimeDlyHMSM(0,0,0,64);
+		OSTimeDlyHMSM(0,0,0,62);
 	}
 
 
@@ -50,11 +52,13 @@ void moveUp(int ID, int current){
 		if(boven >= 4){
 			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
 			VGA_box(15, boven +50, 20, boven + 51, 0);
+			hoogte--;
 		}
 	}else if(ID == 2){
 		if(boven >= 4){
 			VGA_box(300, boven, 305, boven + 1, 0x3333CC);
 			VGA_box(300, boven +50, 305, boven + 51, 0);
+			hoogte--;
 		}
 	}
 
@@ -63,14 +67,17 @@ void moveDown(int ID, int current){
 	int boven = current;
 
 	if(ID == 1){
-		if(boven >= 235){
+		if(boven <= 184){
 			VGA_box(15, boven + 50, 20, boven + 51, 0x3333CC);
 			VGA_box(15, boven, 20, boven + 1, 0);
+			hoogte++;
 		}
 	}else if(ID == 2){
-		if(boven >= 235){
+		if(boven <= 184){
 			VGA_box(300, boven + 50, 305, boven + 51, 0x3333CC);
 			VGA_box(300, boven, 305, boven + 1, 0);
+			hoogte++;
 		}
 	}
+
 }
