@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item value="0" key="org.eclipse.egit.ui.internal.clone.GitSelectWizardPageWizardSel"/>
+	<item value="C:\Users\mikes_000\Documents\GitHub\KBS_ESA_PAINGAME\.git" key="GitSelectRepositoryPage.lastRepository"/>
 	<list key="RepositorySelectionPage.UsedUris">
-		<item value="https://github.com/rickwinters1/KBS_ESA_PAINGAME/"/>
 		<item value="file:///C:\Users\mikes_000\Documents\GitHub\KBS_ESA_PAINGAME"/>
+		<item value="https://github.com/rickwinters1/KBS_ESA_PAINGAME/"/>
 		<item value="https://github.com/rickwinters1/KBS_ESA_PAINGAME.git"/>
 	</list>
 	<section name="GitImportWizard">
