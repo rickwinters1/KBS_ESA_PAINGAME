@@ -16,9 +16,10 @@ void task1(void* pdata);
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
+	volatile int * KEY_ptr			= (int *) 0x10000050;	// pushbutton KEY address
 	VGA_box (0, 0, 319, 239, 0);					//clear screen
-  OSTaskCreateExt(task1,1,(void *)&task1_stk[TASK_STACKSIZE-1],TASK1_PRIORITY,TASK1_PRIORITY,task1_stk,TASK_STACKSIZE,NULL,0);
-  OSTaskCreateExt(task1,2,(void *)&task1_stk[TASK_STACKSIZE-1],TASK1_PRIORITY,TASK1_PRIORITY,task1_stk,TASK_STACKSIZE,NULL,0);
+	OSTaskCreateExt(task1,2,(void *)&task1_stk[TASK_STACKSIZE-1],TASK1_PRIORITY,TASK1_PRIORITY,task1_stk,TASK_STACKSIZE,NULL,0);
+  	OSTaskCreateExt(task1,1,(void *)&task1_stk[TASK_STACKSIZE-1],TASK2_PRIORITY,TASK1_PRIORITY,task1_stk,TASK_STACKSIZE,NULL,0);
 
                
   OSStart();
