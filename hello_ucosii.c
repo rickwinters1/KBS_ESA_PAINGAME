@@ -19,8 +19,8 @@ void task1(void* pdata);
 int main(void)
 {
 	controllerSem = OSSemCreate(1);
-	VGA_box (15, 100, 20, 150, 0x3333CC);				// links
-	VGA_box (300, 0, 305, 50, 0x3333CC);				// rechts
+	VGA_box (15, 4, 20, 54, 0x3333CC);					// links
+	VGA_box (300, 4, 305, 54, 0x3333CC);				// rechts
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
 	VGA_box (0, 0, 319, 3, 0xFFFFFF);					// boven
 	VGA_box (0, 236, 319, 239, 0xFFFFFF);				// onder

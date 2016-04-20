@@ -146,7 +146,9 @@ C_SRCS += hello_ucosii.c
 C_SRCS += Menu.c
 C_SRCS += Game.c
 C_SRCS += Controller.c
-CXX_SRCS :=
+C_SRCS += .metadata/.plugins/org.eclipse.cdt.make.core/specs.c
+C_SRCS += .metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c
+CXX_SRCS := .metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
 ASM_SRCS :=
 
 

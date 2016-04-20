@@ -14,10 +14,9 @@ void task1(void* pdata){
 		}else if(controller(ID) == 0){
 			moveUp(ID, hoogte);
 			hoogte--;
-		}else{
-
 		}
-		OSTimeDlyHMSM(0,0,0,100);
+
+		OSTimeDlyHMSM(0,0,0,63);
 	}
 
 
