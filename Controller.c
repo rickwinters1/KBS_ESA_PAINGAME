@@ -6,19 +6,19 @@ OS_EVENT* controllerSem;
 
 int hoogte = 50;
 
-void task1(void* pdata){
-	int ID = (int*)pdata;
 
+void controllers(void* pdata){
+	int ID = (int*)pdata;
+	printf("controller: %d\n", ID);
 	while (1){
 		if (controller(ID) == 1){
 			moveDown(ID, hoogte);
 
 		}else if(controller(ID) == 0){
 			moveUp(ID, hoogte);
-
 		}
 
-		OSTimeDlyHMSM(0,0,0,0);
+		OSTimeDly(1);
 	}
 
 
@@ -38,50 +38,53 @@ int controller(int ID){
 		while(KEY_value == 4){
 			return 0;
 		}
+		while(KEY_value == 2){
+			return 2;
+		}
 	}else{
-		return 2;
+		return 3;
 	}
 
 }
 
+int checkID(int ID){
+	if(ID == 1){
+		return 15;
+	}else if(ID == 2){
+		return 300;
+
+	}
+	return 0;
+}
 
 void moveUp(int ID, int current){
 	int boven = current;
 
-	if(ID == 1){
-		if(boven >= 4){
-			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
-			VGA_box(15, boven +50, 20, boven + 51, 0);
-			hoogte--;
-		}else if(boven >= 184){
-			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
-		}
-	}else if(ID == 2){
-		if(boven >= 4){
-			VGA_box(300, boven, 305, boven + 1, 0x3333CC);
-			VGA_box(300, boven +50, 305, boven + 51, 0);
-			hoogte--;
-		}else if(boven >= 184){
-			VGA_box(15, boven, 20, boven + 1, 0x3333CC);
-		}
+	int X = checkID(ID);
+
+	if(boven >= 4 && boven <= 184){
+		VGA_box(X, boven, X + 5, boven + 1, 0x3333CC);
+		VGA_box(X, boven +50, X + 5, boven + 51, 0);
+		hoogte--;
+	}else if(boven > 184){
+		VGA_box(X, boven, X + 5, boven + 1, 0x3333CC);
+		hoogte--;
 	}
 
 }
 void moveDown(int ID, int current){
 	int boven = current;
 
-	if(ID == 1){
-		if(boven <= 184){
-			VGA_box(15, boven + 50, 20, boven + 51, 0x3333CC);
-			VGA_box(15, boven, 20, boven + 1, 0);
-			hoogte++;
-		}
-	}else if(ID == 2){
-		if(boven <= 184){
-			VGA_box(300, boven + 50, 305, boven + 51, 0x3333CC);
-			VGA_box(300, boven, 305, boven + 1, 0);
-			hoogte++;
-		}
+	int X = checkID(ID);
+
+	if(boven <= 184 && boven >= 4){
+		VGA_box(X, boven + 50, X + 5, boven + 51, 0x3333CC);
+		VGA_box(X, boven, X + 5, boven + 1, 0);
+		hoogte++;
+	}else if(boven < 4){
+		VGA_box(X, boven + 50, X+5, boven + 51, 0x3333CC);
+		hoogte++;
 	}
+
 
 }
