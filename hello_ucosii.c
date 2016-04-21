@@ -7,11 +7,13 @@ OS_EVENT* controllerSem;
 #define   TASK_STACKSIZE       2048
 OS_STK    controller1_stk[TASK_STACKSIZE];
 OS_STK    controller2_stk[TASK_STACKSIZE];
+OS_STK	  menu_stk[TASK_STACKSIZE];
 
 /* Definition of Task Priorities */
 
 #define controller1_PRIORITY      6
 #define controller2_PRIORITY      7
+#define menu_PRIORITY		  5
 
 void controllers(void* pdata);
 
@@ -28,8 +30,9 @@ int main(void)
 
 	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
 
-	OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
-	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
+	// OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
+	// OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
+	OSTaskCreate(menu, (void*) 0, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
                
 	OSStart();
 	return 0;
@@ -50,6 +53,21 @@ void VGA_box(int x1, int y1, int x2, int y2, short pixel_color)
 			*(pixel_buffer + offset) = pixel_color;	// compute halfword address, set pixel
 			++col;
 		}
+	}
+}
+
+void VGA_text(int x, int y, char * text_ptr)
+{
+	int offset;
+  	volatile char * character_buffer = (char *) 0x09000000;	// VGA character buffer
+
+	/* assume that the text string fits on one line */
+	offset = (y << 7) + x;
+	while ( *(text_ptr) )
+	{
+		*(character_buffer + offset) = *(text_ptr);	// write to the character buffer
+		++text_ptr;
+		++offset;
 	}
 }
 
