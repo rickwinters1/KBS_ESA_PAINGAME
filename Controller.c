@@ -4,21 +4,24 @@
 
 OS_EVENT* controllerSem;
 
-int hoogte = 50;
+
+short kleur = 0x0000ff;
 
 
 void controllers(void* pdata){
 	int ID = (int*)pdata;
+	int hoogte = 50;
+
 	printf("controller: %d\n", ID);
 	while (1){
 		if (controller(ID) == 1){
-			moveDown(ID, hoogte);
+			hoogte = moveDown(ID, hoogte);
 
 		}else if(controller(ID) == 0){
-			moveUp(ID, hoogte);
+			hoogte = moveUp(ID, hoogte);
 		}
 
-		OSTimeDly(1);
+		OSTimeDlyHMSM(0,0,0,63);
 	}
 
 
@@ -26,23 +29,44 @@ void controllers(void* pdata){
 
 int controller(int ID){
 	alt_up_parallel_port_dev * KEY_ptr = alt_up_parallel_port_open_dev ("/dev/Pushbuttons");
-	int KEY_value;
+	alt_up_parallel_port_dev * SW_switch_ptr	= alt_up_parallel_port_open_dev ("/dev/Slider_Switches");
+
+	int KEY_value, SW_value;
 	INT8U err;
 
+	SW_value = alt_up_parallel_port_read_data(SW_switch_ptr);
 	KEY_value = alt_up_parallel_port_read_data(KEY_ptr); 		// read the pushbutton KEY values
 
-	if(KEY_value != 0){
-		while(KEY_value == 8){
-		return 1;
+	if(ID == 2){
+		if(KEY_value != 0){
+			while(KEY_value == 8){
+				return 1;
+			}
+			while(KEY_value == 4){
+				return 0;
+			}
+			while(KEY_value == 2){
+				return 2;
+			}
+		}else{
+			return 3;
 		}
-		while(KEY_value == 4){
-			return 0;
+
+	}else if(ID == 1){
+		if(SW_value != 0){
+			printf("waarde van switches is: %d\n", SW_value);
+			while(SW_value == 2){
+				return 1;
+			}
+			while(SW_value == 1){
+				return 0;
+			}
+			while(SW_value >= 3){
+				return 2;
+			}
+		}else{
+			return 3;
 		}
-		while(KEY_value == 2){
-			return 2;
-		}
-	}else{
-		return 3;
 	}
 
 }
@@ -57,34 +81,35 @@ int checkID(int ID){
 	return 0;
 }
 
-void moveUp(int ID, int current){
+int moveUp(int ID, int current){
 	int boven = current;
 
 	int X = checkID(ID);
 
 	if(boven >= 4 && boven <= 184){
-		VGA_box(X, boven, X + 5, boven + 1, 0x0000ff);
+		VGA_box(X, boven, X + 5, boven + 1, kleur);
 		VGA_box(X, boven +50, X + 5, boven + 51, 0);
-		hoogte--;
+		boven--;
 	}else if(boven > 184){
-		VGA_box(X, boven, X + 5, boven + 1, 0x0000ff);
-		hoogte--;
+		VGA_box(X, boven, X + 5, boven + 1, kleur);
+		boven--;
 	}
+	return boven;
 
 }
-void moveDown(int ID, int current){
+int moveDown(int ID, int current){
 	int boven = current;
 
 	int X = checkID(ID);
 
 	if(boven <= 184 && boven >= 4){
-		VGA_box(X, boven + 50, X + 5, boven + 51, 0x0000ff);
+		VGA_box(X, boven + 50, X + 5, boven + 51, kleur);
 		VGA_box(X, boven, X + 5, boven + 1, 0);
-		hoogte++;
+		boven++;
 	}else if(boven < 4){
-		VGA_box(X, boven + 50, X+5, boven + 51, 0x0000ff);
-		hoogte++;
+		VGA_box(X, boven + 50, X+5, boven + 51, kleur);
+		boven++;
 	}
-
+	return boven;
 
 }
