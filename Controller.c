@@ -4,7 +4,6 @@
 
 OS_EVENT* controllerSem;
 
-
 short kleur = 0x0000ff;
 
 
@@ -12,11 +11,9 @@ void controllers(void* pdata){
 	int ID = (int*)pdata;
 	int hoogte = 50;
 
-	printf("controller: %d\n", ID);
 	while (1){
 		if (controller(ID) == 1){
 			hoogte = moveDown(ID, hoogte);
-
 		}else if(controller(ID) == 0){
 			hoogte = moveUp(ID, hoogte);
 		}

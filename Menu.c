@@ -2,42 +2,42 @@
 #include "includes.h"
 #include "altera_up_avalon_parallel_port.h"
 
+int gameModeMenu = 1;
+
+int controller(int ID);
+
 void menu(void* pdata){
 	int ID = (int*)pdata;
-	int gameModeMenu = 1;
-	int xMenu = 32;
-	int yMenu = 28;
 
-	if (controller(ID) == 1){
-		gameModeMenu+1;
-	} else if (controller(ID) == 0){
-		gameModeMenu-1;
+	int xMenu = 32;
+	int yMenu = 18;
+
+
+	while(1){
+		if (gameModeMenu <= 0){
+			gameModeMenu = 4;
+		} else if (gameModeMenu >= 5){
+			gameModeMenu = 1;
+		}
+
+		if (controller(ID) == 1){
+			gameModeMenu++;
+		} else if (controller(ID) == 0){
+			gameModeMenu--;
+		}
+
+
+		selecteerMenu();
+		OSTimeDly(1);
 	}
-	
 	VGA_text (xMenu, yMenu, "Singeplayer");
 	VGA_text (xMenu, yMenu+4, "Multiplayer");
 	VGA_text (xMenu, yMenu+8, "Highscores");
 	VGA_text (xMenu, yMenu+12, "Tutorial");
 
-	if (gameModeMenu <= 0){
-		gameModeMenu = 4;
-	} else if (gameModeMenu >= 5){
-		gameModeMenu = 1;
-	}
-	
-	/*if (gameModeMenu <= 0){
-		gameModeMenu = 4;
-	} else if (gameModeMenu == 1){
-		selecteerMenu();
-	} else if (gameModeMenu == 2){
-		
-	} else if (gameModeMenu == 3){
-		
-	} else if (gameModeMenu == 4){
-		
-	} else if (gameModeMenu >= 5){
-		gameModeMenu = 1;
-	}*/
+
+
+
 
 
 }

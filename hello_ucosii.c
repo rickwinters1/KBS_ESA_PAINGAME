@@ -13,7 +13,7 @@ OS_STK	  menu_stk[TASK_STACKSIZE];
 
 #define controller1_PRIORITY      6
 #define controller2_PRIORITY      7
-#define menu_PRIORITY		  5
+#define menu_PRIORITY		  		8
 
 void controllers(void* pdata);
 void menu(void* pdata);
@@ -31,9 +31,9 @@ int main(void)
 
 //	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
 
-	// OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
-	// OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
-	OSTaskCreate(menu, (void*) 0, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
+	 //OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
+	 //OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
+	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
                
 	OSStart();
 	return 0;
