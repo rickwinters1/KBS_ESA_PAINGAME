@@ -63,11 +63,11 @@ void moveUp(int ID, int current){
 	int X = checkID(ID);
 
 	if(boven >= 4 && boven <= 184){
-		VGA_box(X, boven, X + 5, boven + 1, 0x3333CC);
+		VGA_box(X, boven, X + 5, boven + 1, 0x0000ff);
 		VGA_box(X, boven +50, X + 5, boven + 51, 0);
 		hoogte--;
 	}else if(boven > 184){
-		VGA_box(X, boven, X + 5, boven + 1, 0x3333CC);
+		VGA_box(X, boven, X + 5, boven + 1, 0x0000ff);
 		hoogte--;
 	}
 
@@ -78,11 +78,11 @@ void moveDown(int ID, int current){
 	int X = checkID(ID);
 
 	if(boven <= 184 && boven >= 4){
-		VGA_box(X, boven + 50, X + 5, boven + 51, 0x3333CC);
+		VGA_box(X, boven + 50, X + 5, boven + 51, 0x0000ff);
 		VGA_box(X, boven, X + 5, boven + 1, 0);
 		hoogte++;
 	}else if(boven < 4){
-		VGA_box(X, boven + 50, X+5, boven + 51, 0x3333CC);
+		VGA_box(X, boven + 50, X+5, boven + 51, 0x0000ff);
 		hoogte++;
 	}
 
