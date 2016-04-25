@@ -21,6 +21,7 @@ void menu(void* pdata);
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
+
 	controllerSem = OSSemCreate(1);
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
 	VGA_box (15, 50, 20, 100, 0x0000ff);				// links
@@ -31,8 +32,8 @@ int main(void)
 
 //	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
 
-	 //OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
-	 //OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
+	OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
+	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
 	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
                
 	OSStart();

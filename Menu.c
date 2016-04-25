@@ -15,12 +15,13 @@ int xOnder = 90;
 
 // 0xffff00 = wit
 // 0x000000 = zwart
+	int xMenu = 32;
+	int yMenu = 18;
 
 void menu(void* pdata){
 	int ID = (int*)pdata;
 
-	int xMenu = 32;
-	int yMenu = 18;
+
 
 
 	while(1){
@@ -38,7 +39,7 @@ void menu(void* pdata){
 
 
 		selecteerMenu();
-		OSTimeDly(1);
+		OSTimeDly(10);
 	}
 	VGA_text (xMenu, yMenu, "Singleplayer");
 	VGA_text (xMenu, yMenu+4, "Multiplayer");
@@ -52,19 +53,19 @@ void selecteerMenu(){
 	//  VGA_box(x1, y1, x2, y2, menuTextKleur);
 	if (gameModeMenu == 1){
 		tekenBox(xLinks, xBoven, xRechts, xOnder, 0xffff00);
-		tekenBox2(Links, Boven, Rechts, Onder, 0x000000);
+		tekenBox2(xLinks, xBoven, xRechts, xOnder, 0x000000);
 		VGA_text (xMenu, yMenu, "Singleplayer");
 	} else if (gameModeMenu == 2){
 		tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, 0xffff00);
-		tekenBox2(Links, Boven+20, Rechts, Onder+20, 0x000000);
+		tekenBox2(xLinks, xBoven+20, xRechts, xOnder+20, 0x000000);
 		VGA_text (xMenu, yMenu+4, "Multiplayer");
 	} else if (gameModeMenu == 3){
 		tekenBox(xLinks, xBoven+40, xRechts, xOnder+40, 0xffff00);
-		tekenBox2(Links, Boven+40, Rechts, Onder+40, 0x000000);
+		tekenBox2(xLinks, xBoven+40, xRechts, xOnder+40, 0x000000);
 		VGA_text (xMenu, yMenu+8, "Highscores");
 	} else if (gameModeMenu == 4){
 		tekenBox(xLinks, xBoven+60, xRechts, xOnder+60, 0xffff00);
-		tekenBox2(Links, Boven+60, Rechts, Onder+60, 0x000000);
+		tekenBox2(xLinks, xBoven+60, xRechts, xOnder+60, 0x000000);
 		VGA_text (xMenu, yMenu+12, "Tutorial");
 	}
 	
@@ -77,10 +78,10 @@ void tekenBox(int Links, int Boven, int Rechts, int Onder, short Kleur){
 }
 
 void tekenBox2(int Links, int Boven, int Rechts, int Onder, short Kleur){
-	Links = xLinks - 1;
-	Boven = xBoven - 1;
-	Rechts = xRechts - 1;
-	Onder = xOnder -1;
+	Links = Links - 1;
+	Boven = Boven - 1;
+	Rechts = Rechts - 1;
+	Onder = Onder -1;
 	
 	VGA_box(Links, Boven, Rechts, Onder, Kleur);
 }
