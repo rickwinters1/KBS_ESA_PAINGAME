@@ -33,11 +33,14 @@ void menu(void* pdata){
 		if (controller(ID) == 1){
 			gameModeMenu++;
 			OSSemPost(menuSem);
+			printf("voor post1 \n");
+
 		} else if (controller(ID) == 0){
 			gameModeMenu--;
 			OSSemPost(menuSem);
+			printf("voor post2 \n");
+
 		}
-		selecteerMenu();
 		OSTimeDly(10);
 	}
 	VGA_text (xMenu, yMenu, "Singleplayer");
@@ -46,26 +49,30 @@ void menu(void* pdata){
 	VGA_text (xMenu, yMenu+12, "Tutorial");
 }
 
-void selecteerMenu(){
+void selecteerMenu(void *pdata){
 	INT8U err;
-	OSSemPend(menuSem, 0, &err);
-	if (gameModeMenu == 1){
-		tekenBox(xLinks, xBoven, xRechts, xOnder, 0xffff00);
-		tekenBox2(xLinks, xBoven, xRechts, xOnder, 0x000000);
-		VGA_text (xMenu, yMenu, "Singleplayer");
-	} else if (gameModeMenu == 2){
-		tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, 0xffff00);
-		tekenBox2(xLinks, xBoven+10, xRechts, xOnder+10, 0x000000);
-		VGA_text (xMenu, yMenu+4, "Multiplayer");
-	} else if (gameModeMenu == 3){
-		tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, 0xffff00);
-		tekenBox2(xLinks, xBoven+20, xRechts, xOnder+20, 0x000000);
-		VGA_text (xMenu, yMenu+8, "Highscores");
-	} else if (gameModeMenu == 4 && check == TRUE){
-		tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, 0xffff00);
-		tekenBox2(xLinks, xBoven+30, xRechts, xOnder+30, 0x000000);
-		VGA_text (xMenu, yMenu+12, "Tutorial");
-	}	
+
+	while(1){
+		OSSemPend(menuSem, 0, &err);
+		if (gameModeMenu == 1){
+			tekenBox(xLinks, xBoven, xRechts, xOnder, 0xffff00);
+			tekenBox2(xLinks, xBoven, xRechts, xOnder, 0x000000);
+			VGA_text (xMenu, yMenu, "Singleplayer");
+		} else if (gameModeMenu == 2){
+			tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, 0xffff00);
+			tekenBox2(xLinks, xBoven+10, xRechts, xOnder+10, 0x000000);
+			VGA_text (xMenu, yMenu+4, "Multiplayer");
+		} else if (gameModeMenu == 3){
+			tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, 0xffff00);
+			tekenBox2(xLinks, xBoven+20, xRechts, xOnder+20, 0x000000);
+			VGA_text (xMenu, yMenu+8, "Highscores");
+		} else if (gameModeMenu == 4){
+			tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, 0xffff00);
+			tekenBox2(xLinks, xBoven+30, xRechts, xOnder+30, 0x000000);
+			VGA_text (xMenu, yMenu+12, "Tutorial");
+		}
+		OSTimeDly(10);
+	}
 }
 
 void tekenBox(int Links, int Boven, int Rechts, int Onder, short Kleur){

@@ -9,6 +9,8 @@ OS_EVENT* menuSem;
 OS_STK    controller1_stk[TASK_STACKSIZE];
 OS_STK    controller2_stk[TASK_STACKSIZE];
 OS_STK	  menu_stk[TASK_STACKSIZE];
+OS_STK	  menu_stk2[TASK_STACKSIZE];
+
 
 /* Definition of Task Priorities */
 
@@ -18,6 +20,7 @@ OS_STK	  menu_stk[TASK_STACKSIZE];
 
 void controllers(void* pdata);
 void menu(void* pdata);
+void selecteerMenu(void *pdata);
 
 /* The main function creates two task and starts multi-tasking */
 int main(void)
@@ -33,10 +36,10 @@ int main(void)
 
 //	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
 
-	OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
-	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
+	//OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
+	//OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
 	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
-               
+	OSTaskCreate(selecteerMenu, (void*) 0, &menu_stk2[TASK_STACKSIZE-1], 9);
 	OSStart();
 	return 0;
 }
