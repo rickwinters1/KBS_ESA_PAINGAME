@@ -6,12 +6,12 @@ OS_EVENT* controllerSem;
 
 short kleur = 0x0000ff;
 extern volatile int timeout = 0;							// used to synchronize with the timer
-volatile int * interval_timer_ptr = (int *) 0x10002000;	// interal timer base address
+volatile int * interval_timer_ptr = (int *) 0x10002000;	// internal timer base address
 
 
 
 void controllers(void* pdata){
-	int counter = 0x96000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
+	int counter = 0x50000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
 	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
 	*(interval_timer_ptr + 0x3) = (counter >> 16) & 0xFFFF;
 
@@ -22,15 +22,13 @@ void controllers(void* pdata){
 	int hoogte = 50;
 
 	while (1){
-//		while (!timeout)
-//					;
 		if (controller(ID) == 1){
 			hoogte = moveDown(ID, hoogte);
 		}else if(controller(ID) == 0){
 			hoogte = moveUp(ID, hoogte);
 		}
 
-		OSTimeDlyHMSM(0,0,0,50);
+		OSTimeDly(1);
 	}
 
 
