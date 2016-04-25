@@ -2,6 +2,7 @@
 #include "includes.h"
 
 OS_EVENT* controllerSem;
+OS_EVENT* menuSem;
 
 /* Definition of Task Stacks */
 #define   TASK_STACKSIZE       2048
@@ -21,7 +22,7 @@ void menu(void* pdata);
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
-
+	menuSem = OSSemCreate(1);
 	controllerSem = OSSemCreate(1);
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
 	VGA_box (15, 50, 20, 100, 0x0000ff);				// links

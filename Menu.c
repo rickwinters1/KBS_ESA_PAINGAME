@@ -2,6 +2,8 @@
 #include "includes.h"
 #include "altera_up_avalon_parallel_port.h"
 
+OS_EVENT* menuSem;
+
 int gameModeMenu = 1;
 int vorige = 0;
 int controller(int ID);
@@ -18,8 +20,6 @@ int xOnder = 80;
 int xMenu = 32;
 int yMenu = 18;
 
-BOOLEAN check;
-
 void menu(void* pdata){
 	int ID = (int*)pdata;
 
@@ -32,13 +32,11 @@ void menu(void* pdata){
 
 		if (controller(ID) == 1){
 			gameModeMenu++;
-			check = true;
+			OSSemPost(menuSem);
 		} else if (controller(ID) == 0){
 			gameModeMenu--;
-			check = TRUE;
+			OSSemPost(menuSem);
 		}
-
-
 		selecteerMenu();
 		OSTimeDly(10);
 	}
@@ -49,26 +47,24 @@ void menu(void* pdata){
 }
 
 void selecteerMenu(){
-	if (gameModeMenu == 1 && check == TRUE){
+	INT8U err;
+	OSSemPend(menuSem, 0, &err);
+	if (gameModeMenu == 1){
 		tekenBox(xLinks, xBoven, xRechts, xOnder, 0xffff00);
 		tekenBox2(xLinks, xBoven, xRechts, xOnder, 0x000000);
 		VGA_text (xMenu, yMenu, "Singleplayer");
-		check = FALSE;
-	} else if (gameModeMenu == 2 && check == TRUE){
+	} else if (gameModeMenu == 2){
 		tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, 0xffff00);
 		tekenBox2(xLinks, xBoven+10, xRechts, xOnder+10, 0x000000);
 		VGA_text (xMenu, yMenu+4, "Multiplayer");
-		check = FALSE;
-	} else if (gameModeMenu == 3 && check == TRUE){
+	} else if (gameModeMenu == 3){
 		tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, 0xffff00);
 		tekenBox2(xLinks, xBoven+20, xRechts, xOnder+20, 0x000000);
 		VGA_text (xMenu, yMenu+8, "Highscores");
-		check = FALSE;
 	} else if (gameModeMenu == 4 && check == TRUE){
 		tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, 0xffff00);
 		tekenBox2(xLinks, xBoven+30, xRechts, xOnder+30, 0x000000);
 		VGA_text (xMenu, yMenu+12, "Tutorial");
-		check = FALSE;
 	}	
 }
 
