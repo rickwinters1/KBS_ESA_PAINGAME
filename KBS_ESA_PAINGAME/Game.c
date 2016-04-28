@@ -10,9 +10,9 @@ short balWit = 0xffffff;
 
 void Game(void* pdata){
 	
-	ALT_x1 = 0; ALT_x2 = 20; ALT_y = 0; ALT_inc_x = 1; ALT_inc_y = 1;
+	ALT_x1 = 0; ALT_x2 = 20; ALT_y = 3; ALT_inc_x = 1; ALT_inc_y = 1;
 
-	pixel_buffer_x = 319; pixel_buffer_y = 239;
+	pixel_buffer_x = 340; pixel_buffer_y = 236;
 
 	blue_x1 = 28; blue_x2 = 52; blue_y1 = 26; blue_y2 = 34;
 	
@@ -23,7 +23,7 @@ void Game(void* pdata){
 	//blue_x1 = 28; blue_x2 = 52; blue_y1 = 26; blue_y2 = 34;
 	while(1){
 		
-		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, zwart); // erase
+		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
 		ALT_x1 += ALT_inc_x;
 		ALT_x2 += ALT_inc_x;
 		ALT_y += ALT_inc_y;
@@ -35,7 +35,7 @@ void Game(void* pdata){
 
 
 	
-		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, wit); // ball
+		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balWit); // ball
 		
 		/*
 		VGA_text (ALT_x1, ALT_y, "          ");		// erase
