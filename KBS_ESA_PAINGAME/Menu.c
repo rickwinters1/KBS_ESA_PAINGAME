@@ -8,15 +8,14 @@ int gameModeMenu = 1;
 int vorige = 0;
 int controller(int ID);
 
-short menuTextKleur = 0xffff00;
-
-int xLinks = 130;
+int xLinks = 120;
 int xRechts = 180;
 int xBoven = 70;
-int xOnder = 80;
+int xOnder = 85;
 
-// 0xffff00 = wit
-// 0x000000 = zwart
+short zwart = 0;
+short geel = 0xffff00;
+
 int xMenu = 32;
 int yMenu = 18;
 
@@ -41,7 +40,7 @@ void menu(void* pdata){
 			printf("voor post2 \n");
 
 		}
-		OSTimeDly(10);
+		OSTimeDlyHMSM(0,0,0,200);
 	}
 	VGA_text (xMenu, yMenu, "Singleplayer");
 	VGA_text (xMenu, yMenu+4, "Multiplayer");
@@ -55,22 +54,55 @@ void selecteerMenu(void *pdata){
 	while(1){
 		OSSemPend(menuSem, 0, &err);
 		if (gameModeMenu == 1){
-			tekenBox(xLinks, xBoven, xRechts, xOnder, 0xffff00);
-			tekenBox2(xLinks, xBoven, xRechts, xOnder, 0x000000);
+			if(vorige == 4){
+				tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, zwart);
+			}else if(vorige == 3){
+				tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+			}
+			tekenBox(xLinks, xBoven, xRechts, xOnder, geel);
+			tekenBox2(xLinks, xBoven, xRechts, xOnder, zwart);
 			VGA_text (xMenu, yMenu, "Singleplayer");
+			vorige = 1;
 		} else if (gameModeMenu == 2){
-			tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, 0xffff00);
-			tekenBox2(xLinks, xBoven+10, xRechts, xOnder+10, 0x000000);
+			if(vorige == 1){
+				tekenBox(xLinks, xBoven, xRechts, xOnder, zwart);
+			}else if(vorige == 3){
+				tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+			}
+			tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, geel);
+			tekenBox2(xLinks, xBoven+10, xRechts, xOnder+10, zwart);
 			VGA_text (xMenu, yMenu+4, "Multiplayer");
+			vorige = 2;
 		} else if (gameModeMenu == 3){
-			tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, 0xffff00);
-			tekenBox2(xLinks, xBoven+20, xRechts, xOnder+20, 0x000000);
+			if(vorige == 2){
+				tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, zwart);
+			}else if(vorige == 4){
+				tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, zwart);
+			}
+			tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, geel);
+			tekenBox2(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
 			VGA_text (xMenu, yMenu+8, "Highscores");
+			vorige = 3;
 		} else if (gameModeMenu == 4){
-			tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, 0xffff00);
-			tekenBox2(xLinks, xBoven+30, xRechts, xOnder+30, 0x000000);
+			if(vorige == 1){
+				tekenBox(xLinks, xBoven, xRechts, xOnder, zwart);
+			}else if(vorige == 3){
+				tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+			}
+			tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, geel);
+			tekenBox2(xLinks, xBoven+30, xRechts, xOnder+30, zwart);
 			VGA_text (xMenu, yMenu+12, "Tutorial");
+			vorige = 4;
 		}
+//		if(vorige == 1){
+//			tekenBox(xLinks, xBoven, xRechts, xOnder, zwart);
+//		}else if(vorige == 2){
+//			tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, zwart);
+//		}else if(vorige == 3){
+//			tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+//		}else if(vorige == 4){
+//			tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, zwart);
+//		}
 		OSTimeDly(10);
 	}
 }
@@ -80,8 +112,8 @@ void tekenBox(int Links, int Boven, int Rechts, int Onder, short Kleur){
 }
 // tekenBox en tekenBox2 maken samen het visuele effect van het selecteren van een menu optie.
 void tekenBox2(int Links, int Boven, int Rechts, int Onder, short Kleur){
-	Links = Links - 1;
-	Boven = Boven - 1;
+	Links = Links + 1;
+	Boven = Boven + 1;
 	Rechts = Rechts - 1;
 	Onder = Onder -1;
 

@@ -13,15 +13,7 @@ obj/default/Game.o: Game.c \
  C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_llist.h \
  C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/priv/alt_alarm.h \
  C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//UCOSII/inc/ucos_ii.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/os_cpu.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//drivers/inc/altera_up_avalon_parallel_port.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_dev.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_llist.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/priv/alt_dev_llist.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_warning.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//drivers/inc/altera_up_avalon_parallel_port_regs.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/io.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/alt_types.h
+ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/os_cpu.h
 
 C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/includes.h:
 
@@ -52,19 +44,3 @@ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc
 C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//UCOSII/inc/ucos_ii.h:
 
 C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/os_cpu.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//drivers/inc/altera_up_avalon_parallel_port.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_dev.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_llist.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/priv/alt_dev_llist.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_warning.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//drivers/inc/altera_up_avalon_parallel_port_regs.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/io.h:
-
-C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/alt_types.h:
