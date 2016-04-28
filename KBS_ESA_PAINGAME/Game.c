@@ -10,9 +10,9 @@ short balWit = 0xffffff;
 
 void Game(void* pdata){
 	
-	ALT_x1 = 0; ALT_x2 = 20; ALT_y = 0; ALT_inc_x = 1; ALT_inc_y = 1;
+	ALT_x1 = 0; ALT_x2 = 20; ALT_y = 3; ALT_inc_x = 1; ALT_inc_y = 1;
 
-	pixel_buffer_x = 340; pixel_buffer_y = 239;
+	pixel_buffer_x = 340; pixel_buffer_y = 236;
 
 	blue_x1 = 28; blue_x2 = 52; blue_y1 = 26; blue_y2 = 34;
 	
