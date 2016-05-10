@@ -75,22 +75,22 @@ void selecteerMenu(void *pdata){
 			vorige = 2;
 		} else if (gameModeMenu == 3){
 			if(vorige == 2){
-				tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, zwart);
+				tekenBox(xLinks *4, xBoven+10 *4, xRechts *4, xOnder+10 *4, zwart);
 			}else if(vorige == 4){
-				tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, zwart);
+				tekenBox(xLinks *4, xBoven+30 *4, xRechts *4, xOnder+30 *4, zwart);
 			}
-			tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, geel);
-			tekenBox2(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+			tekenBox(xLinks *4, xBoven+20 *4, xRechts *4, xOnder+20 *4, geel);
+			tekenBox2(xLinks *4, xBoven+20 *4, xRechts *4, xOnder+20 *4, zwart);
 			VGA_text (xMenu, yMenu+8, "Highscores");
 			vorige = 3;
 		} else if (gameModeMenu == 4){
 			if(vorige == 1){
-				tekenBox(xLinks, xBoven, xRechts, xOnder, zwart);
+				tekenBox(xLinks *4, xBoven *4, xRechts *4, xOnder *4, zwart);
 			}else if(vorige == 3){
-				tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+				tekenBox(xLinks *4, xBoven+20 *4, xRechts *4, xOnder+20 *4, zwart);
 			}
-			tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, geel);
-			tekenBox2(xLinks, xBoven+30, xRechts, xOnder+30, zwart);
+			tekenBox(xLinks *4, xBoven+30 *4, xRechts *4, xOnder+30 *4, geel);
+			tekenBox2(xLinks *4, xBoven+30 *4, xRechts *4, xOnder+30 *4, zwart);
 			VGA_text (xMenu, yMenu+12, "Tutorial");
 			vorige = 4;
 		}
