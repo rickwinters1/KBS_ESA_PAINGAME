@@ -5,7 +5,7 @@
 OS_EVENT* controllerSem;
 
 short kleur = 0x0000ff;
-
+int counter1, counter2, counter3 = 0;
 
 
 void controllers(void* pdata){
@@ -41,13 +41,25 @@ int controller(int ID){
 	if(ID == 2){
 		if(KEY_value != 0){
 			while(KEY_value == 8){
-				return 1;
+				counter1++;
+				if(counter1 >= 20){
+					return 1;
+					counter1 = 0;
+				}
 			}
 			while(KEY_value == 4){
-				return 0;
+				counter2++;
+				if(counter2 >= 20){
+					return 0;
+					counter2 = 0;
+				}
 			}
 			while(KEY_value == 2){
-				return 2;
+				counter3++;
+				if(counter3 >= 20){
+					return 2;
+					counter3 = 0;
+				}
 			}
 		}else{
 			return 3;

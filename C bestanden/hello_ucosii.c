@@ -54,7 +54,7 @@ int main(void)
 	OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
 
 	//OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
-	//OSTaskCreate(selecteerMenu, (void*) 0, &menu_stk2[TASK_STACKSIZE-1], 9);
+	//OSTaskCreate(selecteerMenu, (void*) 0, &menu_stk2[TASK_STACKSIZE-1], 10);
 	OSStart();
 	return 0;
 }

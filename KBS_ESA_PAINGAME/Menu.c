@@ -8,10 +8,10 @@ int gameModeMenu = 1;
 int vorige = 0;
 int controller(int ID);
 
-int xLinks = 120;
-int xRechts = 180;
-int xBoven = 70;
-int xOnder = 85;
+int xLinks = 120/4;
+int xRechts = 180/4;
+int xBoven = 70/4;
+int xOnder = 85/4;
 
 short zwart = 0;
 short geel = 0xffff00;
@@ -55,22 +55,22 @@ void selecteerMenu(void *pdata){
 		OSSemPend(menuSem, 0, &err);
 		if (gameModeMenu == 1){
 			if(vorige == 4){
-				tekenBox(xLinks, xBoven+30, xRechts, xOnder+30, zwart);
+				tekenBox(xLinks *4, xBoven+30 * 4, xRechts *4, xOnder+30 *4, zwart);
 			}else if(vorige == 3){
-				tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+				tekenBox(xLinks *4, xBoven+20 *4, xRechts *4, xOnder+20 *4, zwart);
 			}
-			tekenBox(xLinks, xBoven, xRechts, xOnder, geel);
-			tekenBox2(xLinks, xBoven, xRechts, xOnder, zwart);
+			tekenBox(xLinks *4, xBoven *4, xRechts *4, xOnder *4, geel);
+			tekenBox2(xLinks *4, xBoven *4, xRechts *4, xOnder *4, zwart);
 			VGA_text (xMenu, yMenu, "Singleplayer");
 			vorige = 1;
 		} else if (gameModeMenu == 2){
 			if(vorige == 1){
-				tekenBox(xLinks, xBoven, xRechts, xOnder, zwart);
+				tekenBox(xLinks *4, xBoven *4, xRechts *4, xOnder *4, zwart);
 			}else if(vorige == 3){
-				tekenBox(xLinks, xBoven+20, xRechts, xOnder+20, zwart);
+				tekenBox(xLinks *4, xBoven+20 *4, xRechts *4, xOnder+20 *4, zwart);
 			}
-			tekenBox(xLinks, xBoven+10, xRechts, xOnder+10, geel);
-			tekenBox2(xLinks, xBoven+10, xRechts, xOnder+10, zwart);
+			tekenBox(xLinks *4, xBoven+10 *4, xRechts *4, xOnder+10 *4, geel);
+			tekenBox2(xLinks *4, xBoven+10 *4, xRechts *4, xOnder+10 *4, zwart);
 			VGA_text (xMenu, yMenu+4, "Multiplayer");
 			vorige = 2;
 		} else if (gameModeMenu == 3){
