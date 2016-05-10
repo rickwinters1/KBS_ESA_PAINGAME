@@ -6,14 +6,14 @@ OS_EVENT* controllerSem;
 
 short kleur = 0x0000ff;
 
-
+int hoogte = 50;
 
 void controllers(void* pdata){
 
 
 
 	int ID = (int*)pdata;
-	int hoogte = 50;
+	
 
 	while (1){
 		if (controller(ID) == 1){
