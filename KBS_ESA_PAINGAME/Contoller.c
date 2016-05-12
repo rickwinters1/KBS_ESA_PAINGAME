@@ -40,26 +40,14 @@ int controller(int ID){
 
 	if(ID == 2){
 		if(KEY_value != 0){
-			while(KEY_value == 8){
-				counter1++;
-				if(counter1 >= 20){
-					return 1;
-					counter1 = 0;
-				}
+			if(KEY_value == 8){
+				return 1;
 			}
-			while(KEY_value == 4){
-				counter2++;
-				if(counter2 >= 20){
-					return 0;
-					counter2 = 0;
-				}
+			if(KEY_value == 4){
+				return 0;
 			}
-			while(KEY_value == 2){
-				counter3++;
-				if(counter3 >= 20){
-					return 2;
-					counter3 = 0;
-				}
+			if(KEY_value == 2){
+				return 2;
 			}
 		}else{
 			return 3;
@@ -67,13 +55,13 @@ int controller(int ID){
 
 	}else if(ID == 1){
 		if(SW_value != 0){
-			while(SW_value == 2){
+			if(SW_value == 2){
 				return 1;
 			}
-			while(SW_value == 1){
+			if(SW_value == 1){
 				return 0;
 			}
-			while(SW_value >= 3){
+			if(SW_value >= 3){
 				return 2;
 			}
 		}else{

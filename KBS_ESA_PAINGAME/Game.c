@@ -32,8 +32,8 @@ void Game(void* pdata){
 		if ( (ALT_x2 == pixel_buffer_x) || (ALT_x1 == 0) )
 			ALT_inc_x = -(ALT_inc_x);
 		// if balkje rechts collision
-		if ((ALT_y >= hoogte && ALT_y <= hoogte+50) && (ALT_x2 >= X && ALT_x2 <= X))
-			ALT_inc_x = -(ALT_inc_x);
+//		if ((ALT_y >= hoogte && ALT_y <= hoogte+50) && (ALT_x2 >= X && ALT_x2 <= X))
+//			ALT_inc_x = -(ALT_inc_x);
 		// if balkje links collision
 
 

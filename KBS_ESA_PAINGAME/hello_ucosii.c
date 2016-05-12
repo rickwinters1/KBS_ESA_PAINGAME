@@ -26,7 +26,7 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 void controllers(void* pdata);
 void menu(void* pdata);
 void selecteerMenu(void *pdata);
-void Game(void* pdata);
+//void Game(void* pdata);
 
 /* The main function creates two task and starts multi-tasking */
 int main(void)
@@ -51,7 +51,7 @@ int main(void)
 
 	OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
 	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
-	OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
+	//OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
 
 	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
 	OSTaskCreate(selecteerMenu, (void*) 0, &menu_stk2[TASK_STACKSIZE-1], 10);
