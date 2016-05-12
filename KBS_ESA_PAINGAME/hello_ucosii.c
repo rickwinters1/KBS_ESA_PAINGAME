@@ -3,6 +3,7 @@
 
 OS_EVENT* controllerSem;
 OS_EVENT* menuSem;
+OS_EVENT* gameSem;
 
 extern volatile int timeout = 0;							// used to synchronize with the timer
 volatile int * interval_timer_ptr = (int *) 0x10002000;	// internal timer base address
@@ -39,7 +40,8 @@ int main(void)
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
 	menuSem = OSSemCreate(1);
-	controllerSem = OSSemCreate(1);
+	gameSem = OSSemCreate(0);
+	controllerSem = OSSemCreate(0);
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
 	VGA_box (15, 50, 20, 100, 0x0000ff);				// links
 	VGA_box (300, 50, 305, 100, 0x0000ff);				// rechts
@@ -47,14 +49,14 @@ int main(void)
 	VGA_box (0, 0, 319, 3, 0xFFFFFF);					// boven
 	VGA_box (0, 236, 319, 239, 0xFFFFFF);				// onder
 
-//	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
+	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
 
 	OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
 	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
-	//OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
+	OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
 
 	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
-	OSTaskCreate(selecteerMenu, (void*) 0, &menu_stk2[TASK_STACKSIZE-1], 10);
+	OSTaskCreate(selecteerMenu, (void*) 2, &menu_stk2[TASK_STACKSIZE-1], menu_PRIORITY +1);
 	OSStart();
 	return 0;
 }

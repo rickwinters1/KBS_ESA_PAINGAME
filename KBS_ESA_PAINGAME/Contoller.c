@@ -9,13 +9,14 @@ int counter1, counter2, counter3 = 0;
 
 
 void controllers(void* pdata){
-
-
+	INT8U err;
 
 	int ID = (int*)pdata;
 	int hoogte = 50;
 
+	OSSemPend(controllerSem, 0, &err);
 	while (1){
+
 		if (controller(ID) == 1){
 			hoogte = moveDown(ID, hoogte);
 		}else if(controller(ID) == 0){

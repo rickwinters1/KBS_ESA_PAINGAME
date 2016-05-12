@@ -3,6 +3,8 @@
 #include "altera_up_avalon_parallel_port.h"
 
 OS_EVENT* menuSem;
+OS_EVENT* gameSem;
+OS_EVENT* controllerSem;
 
 int gameModeMenu = 1;
 int vorige = 0;
@@ -64,6 +66,9 @@ void menu(void* pdata){
 
 void selecteerMenu(void *pdata){
 	INT8U err;
+	int ID = (int*)pdata;
+
+
 
 	while(1){
 		if (gameModeMenu == 1){
@@ -80,9 +85,14 @@ void selecteerMenu(void *pdata){
 				VGA_box(xLinks*4, xBoven*4 + 16, xRechts*4, xOnder*4 + 16, rood);
 				VGA_text (xMenu, yMenu + 4, "Multiplayer");
 				eenkeer = 0;
-				vorige = 2;
 				changed = 1;
-
+			}
+			if(controller(ID) == 2){
+				clearScreen();
+				clearText();
+				printf("start game\n");
+				OSSemPost(gameSem);
+				break;
 			}
 		} else if (gameModeMenu == 3){
 			if(eenkeer == 1){
@@ -90,7 +100,6 @@ void selecteerMenu(void *pdata){
 				VGA_box(xLinks*4, xBoven*4 + 32, xRechts*4, xOnder*4 + 32, rood);
 				VGA_text (xMenu, yMenu +  8, "Highscores");
 				eenkeer = 0;
-				vorige = 3;
 				changed = 1;
 
 			}
@@ -100,7 +109,6 @@ void selecteerMenu(void *pdata){
 				VGA_box(xLinks*4, xBoven*4 + 48, xRechts*4, xOnder*4 + 48, rood);
 				VGA_text (xMenu, yMenu + 12, "Tutorial");
 				eenkeer = 0;
-				vorige = 4;
 				changed = 1;
 
 			}
@@ -112,6 +120,13 @@ void selecteerMenu(void *pdata){
 
 void clearScreen(){
 	VGA_box(25,25, 200,200, 0);
+}
+
+void clearText(){
+	VGA_text (xMenu, yMenu, "            ");
+	VGA_text (xMenu, yMenu + 4, "           ");
+	VGA_text (xMenu, yMenu+8, "          ");
+	VGA_text (xMenu, yMenu+12, "        ");
 }
 
 void tekenBox(int Links, int Boven, int Rechts, int Onder, short Kleur){
