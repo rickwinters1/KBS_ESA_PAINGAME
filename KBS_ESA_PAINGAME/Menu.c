@@ -5,6 +5,9 @@
 OS_EVENT* menuSem;
 OS_EVENT* gameSem;
 OS_EVENT* controllerSem;
+OS_FLAG_GRP *menuFlags;
+
+#define Menu_Flag 0x01
 
 int gameModeMenu = 1;
 int vorige = 0;
@@ -28,7 +31,7 @@ int changed;
 
 void menu(void* pdata){
 	int ID = (int*)pdata;
-
+	INT8U err;
 
 	VGA_text (xMenu, yMenu, "Singleplayer");
 	VGA_text (xMenu, yMenu + 4, "Multiplayer");
@@ -37,6 +40,7 @@ void menu(void* pdata){
 
 
 	while(1){
+		OSFlagPend(menuFlags, Menu_Flag, OS_FLAG_WAIT_CLR_ALL, 0, &err);
 		if (controller(ID) == 1){
 			if(changed != 0){
 				gameModeMenu++;
@@ -71,6 +75,7 @@ void selecteerMenu(void *pdata){
 
 
 	while(1){
+
 		if (gameModeMenu == 1){
 			if(eenkeer == 1){
 				clearScreen();
@@ -119,7 +124,7 @@ void selecteerMenu(void *pdata){
 }
 
 void clearScreen(){
-	VGA_box(25,25, 200,200, 0);
+	VGA_box(25,70, 200,200, 0);
 }
 
 void clearText(){

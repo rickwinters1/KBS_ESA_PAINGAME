@@ -56,17 +56,11 @@ int controller(int ID){
 
 	}else if(ID == 1){
 		if(SW_value != 0){
-			if(SW_value == 2){
-				return 1;
-			}
 			if(SW_value == 1){
 				return 0;
 			}
-			if(SW_value >= 3){
-				return 2;
-			}
 		}else{
-			return 3;
+			return 1;
 		}
 	}
 

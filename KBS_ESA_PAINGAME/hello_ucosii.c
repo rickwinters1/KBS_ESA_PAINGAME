@@ -4,6 +4,8 @@
 OS_EVENT* controllerSem;
 OS_EVENT* menuSem;
 OS_EVENT* gameSem;
+OS_FLAG_GRP *menuFlags;
+
 
 extern volatile int timeout = 0;							// used to synchronize with the timer
 volatile int * interval_timer_ptr = (int *) 0x10002000;	// internal timer base address
@@ -24,6 +26,10 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 #define Game_PRIORITY      			6
 #define menu_PRIORITY		  		9
 
+#define Menu_Flag 0x01
+
+short wit = 0xffff;
+
 void controllers(void* pdata);
 void menu(void* pdata);
 void selecteerMenu(void *pdata);
@@ -32,14 +38,15 @@ void Game(void* pdata);
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
+	INT8U err;
 	OSInit();
-	int counter = 0x40000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
+	int counter = 0x50000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
 	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
 	*(interval_timer_ptr + 0x3) = (counter >> 16) & 0xFFFF;
 
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
-	menuSem = OSSemCreate(1);
+	menuFlags = OSFlagCreate(0x00, &err);
 	gameSem = OSSemCreate(0);
 	controllerSem = OSSemCreate(0);
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
@@ -49,7 +56,9 @@ int main(void)
 	VGA_box (0, 0, 319, 3, 0xFFFFFF);					// boven
 	VGA_box (0, 236, 319, 239, 0xFFFFFF);				// onder
 
-	VGA_box (159, 0, 160, 239, 0xFFFFFF);				// middenlijntje
+	draw_number(0, 1);
+	draw_number(8, 2);
+
 
 	OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
 	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
@@ -94,4 +103,78 @@ void VGA_text(int x, int y, char * text_ptr)
 	}
 }
 
+void draw_middenlijn(){
+	int i = 0;
+	while(i < 240){
+		VGA_box (159, i, 160, i+ 7, 0xffff);				// middenlijntje
+		i = i + 11;
+	}
+
+}
+
+void draw_number(int nummer, int ID){
+
+	int X = checkIDScore(ID);
+
+	if(nummer == 1){
+		VGA_box(X + 5, 20, X+7, 60, wit);
+	}else if(nummer == 2){
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+		VGA_box(X + 18, 22, X+ 20, 38, wit);			//lijn naar beneden
+		VGA_box(X, 38, X+ 20, 40, wit);					//lijn naar links
+		VGA_box(X, 40, X+ 2, 58, wit);					//lijn naar beneden
+		VGA_box(X, 58, X+ 20, 60, wit);					//lijn naar rechts
+	}else if(nummer == 3){
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+		VGA_box(X + 18, 22, X+ 20, 60, wit);			//rechter lijn
+		VGA_box(X, 39, X+ 20, 41, wit);					//midden lijn
+		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
+	}else if(nummer == 4){
+		VGA_box(X, 20, X+2, 40, wit);					//linkse lijn
+		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
+		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
+	}else if(nummer == 5){
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+		VGA_box(X, 22, X+ 2, 38, wit);					//lijn naar beneden
+		VGA_box(X, 38, X+ 20, 40, wit);					//lijn naar links
+		VGA_box(X + 18, 40, X+ 20, 58, wit);			//lijn naar beneden
+		VGA_box(X, 58, X+ 20, 60, wit);					//lijn naar rechts
+	}else if(nummer == 6){
+		VGA_box(X, 20, X+2, 60, wit);					//lijn links
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
+		VGA_box(X + 18, 40, X+ 20, 58, wit);			//lijn rechts
+		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
+	}else if(nummer == 7){
+		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+	}else if(nummer == 8){
+		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
+		VGA_box(X, 20, X+2, 60, wit);					//lijn links
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
+		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
+	}else if(nummer == 9){
+		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
+		VGA_box(X, 20, X+2, 40, wit);					//linkse lijn
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
+		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
+	}else if(nummer == 0){
+		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
+		VGA_box(X, 20, X+2, 60, wit);					//lijn links
+		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
+		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
+	}
+}
+
+int checkIDScore(int ID){
+	if(ID == 1){
+		return 120;
+	}else if(ID == 2){
+		return 180;
+
+	}
+	return 0;
+}
 

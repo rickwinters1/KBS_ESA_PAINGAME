@@ -31,7 +31,9 @@ void Game(void* pdata){
 	OSSemPend(gameSem, 0, &err);
 	OSSemPost(controllerSem);
 	OSSemPost(controllerSem);
-
+	draw_middenlijn();
+	draw_number(0, 1);
+	draw_number(8, 2);
 	while(1){
 		
 
