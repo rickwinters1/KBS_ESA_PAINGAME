@@ -5,20 +5,23 @@
 OS_EVENT* menuSem;
 OS_EVENT* gameSem;
 OS_EVENT* controllerSem;
-OS_FLAG_GRP *menuFlags;
+OS_FLAG_GRP *Flags;
 
 #define Menu_Flag 0x01
+#define Game_Flag 0x02
+#define C1_Flag 0x04
+#define C2_Flag 0x08
 
 int gameModeMenu = 1;
 int vorige = 0;
 int controller(int ID);
 
-int xLinks = 30;
-int xRechts = 45;
+int xLinks = 32;
+int xRechts = 47;
 int xBoven = 18;
 int xOnder = 21;
 
-int xMenu = 30 +2;
+int xMenu = 32 +2;
 int yMenu = 18 +1;
 
 short zwart = 0;
@@ -26,6 +29,7 @@ short geel = 0xffff00;
 short rood = 0xf800;
 
 int eenkeer = 1;
+int onePress = 1;
 int last;
 int changed;
 
@@ -33,14 +37,11 @@ void menu(void* pdata){
 	int ID = (int*)pdata;
 	INT8U err;
 
-	VGA_text (xMenu, yMenu, "Singleplayer");
-	VGA_text (xMenu, yMenu + 4, "Multiplayer");
-	VGA_text (xMenu, yMenu+8, "Highscores");
-	VGA_text (xMenu, yMenu+12, "Tutorial");
-
+	teken_menu();
 
 	while(1){
-		OSFlagPend(menuFlags, Menu_Flag, OS_FLAG_WAIT_CLR_ALL, 0, &err);
+		OSFlagPend(Flags, Menu_Flag, OS_FLAG_WAIT_CLR_ALL, 0, &err);
+
 		if (controller(ID) == 1){
 			if(changed != 0){
 				gameModeMenu++;
@@ -92,12 +93,15 @@ void selecteerMenu(void *pdata){
 				eenkeer = 0;
 				changed = 1;
 			}
-			if(controller(ID) == 2){
-				clearScreen();
-				clearText();
-				printf("start game\n");
-				OSSemPost(gameSem);
-				break;
+			if(onePress == 1){
+				if(controller(ID) == 2){
+					clearScreen();
+					clearText();
+					printf("start game\n");
+					OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_CLR, &err);
+					OSFlagPost(Flags, Menu_Flag, OS_FLAG_SET, &err);
+					onePress = 0;
+				}
 			}
 		} else if (gameModeMenu == 3){
 			if(eenkeer == 1){
@@ -145,4 +149,11 @@ void tekenBox2(int Links, int Boven, int Rechts, int Onder, short Kleur){
 	Onder = Onder -1;
 
 	VGA_box(Links, Boven, Rechts, Onder, Kleur);
+}
+
+void teken_menu(){
+	VGA_text (xMenu, yMenu, "Singleplayer");
+	VGA_text (xMenu, yMenu + 4, "Multiplayer");
+	VGA_text (xMenu, yMenu+8, "Highscores");
+	VGA_text (xMenu, yMenu+12, "Tutorial");
 }

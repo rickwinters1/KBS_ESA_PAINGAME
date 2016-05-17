@@ -4,7 +4,7 @@
 OS_EVENT* controllerSem;
 OS_EVENT* menuSem;
 OS_EVENT* gameSem;
-OS_FLAG_GRP *menuFlags;
+OS_FLAG_GRP *Flags;
 
 
 extern volatile int timeout = 0;							// used to synchronize with the timer
@@ -26,9 +26,15 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 #define Game_PRIORITY      			6
 #define menu_PRIORITY		  		9
 
+
+//Flags
 #define Menu_Flag 0x01
+#define Game_Flag 0x02
+#define C1_Flag 0x04
+#define C2_Flag 0x08
 
 short wit = 0xffff;
+short groen = 0x0697;
 
 void controllers(void* pdata);
 void menu(void* pdata);
@@ -46,15 +52,16 @@ int main(void)
 
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
-	menuFlags = OSFlagCreate(0x00, &err);
+	Flags = OSFlagCreate(Game_Flag + C1_Flag + C2_Flag, &err);
+
 	gameSem = OSSemCreate(0);
 	controllerSem = OSSemCreate(0);
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
 	VGA_box (15, 50, 20, 100, 0x0000ff);				// links
 	VGA_box (300, 50, 305, 100, 0x0000ff);				// rechts
 
-	VGA_box (0, 0, 319, 3, 0xFFFFFF);					// boven
-	VGA_box (0, 236, 319, 239, 0xFFFFFF);				// onder
+	VGA_box (0, 0, 319, 3, groen);					// boven
+	VGA_box (0, 236, 319, 239, groen);				// onder
 
 	draw_number(0, 1);
 	draw_number(8, 2);
@@ -106,7 +113,7 @@ void VGA_text(int x, int y, char * text_ptr)
 void draw_middenlijn(){
 	int i = 0;
 	while(i < 240){
-		VGA_box (159, i, 160, i+ 7, 0xffff);				// middenlijntje
+		VGA_box (159, i, 160, i+ 7, groen);				// middenlijntje
 		i = i + 11;
 	}
 

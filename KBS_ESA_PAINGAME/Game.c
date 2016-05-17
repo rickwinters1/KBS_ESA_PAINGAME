@@ -4,6 +4,12 @@
 OS_EVENT* gameSem;
 OS_EVENT* controllerSem;
 
+OS_FLAG_GRP *Flags;
+
+#define Menu_Flag 0x01
+#define Game_Flag 0x02
+#define C1_Flag 0x04
+#define C2_Flag 0x08
 
 int ALT_x1; int ALT_x2; int ALT_y;
 int ALT_inc_x; int ALT_inc_y;
@@ -28,15 +34,11 @@ void Game(void* pdata){
 
 	//blue_x1 = 28; blue_x2 = 52; blue_y1 = 26; blue_y2 = 34;
 
-	OSSemPend(gameSem, 0, &err);
-	OSSemPost(controllerSem);
-	OSSemPost(controllerSem);
-	draw_middenlijn();
+
 	draw_number(0, 1);
 	draw_number(8, 2);
 	while(1){
-		
-
+		OSFlagPend(Flags, Game_Flag, OS_FLAG_WAIT_CLR_ALL, 0, &err);
 
 		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
 		if(first == 1){
@@ -44,6 +46,7 @@ void Game(void* pdata){
 			ALT_x2 += ALT_inc_x;
 			ALT_y += ALT_inc_y;
 			first = 0;
+			draw_middenlijn();
 		}else{
 			ALT_x1 += ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
@@ -58,7 +61,16 @@ void Game(void* pdata){
 //		if ((ALT_y >= hoogte && ALT_y <= hoogte+50) && (ALT_x2 >= X && ALT_x2 <= X))
 //			ALT_inc_x = -(ALT_inc_x);
 		// if balkje links collision
+		if(ALT_y < 30){
+			printf("end game");
+			clearScreen();
+			OSFlagPost(Flags, Menu_Flag, OS_FLAG_CLR, &err);
+			OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_SET, &err);
+			teken_menu();
+			ALT_x1 = 0; ALT_x2 = 180; ALT_y = 100; ALT_inc_x = 1; ALT_inc_y = 1;
 
+
+		}
 
 	
 		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balWit); // ball
