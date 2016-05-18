@@ -22,9 +22,9 @@ int first = 1;
 
 void Game(void* pdata){
 	
-	ALT_x1 = 0; ALT_x2 = 180; ALT_y = 100; ALT_inc_x = 1; ALT_inc_y = 1;
+	ALT_x1 = 0; ALT_x2 = 165; ALT_y = 100; ALT_inc_x = 1; ALT_inc_y = 1;
 
-	pixel_buffer_x = 340; pixel_buffer_y = 230;
+	pixel_buffer_x = 319; pixel_buffer_y = 230;
 	
 	INT8U err;
 
@@ -35,42 +35,38 @@ void Game(void* pdata){
 	//blue_x1 = 28; blue_x2 = 52; blue_y1 = 26; blue_y2 = 34;
 
 
-	draw_number(0, 1);
-	draw_number(8, 2);
+
 	while(1){
-		OSFlagPend(Flags, Game_Flag, OS_FLAG_WAIT_CLR_ALL, 0, &err);
+		OSFlagPend(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
+
+		draw_number(0, 1);
+		draw_number(8, 2);
+		draw_middenlijn();
 
 		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
 		if(first == 1){
-			ALT_x1 = 159 + ALT_x1 + ALT_inc_x;
+			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
 			ALT_y += ALT_inc_y;
 			first = 0;
-			draw_middenlijn();
 		}else{
 			ALT_x1 += ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
 			ALT_y += ALT_inc_y;
 		}
 
-		if ( (ALT_y == pixel_buffer_y) || (ALT_y == 4) )
+		if ( (ALT_y == pixel_buffer_y) || (ALT_y == 4) ){
 			ALT_inc_y = -(ALT_inc_y);
-		if ( (ALT_x2 == pixel_buffer_x) || (ALT_x1 == 0) )
+		}
+		if ( (ALT_x2 == pixel_buffer_x) || (ALT_x1 == 0) ){
 			ALT_inc_x = -(ALT_inc_x);
+			endGame();
+		}
 		// if balkje rechts collision
 //		if ((ALT_y >= hoogte && ALT_y <= hoogte+50) && (ALT_x2 >= X && ALT_x2 <= X))
 //			ALT_inc_x = -(ALT_inc_x);
 		// if balkje links collision
-		if(ALT_y < 30){
-			printf("end game");
-			clearScreen();
-			OSFlagPost(Flags, Menu_Flag, OS_FLAG_CLR, &err);
-			OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_SET, &err);
-			teken_menu();
-			ALT_x1 = 0; ALT_x2 = 180; ALT_y = 100; ALT_inc_x = 1; ALT_inc_y = 1;
 
-
-		}
 
 	
 		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balWit); // ball
@@ -93,4 +89,14 @@ void Game(void* pdata){
 
 		OSTimeDly(1);
 	}
+}
+
+void endGame(){
+	INT8U err;
+
+	printf("end game\n");
+	clearScreen();
+	OSFlagPost(Flags, Menu_Flag, OS_FLAG_CLR, &err);
+	OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_SET, &err);
+	teken_menu();
 }

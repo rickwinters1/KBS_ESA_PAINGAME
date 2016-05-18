@@ -103,6 +103,7 @@ void selecteerMenu(void *pdata){
 					onePress = 0;
 				}
 			}
+			onePress = 1;
 		} else if (gameModeMenu == 3){
 			if(eenkeer == 1){
 				clearScreen();
@@ -128,7 +129,7 @@ void selecteerMenu(void *pdata){
 }
 
 void clearScreen(){
-	VGA_box(25,70, 200,200, 0);
+	VGA_box(25,70, 200,135, 0);
 }
 
 void clearText(){
@@ -156,4 +157,6 @@ void teken_menu(){
 	VGA_text (xMenu, yMenu + 4, "Multiplayer");
 	VGA_text (xMenu, yMenu+8, "Highscores");
 	VGA_text (xMenu, yMenu+12, "Tutorial");
+	VGA_box(xLinks*4, xBoven*4 + 16, xRechts*4, xOnder*4 + 16, rood);
+
 }
