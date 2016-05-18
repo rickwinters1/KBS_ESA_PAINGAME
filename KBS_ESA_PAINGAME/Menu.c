@@ -93,17 +93,14 @@ void selecteerMenu(void *pdata){
 				eenkeer = 0;
 				changed = 1;
 			}
-			if(onePress == 1){
-				if(controller(ID) == 2){
-					clearScreen();
-					clearText();
-					printf("start game\n");
-					OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_CLR, &err);
-					OSFlagPost(Flags, Menu_Flag, OS_FLAG_SET, &err);
-					onePress = 0;
-				}
+			if(controller(ID) == 2){
+				clearScreen();
+				clearText();
+				printf("start game\n");
+				OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags, Menu_Flag, OS_FLAG_SET, &err);
 			}
-			onePress = 1;
+
 		} else if (gameModeMenu == 3){
 			if(eenkeer == 1){
 				clearScreen();

@@ -65,6 +65,8 @@ int controller(int ID) {
 		if (SW_value != 0) {
 			if (SW_value == 1) {
 				return 0;
+			}else if(SW_value == 4){
+				return 4;
 			}
 		} else {
 			return 1;

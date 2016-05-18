@@ -19,6 +19,7 @@ short balZwart = 0x000000;
 short balWit = 0xffffff;
 
 int first = 1;
+int check = 1;
 
 void Game(void* pdata){
 	
@@ -42,52 +43,64 @@ void Game(void* pdata){
 		draw_number(0, 1);
 		draw_number(8, 2);
 		draw_middenlijn();
+		if( check == 1){
+			VGA_text(20,20, "Houdt de knop ingedrukt om te spelen");
+			OSTimeDlyHMSM(0,1,0,0);
+			VGA_text(20,20, "                                    ");
+			check = 0;
+		}
 
-		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
-		if(first == 1){
-			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
-			ALT_x2 += ALT_inc_x;
-			ALT_y += ALT_inc_y;
-			first = 0;
-		}else{
+		if(controller(1) == 4){
+
+			VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
+			if(first == 1){
+				ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
+				ALT_x2 += ALT_inc_x;
+				ALT_y += ALT_inc_y;
+				first = 0;
+			}else{
+				ALT_x1 += ALT_inc_x;
+				ALT_x2 += ALT_inc_x;
+				ALT_y += ALT_inc_y;
+			}
+			VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balWit); // ball
+			if ( (ALT_y == pixel_buffer_y) || (ALT_y == 4) ){
+				ALT_inc_y = -(ALT_inc_y);
+			}
+			if ( (ALT_x2 == pixel_buffer_x) || (ALT_x1 == 0) ){
+				ALT_inc_x = -(ALT_inc_x);
+				endGame();
+
+			}
+			// if balkje rechts collision
+			//		if ((ALT_y >= hoogte && ALT_y <= hoogte+50) && (ALT_x2 >= X && ALT_x2 <= X))
+			//			ALT_inc_x = -(ALT_inc_x);
+			// if balkje links collision
+
+
+
+
+
+			/*
+			VGA_text (ALT_x1, ALT_y, "          ");		// erase
 			ALT_x1 += ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
 			ALT_y += ALT_inc_y;
-		}
 
-		if ( (ALT_y == pixel_buffer_y) || (ALT_y == 4) ){
-			ALT_inc_y = -(ALT_inc_y);
-		}
-		if ( (ALT_x2 == pixel_buffer_x) || (ALT_x1 == 0) ){
-			ALT_inc_x = -(ALT_inc_x);
+			if ( (ALT_y == char_buffer_y) || (ALT_y == 0) )
+				ALT_inc_y = -(ALT_inc_y);
+			if ( (ALT_x2 == char_buffer_x) || (ALT_x1 == 0) )
+				ALT_inc_x = -(ALT_inc_x);
+
+
+
+			VGA_text (ALT_x1, ALT_y, "HALLOOO");
+			*/
+
+			OSTimeDly(1);
+		}else if(controller(1) != 4){
 			endGame();
 		}
-		// if balkje rechts collision
-//		if ((ALT_y >= hoogte && ALT_y <= hoogte+50) && (ALT_x2 >= X && ALT_x2 <= X))
-//			ALT_inc_x = -(ALT_inc_x);
-		// if balkje links collision
-
-
-	
-		VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balWit); // ball
-		
-		/*
-		VGA_text (ALT_x1, ALT_y, "          ");		// erase
-		ALT_x1 += ALT_inc_x;
-		ALT_x2 += ALT_inc_x;
-		ALT_y += ALT_inc_y;
-
-		if ( (ALT_y == char_buffer_y) || (ALT_y == 0) )
-			ALT_inc_y = -(ALT_inc_y);
-		if ( (ALT_x2 == char_buffer_x) || (ALT_x1 == 0) )
-			ALT_inc_x = -(ALT_inc_x);
-
-
-
-		VGA_text (ALT_x1, ALT_y, "HALLOOO");
-		*/
-
-		OSTimeDly(1);
 	}
 }
 
@@ -95,8 +108,15 @@ void endGame(){
 	INT8U err;
 
 	printf("end game\n");
+	OSTimeDlyHMSM(0,0,2,0);
 	clearScreen();
 	OSFlagPost(Flags, Menu_Flag, OS_FLAG_CLR, &err);
 	OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_SET, &err);
 	teken_menu();
+	VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
+
+	ALT_x1 = 0; ALT_x2 = 165; ALT_y = 100; ALT_inc_x = 1; ALT_inc_y = 1;
+
+	check = 1;
+	first = 1;
 }
