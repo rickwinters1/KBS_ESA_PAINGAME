@@ -3,8 +3,12 @@
 #include "altera_up_avalon_parallel_port.h"
 
 OS_EVENT* controllerSem;
+OS_EVENT* MailBox;
+
 
 OS_FLAG_GRP *Flags;
+
+
 
 #define Menu_Flag 0x01
 #define Game_Flag 0x02
@@ -15,6 +19,11 @@ OS_FLAG_GRP *Flags;
 short kleur = 0x0000ff;
 int counter1, counter2, counter3 = 0;
 
+typedef struct{
+	int ID;
+	int Hoogte;
+}Balk;
+
 alt_up_parallel_port_dev *gpio_dev; //	gpio device
 
 
@@ -24,14 +33,22 @@ void controllers(void* pdata) {
 	int ID = (int*) pdata;
 	int hoogte = 50;
 
+	Balk balkje;
+
 	while (1) {
 		OSFlagPend(Flags, C1_Flag + C2_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
+
 
 		if (controller(ID) == 1) {
 			hoogte = moveDown(ID, hoogte);
 		} else if (controller(ID) == 0) {
 			hoogte = moveUp(ID, hoogte);
 		}
+
+		balkje.ID = ID;
+		balkje.Hoogte = hoogte;
+
+		OSQPost(MailBox, (void*)&balkje);
 
 		OSTimeDly(1);
 	}

@@ -5,6 +5,8 @@ OS_EVENT* controllerSem;
 OS_EVENT* menuSem;
 OS_EVENT* gameSem;
 OS_FLAG_GRP *Flags;
+OS_EVENT* MailBox;
+
 
 
 extern volatile int timeout = 0;							// used to synchronize with the timer
@@ -21,8 +23,8 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 
 /* Definition of Task Priorities */
 
-#define controller1_PRIORITY      	7
-#define controller2_PRIORITY      	8
+#define controller1_PRIORITY      	8
+#define controller2_PRIORITY      	7
 #define Game_PRIORITY      			6
 #define menu_PRIORITY		  		9
 
@@ -42,6 +44,9 @@ void menu(void* pdata);
 void selecteerMenu(void *pdata);
 void Game(void* pdata);
 
+void * Messages[200];
+
+
 /* The main function creates two task and starts multi-tasking */
 int main(void)
 {
@@ -57,6 +62,9 @@ int main(void)
 
 	gameSem = OSSemCreate(0);
 	controllerSem = OSSemCreate(0);
+
+	MailBox = OSQCreate(&Messages[0], 200);
+
 	VGA_box (0, 0, 319, 239, 0);						//clear screen
 	VGA_box (15, 50, 20, 100, 0x0000ff);				// links
 	VGA_box (300, 50, 305, 100, 0x0000ff);				// rechts
