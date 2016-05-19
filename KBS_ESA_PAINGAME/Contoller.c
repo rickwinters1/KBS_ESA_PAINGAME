@@ -10,9 +10,13 @@ OS_FLAG_GRP *Flags;
 #define Game_Flag 0x02
 #define C1_Flag 0x04
 #define C2_Flag 0x08
+#define Menu2_Flag 0x10
 
 short kleur = 0x0000ff;
 int counter1, counter2, counter3 = 0;
+
+alt_up_parallel_port_dev *gpio_dev; //	gpio device
+
 
 void controllers(void* pdata) {
 	INT8U err;
@@ -39,12 +43,17 @@ int controller(int ID) {
 			"/dev/Pushbuttons");
 	alt_up_parallel_port_dev * SW_switch_ptr = alt_up_parallel_port_open_dev(
 			"/dev/Slider_Switches");
+	gpio_dev = alt_up_parallel_port_open_dev("/dev/Expansion_JP5");		//	DE2-115 gpio
+	alt_up_parallel_port_set_port_direction(gpio_dev, 0x00000001);		// 1-0-1-1	(1 = output; 0 = input)
 
-	int KEY_value, SW_value;
+	int KEY_value, SW_value, gpio_values;
 	INT8U err;
+
+
 
 	SW_value = alt_up_parallel_port_read_data(SW_switch_ptr);
 	KEY_value = alt_up_parallel_port_read_data(KEY_ptr); // read the pushbutton KEY values
+	gpio_values = alt_up_parallel_port_read_data(gpio_dev);
 
 	if (ID == 2) {
 		if (KEY_value != 0) {
@@ -71,7 +80,16 @@ int controller(int ID) {
 		} else {
 			return 1;
 		}
+	} else if(ID == 3){
+		if(gpio_values != 0){
+			if(gpio_values == 0xffffffff){
+				return 1;
+			}
+		}else{
+			return 0;
+		}
 	}
+	gpio_values &= 0x80000000;		//	negeer alle andere bits, die zijn waarschijnlijk HOOG !
 
 }
 

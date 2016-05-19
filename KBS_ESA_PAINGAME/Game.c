@@ -10,6 +10,7 @@ OS_FLAG_GRP *Flags;
 #define Game_Flag 0x02
 #define C1_Flag 0x04
 #define C2_Flag 0x08
+#define Menu2_Flag 0x10
 
 int ALT_x1; int ALT_x2; int ALT_y;
 int ALT_inc_x; int ALT_inc_y;
@@ -18,6 +19,7 @@ int blue_x1; int blue_y1; int blue_x2; int blue_y2;
 short balZwart = 0x000000;
 short balWit = 0xffffff;
 
+int score1, score2 = 0;
 int first = 1;
 int check = 1;
 
@@ -28,7 +30,7 @@ void Game(void* pdata){
 	pixel_buffer_x = 319; pixel_buffer_y = 230;
 	
 	INT8U err;
-
+	int i;
 	//ALT_x1 = 0; ALT_x2 = 5/* ALTERA = 6 chars */; ALT_y = 0; ALT_inc_x = 1; ALT_inc_y = 1;
 
 	//char_buffer_x = 79; char_buffer_y = 59;
@@ -40,17 +42,34 @@ void Game(void* pdata){
 	while(1){
 		OSFlagPend(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 
-		draw_number(0, 1);
-		draw_number(8, 2);
+
+		for(i = 0; i <= 9; i++){
+			if(score1 == i){
+				draw_number(i, 1);
+			}
+			if(score2 == i){
+				draw_number(i, 2);
+			}
+		}
 		draw_middenlijn();
 		if( check == 1){
+			del_middenlijn();
 			VGA_text(20,20, "Houdt de knop ingedrukt om te spelen");
 			OSTimeDlyHMSM(0,1,0,0);
 			VGA_text(20,20, "                                    ");
+
+			del_number(1);
+			del_number(2);
+
+			score1= 0;
+			score2= 0;
+
+			i=0;
+
 			check = 0;
 		}
 
-		if(controller(1) == 4){
+		if(controller(3) == 1){
 
 			VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
 			if(first == 1){
@@ -69,9 +88,21 @@ void Game(void* pdata){
 			}
 			if ( (ALT_x2 == pixel_buffer_x) || (ALT_x1 == 0) ){
 				ALT_inc_x = -(ALT_inc_x);
-				endGame();
+			}
+
+			//links dood
+			if(ALT_x1 == 0){
+				score1++;
+				del_number(1);
+			}
+
+			//rechts dood
+			if(ALT_x2 == pixel_buffer_x){
+				score2++;
+				del_number(2);
 
 			}
+
 			// if balkje rechts collision
 			//		if ((ALT_y >= hoogte && ALT_y <= hoogte+50) && (ALT_x2 >= X && ALT_x2 <= X))
 			//			ALT_inc_x = -(ALT_inc_x);
@@ -98,7 +129,7 @@ void Game(void* pdata){
 			*/
 
 			OSTimeDly(1);
-		}else if(controller(1) != 4){
+		}else if(controller(2) != 2){
 			endGame();
 		}
 	}
@@ -108,15 +139,26 @@ void endGame(){
 	INT8U err;
 
 	printf("end game\n");
-	OSTimeDlyHMSM(0,0,2,0);
+
 	clearScreen();
-	OSFlagPost(Flags, Menu_Flag, OS_FLAG_CLR, &err);
+
 	OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_SET, &err);
+
+	VGA_text(35,25, "GAME OVER");
+	OSTimeDlyHMSM(0,0,40,0);
+	VGA_text(35,25, "         ");
+
+	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
+
 	teken_menu();
 	VGA_box(ALT_x1, ALT_y, ALT_x1+5, ALT_y+5, balZwart); // erase
 
 	ALT_x1 = 0; ALT_x2 = 165; ALT_y = 100; ALT_inc_x = 1; ALT_inc_y = 1;
 
+
+
 	check = 1;
 	first = 1;
+
+
 }

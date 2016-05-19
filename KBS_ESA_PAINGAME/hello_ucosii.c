@@ -32,6 +32,7 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 #define Game_Flag 0x02
 #define C1_Flag 0x04
 #define C2_Flag 0x08
+#define Menu2_Flag 0x10
 
 short wit = 0xffff;
 short groen = 0x0697;
@@ -63,16 +64,13 @@ int main(void)
 	VGA_box (0, 0, 319, 3, groen);					// boven
 	VGA_box (0, 236, 319, 239, groen);				// onder
 
-	draw_number(0, 1);
-	draw_number(8, 2);
-
 
 	OSTaskCreate(controllers,(void*) 1,&controller1_stk[TASK_STACKSIZE-1],controller1_PRIORITY);
 	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
 	OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
 
 	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
-	OSTaskCreate(selecteerMenu, (void*) 2, &menu_stk2[TASK_STACKSIZE-1], menu_PRIORITY +1);
+	OSTaskCreate(selecteerMenu, (void*) 3, &menu_stk2[TASK_STACKSIZE-1], menu_PRIORITY +1);
 	OSStart();
 	return 0;
 }
@@ -116,7 +114,19 @@ void draw_middenlijn(){
 		VGA_box (159, i, 160, i+ 7, groen);				// middenlijntje
 		i = i + 11;
 	}
+}
 
+void del_middenlijn(){
+	VGA_box(159, 4, 160, 235, 0);
+}
+
+void del_number(int side){
+	if(side == 1){
+		VGA_box(120, 20, 140, 60, 0);
+	}
+	if(side == 2){
+		VGA_box(180, 20, 200, 60, 0);
+	}
 }
 
 void draw_number(int nummer, int ID){

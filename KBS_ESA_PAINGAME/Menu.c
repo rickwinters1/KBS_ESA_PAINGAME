@@ -11,6 +11,7 @@ OS_FLAG_GRP *Flags;
 #define Game_Flag 0x02
 #define C1_Flag 0x04
 #define C2_Flag 0x08
+#define Menu2_Flag 0x10
 
 int gameModeMenu = 1;
 int vorige = 0;
@@ -76,6 +77,7 @@ void selecteerMenu(void *pdata){
 
 
 	while(1){
+	OSFlagPend(Flags, Menu2_Flag, OS_FLAG_WAIT_CLR_ALL, 0, &err);
 
 		if (gameModeMenu == 1){
 			if(eenkeer == 1){
@@ -93,12 +95,12 @@ void selecteerMenu(void *pdata){
 				eenkeer = 0;
 				changed = 1;
 			}
-			if(controller(ID) == 2){
+			if(controller(ID) == 1){
 				clearScreen();
 				clearText();
 				printf("start game\n");
 				OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_CLR, &err);
-				OSFlagPost(Flags, Menu_Flag, OS_FLAG_SET, &err);
+				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 
 		} else if (gameModeMenu == 3){
@@ -127,6 +129,7 @@ void selecteerMenu(void *pdata){
 
 void clearScreen(){
 	VGA_box(25,70, 200,135, 0);
+	del_middenlijn();
 }
 
 void clearText(){
