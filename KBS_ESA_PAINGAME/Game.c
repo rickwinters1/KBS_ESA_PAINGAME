@@ -15,6 +15,13 @@ OS_FLAG_GRP *Flags;
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
 
+#define zwart  0x000000
+#define wit  0xffffff
+#define geel 0xffff00
+#define rood 0xf800
+#define blauw 0x0000ff
+#define groen 0x0697
+
 int ALT_x1;
 int ALT_x2;
 int ALT_y;
@@ -22,12 +29,6 @@ int ALT_inc_x;
 int ALT_inc_y;
 int pixel_buffer_x;
 int pixel_buffer_y;
-int blue_x1;
-int blue_y1;
-int blue_x2;
-int blue_y2;
-short balZwart = 0x000000;
-short balWit = 0xffffff;
 
 int score1, score2 = 0;
 int first = 1;
@@ -38,6 +39,7 @@ typedef struct balk {
 } Balk;
 
 void Game(void* pdata) {
+
 
 	ALT_x1 = 0;
 	ALT_x2 = 165;
@@ -103,7 +105,7 @@ void Game(void* pdata) {
 
 		if (controller(3) == 1) {
 
-			VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, balZwart); // erase
+			VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
 			if (first == 1) {
 				ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
 				ALT_x2 += ALT_inc_x;
@@ -114,7 +116,7 @@ void Game(void* pdata) {
 				ALT_x2 += ALT_inc_x;
 				ALT_y += ALT_inc_y;
 			}
-			VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, balWit); // ball
+			VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, wit); // ball
 
 			//collision rand boven en onder
 			if ((ALT_y == pixel_buffer_y) || (ALT_y == 4)) {
@@ -128,15 +130,15 @@ void Game(void* pdata) {
 			//links dood
 			if (ALT_x1 == 0) {
 				score2++;
-				del_number(2);
 				gescoord(2);
+				del_number(2);
 			}
 
 			//rechts dood
 			if (ALT_x2 == pixel_buffer_x) {
 				score1++;
-				del_number(1);
 				gescoord(1);
+				del_number(1);
 			}
 
 			//collision linker balkje
@@ -179,27 +181,24 @@ void Game(void* pdata) {
 }
 
 void gescoord(int ID){
-	clearScreen();
 
-	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, balZwart); // erase
-
-
+	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
 
 	first = 1;
 
 	if(ID == 1){
-		VGA_text(35, 25, "Speler 1 heeft gescoord!");
+		VGA_text(30, 25, "Speler 1 heeft gescoord!");
 		OSTimeDlyHMSM(0, 0, 30, 0);
-		VGA_text(35, 25, "                        ");
+		VGA_text(30, 25, "                        ");
 		ALT_x1 = 0;
 		ALT_x2 = 165;
 		ALT_y = 100;
 		ALT_inc_x = -1;
 		ALT_inc_y = 1;
 	}else if(ID == 2){
-		VGA_text(35, 25, "Speler 2 heeft gescoord!");
+		VGA_text(30, 25, "Speler 2 heeft gescoord!");
 		OSTimeDlyHMSM(0, 0, 30, 0);
-		VGA_text(35, 25, "                        ");
+		VGA_text(30, 25, "                        ");
 		ALT_x1 = 0;
 		ALT_x2 = 165;
 		ALT_y = 100;
@@ -225,7 +224,7 @@ void endGame() {
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
 	teken_menu();
-	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, balZwart); // erase
+	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
 
 	ALT_x1 = 0;
 	ALT_x2 = 165;

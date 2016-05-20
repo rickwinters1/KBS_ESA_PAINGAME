@@ -13,6 +13,11 @@ OS_FLAG_GRP *Flags;
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
 
+#define Zwart  0x000000
+#define Wit  0xffffff
+#define geel 0xffff00
+#define rood 0xf800
+
 int gameModeMenu = 1;
 int vorige = 0;
 int controller(int ID);
@@ -24,10 +29,6 @@ int xOnder = 21;
 
 int xMenu = 32 +2;
 int yMenu = 18 +1;
-
-short zwart = 0;
-short geel = 0xffff00;
-short rood = 0xf800;
 
 int eenkeer = 1;
 int onePress = 1;

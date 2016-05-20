@@ -40,8 +40,13 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
 
-short wit = 0xffff;
-short groen = 0x0697;
+#define zwart  0x000000
+#define wit  0xffffff
+#define geel 0xffff00
+#define rood 0xf800
+#define blauw 0x0000ff
+#define groen 0x0697
+
 
 void controllers(void* pdata);
 void menu(void* pdata);

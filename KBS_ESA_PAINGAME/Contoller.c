@@ -18,7 +18,12 @@ OS_FLAG_GRP *Flags;
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
 
-short kleur = 0x0000ff;
+#define Zwart  0x000000
+#define Wit  0xffffff
+#define geel 0xffff00
+#define rood 0xf800
+#define blauw 0x0000ff
+
 int counter1, counter2, counter3 = 0;
 
 typedef struct{
@@ -126,11 +131,11 @@ int moveUp(int ID, int current) {
 	int X = checkID(ID);
 
 	if (boven >= 4 && boven <= 184) {
-		VGA_box(X, boven, X + 5, boven + 1, kleur);
+		VGA_box(X, boven, X + 5, boven + 1, blauw);
 		VGA_box(X, boven + 50, X + 5, boven + 51, 0);
 		boven--;
 	} else if (boven > 184) {
-		VGA_box(X, boven, X + 5, boven + 1, kleur);
+		VGA_box(X, boven, X + 5, boven + 1, blauw);
 		boven--;
 	}
 	return boven;
@@ -142,11 +147,11 @@ int moveDown(int ID, int current) {
 	int X = checkID(ID);
 
 	if (boven <= 184 && boven >= 4) {
-		VGA_box(X, boven + 50, X + 5, boven + 51, kleur);
+		VGA_box(X, boven + 50, X + 5, boven + 51, blauw);
 		VGA_box(X, boven, X + 5, boven + 1, 0);
 		boven++;
 	} else if (boven < 4) {
-		VGA_box(X, boven + 50, X + 5, boven + 51, kleur);
+		VGA_box(X, boven + 50, X + 5, boven + 51, blauw);
 		boven++;
 	}
 	return boven;
