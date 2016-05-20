@@ -33,6 +33,7 @@ int pixel_buffer_y;
 int score1, score2 = 0;
 int first = 1;
 int check = 1;
+int random;
 
 typedef struct balk {
 	int Hoogte;
@@ -82,7 +83,7 @@ void Game(void* pdata) {
 			if(score1 == 9 || score2 == 9){
 				score1 =0;
 				score2 =0;
-				endGame();
+
 			}
 		}
 		draw_middenlijn();
@@ -143,29 +144,21 @@ void Game(void* pdata) {
 
 			//collision linker balkje
 			//lange zijde
-			if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
+			if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte - 6 && ALT_y < balkje->Hoogte + 50)){
 				ALT_inc_x = -(ALT_inc_x);
 			}
 			//boven
-			if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte){
-				ALT_inc_y = -(ALT_inc_y);
-			}
-			//onder
-			if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte + 50){
+			if(((ALT_x1 <= 20 && ALT_x1 >= 15) && ALT_y == balkje->Hoogte - 6) || ((ALT_x1 <= 20 && ALT_x1 >= 15) && ALT_y == balkje->Hoogte + 50)){
 				ALT_inc_y = -(ALT_inc_y);
 			}
 
 			//collision rechter balkje
 			//lange zijde
-			if(ALT_x2 == 299 && (ALT_y > balkje2->Hoogte && ALT_y < balkje2->Hoogte + 50)){
+			if(ALT_x2 == 299 && (ALT_y > balkje2->Hoogte - 6 && ALT_y < balkje2->Hoogte + 50)){
 				ALT_inc_x = -(ALT_inc_x);
 			}
 			//boven
-			if((ALT_x2 < 304 && ALT_x2 > 301) && ALT_y == balkje2->Hoogte){
-				ALT_inc_y = -(ALT_inc_y);
-			}
-			//onder
-			if((ALT_x2 < 304 && ALT_x2 > 301) && ALT_y == balkje2->Hoogte + 50){
+			if(((ALT_x2 <= 305 && ALT_x2 >= 300) && ALT_y == balkje2->Hoogte - 6) || ((ALT_x2 <= 305 && ALT_x2 >= 300) && ALT_y == balkje2->Hoogte + 50)){
 				ALT_inc_y = -(ALT_inc_y);
 			}
 
@@ -188,22 +181,49 @@ void gescoord(int ID){
 
 	if(ID == 1){
 		VGA_text(30, 25, "Speler 1 heeft gescoord!");
-		OSTimeDlyHMSM(0, 0, 30, 0);
+		OSTimeDlyHMSM(0, 0, 35, 0);
 		VGA_text(30, 25, "                        ");
 		ALT_x1 = 0;
 		ALT_x2 = 165;
 		ALT_y = 100;
 		ALT_inc_x = -1;
-		ALT_inc_y = 1;
+		if(random == 1){
+			ALT_inc_y = -1;
+			random == 0;
+		}else if(random == 0){
+			ALT_inc_y = 1;
+			random == 1;
+		}
 	}else if(ID == 2){
 		VGA_text(30, 25, "Speler 2 heeft gescoord!");
-		OSTimeDlyHMSM(0, 0, 30, 0);
+		OSTimeDlyHMSM(0, 0, 35, 0);
 		VGA_text(30, 25, "                        ");
 		ALT_x1 = 0;
 		ALT_x2 = 165;
 		ALT_y = 100;
 		ALT_inc_x = 1;
-		ALT_inc_y = 1;
+		if(random == 1){
+			ALT_inc_y = 1;
+			random = 0;
+		}else if(random == 0){
+			ALT_inc_y = -1;
+			random = 1;
+		}
+	}else if(ID == 3){
+		VGA_text(30, 25, "De computer heeft gescoord!");
+		OSTimeDlyHMSM(0, 0, 35, 0);
+		VGA_text(30, 25, "                           ");
+		ALT_x1 = 0;
+		ALT_x2 = 165;
+		ALT_y = 100;
+		ALT_inc_x = -1;
+		if(random == 1){
+			ALT_inc_y = 1;
+			random = 0;
+		}else if(random == 0){
+			ALT_inc_y = -1;
+			random = 1;
+		}
 	}
 
 }

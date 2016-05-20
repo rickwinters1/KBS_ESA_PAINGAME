@@ -146,6 +146,8 @@ C_SRCS += hello_ucosii.c
 C_SRCS += Contoller.c
 C_SRCS += Game.c
 C_SRCS += Menu.c
+C_SRCS += Singleplayer.c
+C_SRCS += Tutorial.c
 CXX_SRCS :=
 ASM_SRCS :=
 
