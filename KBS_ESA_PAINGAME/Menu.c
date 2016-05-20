@@ -66,7 +66,7 @@ void menu(void* pdata){
 				gameModeMenu = 4;
 			}
 		}
-		OSTimeDly(10);
+		OSTimeDly(20);
 	}
 
 }
