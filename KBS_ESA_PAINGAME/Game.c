@@ -4,6 +4,8 @@
 OS_EVENT* gameSem;
 OS_EVENT* controllerSem;
 OS_EVENT* MailBox;
+OS_EVENT* MailBox2;
+
 
 OS_FLAG_GRP *Flags;
 
@@ -32,7 +34,6 @@ int first = 1;
 int check = 1;
 
 typedef struct balk {
-	int ID;
 	int Hoogte;
 } Balk;
 
@@ -51,7 +52,9 @@ void Game(void* pdata) {
 	int i;
 	int hoogte;
 	int ID;
+	int count;
 	Balk * balkje;
+	Balk * balkje2;
 
 	//ALT_x1 = 0; ALT_x2 = 5/* ALTERA = 6 chars */; ALT_y = 0; ALT_inc_x = 1; ALT_inc_y = 1;
 
@@ -62,7 +65,8 @@ void Game(void* pdata) {
 	while (1) {
 		OSFlagPend(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 
-		balkje = (Balk*) OSQPend(MailBox, 0, &err);
+		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
+		balkje2 = (Balk*) OSMboxPend(MailBox2, 0, &err);
 
 		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
 
@@ -111,47 +115,98 @@ void Game(void* pdata) {
 				ALT_y += ALT_inc_y;
 			}
 			VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, balWit); // ball
+
+			//collision rand boven en onder
 			if ((ALT_y == pixel_buffer_y) || (ALT_y == 4)) {
 				ALT_inc_y = -(ALT_inc_y);
 			}
+			//collision rand rechts en links
 			if ((ALT_x2 == pixel_buffer_x) || (ALT_x1 == 0)) {
-				ALT_inc_x = -(ALT_inc_x);
+				//ALT_inc_x = -(ALT_inc_x);
 			}
 
 			//links dood
 			if (ALT_x1 == 0) {
 				score2++;
 				del_number(2);
+				gescoord(2);
 			}
 
 			//rechts dood
 			if (ALT_x2 == pixel_buffer_x) {
 				score1++;
 				del_number(1);
-
+				gescoord(1);
 			}
 
 			//collision linker balkje
-			if(balkje->ID == 1){
-				if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
-					ALT_inc_x = -(ALT_inc_x);
-				}
+			//lange zijde
+			if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
+				ALT_inc_x = -(ALT_inc_x);
+			}
+			//boven
+			if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte){
+				ALT_inc_y = -(ALT_inc_y);
+			}
+			//onder
+			if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte + 50){
+				ALT_inc_y = -(ALT_inc_y);
 			}
 
 			//collision rechter balkje
-			if(balkje->ID == 2){
-				if(ALT_x2 == 299 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
-					ALT_inc_x = -(ALT_inc_x);
-				}
+			//lange zijde
+			if(ALT_x2 == 299 && (ALT_y > balkje2->Hoogte && ALT_y < balkje2->Hoogte + 50)){
+				ALT_inc_x = -(ALT_inc_x);
+			}
+			//boven
+			if((ALT_x2 < 304 && ALT_x2 > 301) && ALT_y == balkje2->Hoogte){
+				ALT_inc_y = -(ALT_inc_y);
+			}
+			//onder
+			if((ALT_x2 < 304 && ALT_x2 > 301) && ALT_y == balkje2->Hoogte + 50){
+				ALT_inc_y = -(ALT_inc_y);
 			}
 
 
 
 			OSTimeDly(1);
+
 		} else if (controller(2) != 2) {
 			endGame();
 		}
+
 	}
+}
+
+void gescoord(int ID){
+	clearScreen();
+
+	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, balZwart); // erase
+
+
+
+	first = 1;
+
+	if(ID == 1){
+		VGA_text(35, 25, "Speler 1 heeft gescoord!");
+		OSTimeDlyHMSM(0, 0, 30, 0);
+		VGA_text(35, 25, "                        ");
+		ALT_x1 = 0;
+		ALT_x2 = 165;
+		ALT_y = 100;
+		ALT_inc_x = -1;
+		ALT_inc_y = 1;
+	}else if(ID == 2){
+		VGA_text(35, 25, "Speler 2 heeft gescoord!");
+		OSTimeDlyHMSM(0, 0, 30, 0);
+		VGA_text(35, 25, "                        ");
+		ALT_x1 = 0;
+		ALT_x2 = 165;
+		ALT_y = 100;
+		ALT_inc_x = 1;
+		ALT_inc_y = 1;
+	}
+
 }
 
 void endGame() {

@@ -4,6 +4,8 @@
 
 OS_EVENT* controllerSem;
 OS_EVENT* MailBox;
+OS_EVENT* MailBox2;
+
 
 
 OS_FLAG_GRP *Flags;
@@ -20,7 +22,6 @@ short kleur = 0x0000ff;
 int counter1, counter2, counter3 = 0;
 
 typedef struct{
-	int ID;
 	int Hoogte;
 }Balk;
 
@@ -37,7 +38,7 @@ void controllers(void* pdata) {
 
 	while (1) {
 		OSFlagPend(Flags, C1_Flag + C2_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
-
+		balkje.Hoogte = hoogte;
 
 		if (controller(ID) == 1) {
 			hoogte = moveDown(ID, hoogte);
@@ -45,10 +46,11 @@ void controllers(void* pdata) {
 			hoogte = moveUp(ID, hoogte);
 		}
 
-		balkje.ID = ID;
-		balkje.Hoogte = hoogte;
-
-		OSQPost(MailBox, (void*)&balkje);
+		if(ID == 1){
+			OSMboxPost(MailBox, (void*)&balkje);
+		}else if(ID == 2){
+			OSMboxPost(MailBox2, (void*)&balkje);
+		}
 
 		OSTimeDly(1);
 	}
@@ -65,8 +67,6 @@ int controller(int ID) {
 
 	int KEY_value, SW_value, gpio_values;
 	INT8U err;
-
-
 
 	SW_value = alt_up_parallel_port_read_data(SW_switch_ptr);
 	KEY_value = alt_up_parallel_port_read_data(KEY_ptr); // read the pushbutton KEY values
