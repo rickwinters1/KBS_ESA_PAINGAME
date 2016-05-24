@@ -124,7 +124,7 @@ void selecteerMenu(void *pdata){
 			}
 		}
 
-		OSTimeDly(10);
+		OSTimeDly(20);
 	}
 }
 

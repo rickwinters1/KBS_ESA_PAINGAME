@@ -2719,8 +2719,8 @@ void selecteerMenu(void *pdata){
 			}
 		}
 
-		OSTimeDly(10);
-    1284:	01000284 	movi	r4,10
+		OSTimeDly(20);
+    1284:	01000504 	movi	r4,20
     1288:	000dc180 	call	dc18 <OSTimeDly>
 	}
     128c:	003f3e06 	br	f88 <__alt_mem_Flash_flash_data+0xf4000f88>
@@ -2958,8 +2958,8 @@ int main(void)
 	INT8U err;
 	OSInit();
     1558:	00061d40 	call	61d4 <OSInit>
-	int counter = 0x50000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
-    155c:	00800174 	movhi	r2,5
+	int counter = 0x40000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
+    155c:	00800134 	movhi	r2,4
     1560:	e0bffe15 	stw	r2,-8(fp)
 	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
     1564:	d0a00b17 	ldw	r2,-32724(gp)
@@ -29891,7 +29891,7 @@ alt_exception_cause_generated_bad_addr(alt_exception_cause cause)
    11cdc:	d9400015 	stw	r5,0(sp)
    11ce0:	d9800115 	stw	r6,4(sp)
    11ce4:	d9c00215 	stw	r7,8(sp)
-   11ce8:	00000000 	call	0 <__reset>
+   11ce8:	00000000 	call	0 <__alt_mem_SDRAM>
    11cec:	d9400017 	ldw	r5,0(sp)
    11cf0:	d9800117 	ldw	r6,4(sp)
    11cf4:	d9c00217 	ldw	r7,8(sp)
@@ -29977,7 +29977,7 @@ alt_exception_cause_generated_bad_addr(alt_exception_cause cause)
    11e2c:	10003426 	beq	r2,zero,11f00 <__call_exitprocs+0x18c>
    11e30:	9809883a 	mov	r4,r19
    11e34:	a8800015 	stw	r2,0(r21)
-   11e38:	00000000 	call	0 <__reset>
+   11e38:	00000000 	call	0 <__alt_mem_SDRAM>
    11e3c:	acc00017 	ldw	r19,0(r21)
    11e40:	983fe41e 	bne	r19,zero,11dd4 <__alt_mem_Flash_flash_data+0xf4011dd4>
    11e44:	dfc00b17 	ldw	ra,44(sp)
