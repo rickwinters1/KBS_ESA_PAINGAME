@@ -148,6 +148,10 @@ void del_number(int side){
 	}
 }
 
+void deleteNummer(){
+	VGA_box(120, 20, 180, 60, 0);
+}
+
 void draw_number(int nummer, int ID){
 
 	int X = checkIDScore(ID);
@@ -208,9 +212,11 @@ int checkIDScore(int ID){
 	if(ID == 1){
 		return 120;
 	}else if(ID == 2){
+		return 150;
+	}else if(ID == 3){
 		return 180;
-
 	}
+	
 	return 0;
 }
 
