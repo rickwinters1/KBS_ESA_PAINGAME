@@ -61,7 +61,8 @@ void Game(void* pdata) {
 	int count;
 	Balk * balkje;
 	Balk * balkje2;
-
+	
+	VGA_box (316, 0, 319, 239, zwart); 					// singleplayer balk weghalen voor de zekerheid
 	//ALT_x1 = 0; ALT_x2 = 5/* ALTERA = 6 chars */; ALT_y = 0; ALT_inc_x = 1; ALT_inc_y = 1;
 
 	//char_buffer_x = 79; char_buffer_y = 59;
@@ -288,6 +289,7 @@ void Singleplayer(void* pdata){
 	int hoogte;
 	int ID;
 	int count;
+	int q;
 	Balk * balkje;
 	Balk * balkje2;
 	
@@ -308,6 +310,13 @@ void Singleplayer(void* pdata){
 			if (score3 == i) {
 				deleteNummer();
 				exec(i);
+			}
+			if (i >= 0 && i <= 9){
+				q = 1;
+			} else if (i >= 10 && i <= 99){
+				q = 2;
+			} else if (i >= 100 && i <= 999){
+				q = 3;
 			}
 			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
 				score3 =0;

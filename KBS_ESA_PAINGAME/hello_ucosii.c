@@ -157,7 +157,7 @@ void del_number(int side){
 }
 
 void deleteNummer(){
-	VGA_box(120, 20, 180, 60, 0);
+	VGA_box(120, 20, 200, 60, 0);
 }
 
 void draw_number(int nummer, int ID){
