@@ -17,6 +17,8 @@ OS_FLAG_GRP *Flags;
 #define C1_Flag 0x04
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
+#define Singleplayer_Flag 0x20
+
 
 #define Zwart  0x000000
 #define Wit  0xffffff

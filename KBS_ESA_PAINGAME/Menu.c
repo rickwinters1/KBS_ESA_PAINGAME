@@ -12,6 +12,7 @@ OS_FLAG_GRP *Flags;
 #define C1_Flag 0x04
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
+#define Singleplayer_Flag 0x20
 
 #define Zwart  0x000000
 #define Wit  0xffffff
@@ -88,6 +89,13 @@ void selecteerMenu(void *pdata){
 				eenkeer = 0;
 				changed = 1;
 			}
+			if(controller(ID) == 2){
+				clearScreen();
+				clearText();
+				printf("start Singleplayer\n");
+				OSFlagPost(Flags, Singleplayer_Flag + C1_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags, Menu_Flag + Menu2_Flag + C2_Flag, OS_FLAG_SET, &err);
+			}
 		} else if (gameModeMenu == 2){
 			if(eenkeer == 1){
 				clearScreen();
@@ -96,7 +104,7 @@ void selecteerMenu(void *pdata){
 				eenkeer = 0;
 				changed = 1;
 			}
-			if(controller(ID) == 1){
+			if(controller(ID) == 2){
 				clearScreen();
 				clearText();
 				printf("start game\n");
