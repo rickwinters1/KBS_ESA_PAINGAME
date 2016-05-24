@@ -61,7 +61,7 @@ int main(void)
 {
 	INT8U err;
 	OSInit();
-	int counter = 0x40000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
+	int counter = 0x50000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
 	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
 	*(interval_timer_ptr + 0x3) = (counter >> 16) & 0xFFFF;
 
