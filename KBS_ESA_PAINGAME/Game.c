@@ -170,8 +170,12 @@ void Game(void* pdata) {
 
 			OSTimeDly(1);
 
-		} else if (controller(2) != 2) {
-			endGame();
+		} else if (controller(2) == 2) {
+			//links
+			endGame(1);
+		}else if(controller(2) == 3){
+			//rechts
+			endGame(2);
 		}
 
 	}
@@ -232,7 +236,7 @@ void gescoord(int ID){
 
 }
 
-void endGame() {
+void endGame(int ID) {
 	INT8U err;
 
 	printf("end game\n");
@@ -241,9 +245,16 @@ void endGame() {
 
 	OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_SET, &err);
 
-	VGA_text(35, 25, "GAME OVER");
-	OSTimeDlyHMSM(0, 0, 40, 0);
-	VGA_text(35, 25, "         ");
+	if(ID == 1){
+		VGA_text(35, 25, "Player 1 lost");
+		OSTimeDlyHMSM(0, 0, 40, 0);
+		VGA_text(35, 25, "             ");
+	} else if(ID == 2){
+		VGA_text(35, 25, "Player 2 lost");
+		OSTimeDlyHMSM(0, 0, 40, 0);
+		VGA_text(35, 25, "             ");
+	}
+
 
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
@@ -283,7 +294,6 @@ void Singleplayer(void* pdata){
 	int score3 = 0;
 	int leven = 3;
 	
-	X = checkIDScore(ID);
 	
 	VGA_box (316, 0, 319, 239, groen); 					// rechts
 	
@@ -301,7 +311,7 @@ void Singleplayer(void* pdata){
 			}
 			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
 				score3 =0;
-				endGame();
+				endGame(1);
 			}
 		}
 		
@@ -323,6 +333,7 @@ void Singleplayer(void* pdata){
 
 
 		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
 		if (first == 1) {
 			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
@@ -380,6 +391,8 @@ void Singleplayer(void* pdata){
 }
 
 static void nummer1(int q){
+	X = checkIDScore(q);
+
 	VGA_box(X + 5, 20, X+7, 60, wit);
 }
 
