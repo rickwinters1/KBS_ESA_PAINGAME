@@ -1359,6 +1359,8 @@ int controller(int ID) {
      3e0:	10800037 	ldwio	r2,0(r2)
      3e4:	e0bffe15 	stw	r2,-8(fp)
 
+	//printf("gpio_value is: %d\n", gpio_values);
+
 	if (ID == 2) {
      3e8:	e0bfff17 	ldw	r2,-4(fp)
      3ec:	10800098 	cmpnei	r2,r2,2
@@ -1430,7 +1432,7 @@ int controller(int ID) {
 		if(gpio_values != 0){
      490:	e0bffe17 	ldw	r2,-8(fp)
      494:	10000526 	beq	r2,zero,4ac <controller+0x150>
-			if(gpio_values == 0xffffffff){
+			if(gpio_values == -1){
      498:	e0bffe17 	ldw	r2,-8(fp)
      49c:	10bfffd8 	cmpnei	r2,r2,-1
      4a0:	1000041e 	bne	r2,zero,4b4 <controller+0x158>
@@ -1738,11 +1740,12 @@ void Game(void* pdata) {
      7bc:	00096fc0 	call	96fc <OSMboxPend>
      7c0:	e0bffb15 	stw	r2,-20(fp)
 
-		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
+
 
 		for (i = 0; i <= 9; i++) {
      7c4:	e03ff915 	stw	zero,-28(fp)
      7c8:	00001706 	br	828 <Game+0x104>
+
 			if (score1 == i) {
      7cc:	d0e7ee17 	ldw	r3,-24648(gp)
      7d0:	e0bff917 	ldw	r2,-28(fp)
@@ -1775,7 +1778,7 @@ void Game(void* pdata) {
 		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
 		balkje2 = (Balk*) OSMboxPend(MailBox2, 0, &err);
 
-		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
+
 
 		for (i = 0; i <= 9; i++) {
      81c:	e0bff917 	ldw	r2,-28(fp)
@@ -29891,7 +29894,7 @@ alt_exception_cause_generated_bad_addr(alt_exception_cause cause)
    11cdc:	d9400015 	stw	r5,0(sp)
    11ce0:	d9800115 	stw	r6,4(sp)
    11ce4:	d9c00215 	stw	r7,8(sp)
-   11ce8:	00000000 	call	0 <__alt_mem_SDRAM>
+   11ce8:	00000000 	call	0 <__reset>
    11cec:	d9400017 	ldw	r5,0(sp)
    11cf0:	d9800117 	ldw	r6,4(sp)
    11cf4:	d9c00217 	ldw	r7,8(sp)
@@ -29977,7 +29980,7 @@ alt_exception_cause_generated_bad_addr(alt_exception_cause cause)
    11e2c:	10003426 	beq	r2,zero,11f00 <__call_exitprocs+0x18c>
    11e30:	9809883a 	mov	r4,r19
    11e34:	a8800015 	stw	r2,0(r21)
-   11e38:	00000000 	call	0 <__alt_mem_SDRAM>
+   11e38:	00000000 	call	0 <__reset>
    11e3c:	acc00017 	ldw	r19,0(r21)
    11e40:	983fe41e 	bne	r19,zero,11dd4 <__alt_mem_Flash_flash_data+0xf4011dd4>
    11e44:	dfc00b17 	ldw	ra,44(sp)

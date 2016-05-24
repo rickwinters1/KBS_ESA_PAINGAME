@@ -71,9 +71,10 @@ void Game(void* pdata) {
 		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
 		balkje2 = (Balk*) OSMboxPend(MailBox2, 0, &err);
 
-		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
+
 
 		for (i = 0; i <= 9; i++) {
+
 			if (score1 == i) {
 				draw_number(i, 1);
 			}

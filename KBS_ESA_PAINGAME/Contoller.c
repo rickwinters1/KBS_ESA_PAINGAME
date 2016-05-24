@@ -77,6 +77,8 @@ int controller(int ID) {
 	KEY_value = alt_up_parallel_port_read_data(KEY_ptr); // read the pushbutton KEY values
 	gpio_values = alt_up_parallel_port_read_data(gpio_dev);
 
+	//printf("gpio_value is: %d\n", gpio_values);
+
 	if (ID == 2) {
 		if (KEY_value != 0) {
 			if (KEY_value == 8) {
@@ -104,8 +106,10 @@ int controller(int ID) {
 		}
 	} else if(ID == 3){
 		if(gpio_values != 0){
-			if(gpio_values == 0xffffffff){
+			if(gpio_values == -1){
 				return 1;
+			} else if(gpio_values == -3){
+				return 2;
 			}
 		}else{
 			return 0;
