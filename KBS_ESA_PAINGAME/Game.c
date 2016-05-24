@@ -24,6 +24,8 @@ OS_FLAG_GRP *Flags;
 #define blauw 0x0000ff
 #define groen 0x0697
 
+#define beginLevens 3
+
 int ALT_x1;
 int ALT_x2;
 int ALT_y;
@@ -37,6 +39,7 @@ int first = 1;
 int check = 1;
 int random;
 int X;
+int leven = beginLevens;
 
 typedef struct balk {
 	int Hoogte;
@@ -62,7 +65,7 @@ void Game(void* pdata) {
 	Balk * balkje;
 	Balk * balkje2;
 	
-	VGA_box (316, 0, 319, 239, zwart); 					// singleplayer balk weghalen voor de zekerheid
+	VGA_box (316, 5, 319, 235, zwart); 					// singleplayer balk weghalen voor de zekerheid
 	//ALT_x1 = 0; ALT_x2 = 5/* ALTERA = 6 chars */; ALT_y = 0; ALT_inc_x = 1; ALT_inc_y = 1;
 
 	//char_buffer_x = 79; char_buffer_y = 59;
@@ -70,7 +73,7 @@ void Game(void* pdata) {
 	//blue_x1 = 28; blue_x2 = 52; blue_y1 = 26; blue_y2 = 34;
 
 	while (1) {
-		OSFlagPend(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
+		OSFlagPend(Flags, Game_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 
 		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
 		balkje2 = (Balk*) OSMboxPend(MailBox2, 0, &err);
@@ -260,6 +263,7 @@ void endGame(int ID) {
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
 	teken_menu();
+
 	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
 
 	ALT_x1 = 0;
@@ -271,6 +275,39 @@ void endGame(int ID) {
 	check = 1;
 	first = 1;
 
+}
+
+void endSingleplayer(){
+	INT8U err;
+
+	printf("end Singleplayer\n");
+
+	clearScreen();
+
+	OSFlagPost(Flags, Singleplayer_Flag + C1_Flag, OS_FLAG_SET, &err);
+
+	VGA_text(35, 25, "GAME OVER");
+	OSTimeDlyHMSM(0, 0, 40, 0);
+	VGA_text(35, 25, "         ");
+
+
+
+	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
+
+	teken_menu();
+
+	VGA_box (316, 4, 319, 235, zwart); 					// singleplayer balk weghalen voor de zekerheid
+
+	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
+	ALT_x1 = 0;
+	ALT_x2 = 165;
+	ALT_y = 100;
+	ALT_inc_x = 1;
+	ALT_inc_y = 1;
+
+	leven = beginLevens;
+	first = 1;
 }
 
 void Singleplayer(void* pdata){
@@ -294,35 +331,38 @@ void Singleplayer(void* pdata){
 	Balk * balkje2;
 	
 	int score3 = 0;
-	int leven = 3;
 	
 	
 	VGA_box (316, 0, 319, 239, groen); 					// rechts
 	
 	while (1) {
-		OSFlagPend(Flags, Singleplayer_Flag + C1_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
+		OSFlagPend(Flags, Singleplayer_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 
 		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
 
 		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
 
 		for (i = 0; i <= 999; i++) {
-			if (score3 == i) {
-				deleteNummer();
-				exec(i);
-			}
-			if (i >= 0 && i <= 9){
-				q = 1;
-			} else if (i >= 10 && i <= 99){
-				q = 2;
-			} else if (i >= 100 && i <= 999){
-				q = 3;
+
+			if(score3 == i){
+
+				if (score3 >= 0 && score3 <= 9){
+					draw_number(i, 3);
+				} else if (score3 >= 10 && score3 <= 99){
+					draw_number(i /10 , 2);
+					draw_number(i %10, 3);
+				} else if (score3 >= 100 && score3 <= 999){
+					draw_number(i /100 , 1);
+					draw_number(i %10, 2);
+					draw_number(i %10 /10, 3);
+				}
 			}
 			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
 				score3 =0;
-				endGame(1);
+				endSingleplayer();
 			}
 		}
+
 		
 //		if (check == 1) {
 //			del_middenlijn();
@@ -362,7 +402,9 @@ void Singleplayer(void* pdata){
 		//collision rand rechts en links
 		if ((ALT_x2 == pixel_buffer_x)) {
 			ALT_inc_x = -(ALT_inc_x);
+			deleteNummer();
 			score3++;
+
 		}
 
 		//links dood
@@ -400,7 +442,6 @@ void Singleplayer(void* pdata){
 }
 
 static void nummer1(int q){
-	X = checkIDScore(q);
 
 	VGA_box(X + 5, 20, X+7, 60, wit);
 }

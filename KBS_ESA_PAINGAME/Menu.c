@@ -94,7 +94,7 @@ void selecteerMenu(void *pdata){
 				clearText();
 				printf("start Singleplayer\n");
 				OSFlagPost(Flags, Singleplayer_Flag + C1_Flag, OS_FLAG_CLR, &err);
-				OSFlagPost(Flags, Menu_Flag + Menu2_Flag + C2_Flag, OS_FLAG_SET, &err);
+				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 		} else if (gameModeMenu == 2){
 			if(eenkeer == 1){
