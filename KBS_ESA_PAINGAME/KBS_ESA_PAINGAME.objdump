@@ -2786,323 +2786,323 @@ void Singleplayer(void* pdata){
     116c:	100d883a 	mov	r6,r2
     1170:	0013e700 	call	13e70 <OSMboxPend>
     1174:	e0bffd15 	stw	r2,-12(fp)
-
 		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
 
-		for (i = 0; i <= 999; i++) {
-    1178:	e03ffc15 	stw	zero,-16(fp)
-    117c:	00004906 	br	12a4 <Singleplayer+0x1b4>
 
-			if(score3 == i){
-    1180:	d0e81a17 	ldw	r3,-24472(gp)
-    1184:	e0bffc17 	ldw	r2,-16(fp)
-    1188:	18803c1e 	bne	r3,r2,127c <Singleplayer+0x18c>
-
-				if (score3 >= 0 && score3 <= 9){
-    118c:	d0a81a17 	ldw	r2,-24472(gp)
-    1190:	10000716 	blt	r2,zero,11b0 <Singleplayer+0xc0>
-    1194:	d0a81a17 	ldw	r2,-24472(gp)
-    1198:	10800288 	cmpgei	r2,r2,10
-    119c:	1000041e 	bne	r2,zero,11b0 <Singleplayer+0xc0>
-					draw_number(i, 3);
-    11a0:	e13ffc17 	ldw	r4,-16(fp)
-    11a4:	014000c4 	movi	r5,3
-    11a8:	000297c0 	call	297c <draw_number>
-
-		for (i = 0; i <= 999; i++) {
-
-			if(score3 == i){
-
-				if (score3 >= 0 && score3 <= 9){
-    11ac:	00003306 	br	127c <Singleplayer+0x18c>
-					draw_number(i, 3);
-				} else if (score3 >= 10 && score3 <= 99){
-    11b0:	d0a81a17 	ldw	r2,-24472(gp)
-    11b4:	10800290 	cmplti	r2,r2,10
-    11b8:	1000121e 	bne	r2,zero,1204 <Singleplayer+0x114>
-    11bc:	d0a81a17 	ldw	r2,-24472(gp)
-    11c0:	10801908 	cmpgei	r2,r2,100
-    11c4:	10000f1e 	bne	r2,zero,1204 <Singleplayer+0x114>
-					draw_number(i /10 , 2);
-    11c8:	e0fffc17 	ldw	r3,-16(fp)
-    11cc:	00800284 	movi	r2,10
-    11d0:	1885283a 	div	r2,r3,r2
-    11d4:	1009883a 	mov	r4,r2
-    11d8:	01400084 	movi	r5,2
-    11dc:	000297c0 	call	297c <draw_number>
-					draw_number(i %10, 3);
-    11e0:	e0bffc17 	ldw	r2,-16(fp)
-    11e4:	00c00284 	movi	r3,10
-    11e8:	10c7283a 	div	r3,r2,r3
-    11ec:	18c002a4 	muli	r3,r3,10
-    11f0:	10c5c83a 	sub	r2,r2,r3
-    11f4:	1009883a 	mov	r4,r2
-    11f8:	014000c4 	movi	r5,3
-    11fc:	000297c0 	call	297c <draw_number>
-
-			if(score3 == i){
-
-				if (score3 >= 0 && score3 <= 9){
-					draw_number(i, 3);
-				} else if (score3 >= 10 && score3 <= 99){
-    1200:	00001e06 	br	127c <Singleplayer+0x18c>
-					draw_number(i /10 , 2);
-					draw_number(i %10, 3);
-				} else if (score3 >= 100 && score3 <= 999){
-    1204:	d0a81a17 	ldw	r2,-24472(gp)
-    1208:	10801910 	cmplti	r2,r2,100
-    120c:	10001b1e 	bne	r2,zero,127c <Singleplayer+0x18c>
-    1210:	d0a81a17 	ldw	r2,-24472(gp)
-    1214:	1080fa08 	cmpgei	r2,r2,1000
-    1218:	1000181e 	bne	r2,zero,127c <Singleplayer+0x18c>
-					draw_number(i /100 , 1);
-    121c:	e0fffc17 	ldw	r3,-16(fp)
-    1220:	00801904 	movi	r2,100
-    1224:	1885283a 	div	r2,r3,r2
-    1228:	1009883a 	mov	r4,r2
-    122c:	01400044 	movi	r5,1
-    1230:	000297c0 	call	297c <draw_number>
-					draw_number(i /10 %10, 2);
-    1234:	e0fffc17 	ldw	r3,-16(fp)
-    1238:	00800284 	movi	r2,10
-    123c:	1885283a 	div	r2,r3,r2
-    1240:	00c00284 	movi	r3,10
-    1244:	10c7283a 	div	r3,r2,r3
-    1248:	18c002a4 	muli	r3,r3,10
-    124c:	10c5c83a 	sub	r2,r2,r3
-    1250:	1009883a 	mov	r4,r2
-    1254:	01400084 	movi	r5,2
-    1258:	000297c0 	call	297c <draw_number>
-					draw_number(i %10, 3);
-    125c:	e0bffc17 	ldw	r2,-16(fp)
-    1260:	00c00284 	movi	r3,10
-    1264:	10c7283a 	div	r3,r2,r3
-    1268:	18c002a4 	muli	r3,r3,10
-    126c:	10c5c83a 	sub	r2,r2,r3
-    1270:	1009883a 	mov	r4,r2
-    1274:	014000c4 	movi	r5,3
-    1278:	000297c0 	call	297c <draw_number>
-				}
-			}
-			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
-    127c:	d0a81a17 	ldw	r2,-24472(gp)
-    1280:	1080f9e0 	cmpeqi	r2,r2,999
-    1284:	1000021e 	bne	r2,zero,1290 <Singleplayer+0x1a0>
-    1288:	d0a00217 	ldw	r2,-32760(gp)
-    128c:	1000021e 	bne	r2,zero,1298 <Singleplayer+0x1a8>
-				score3 =0;
-    1290:	d0281a15 	stw	zero,-24472(gp)
-				endSingleplayer();
-    1294:	0000fb80 	call	fb8 <endSingleplayer>
-
-		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
-
-		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
-
-		for (i = 0; i <= 999; i++) {
-    1298:	e0bffc17 	ldw	r2,-16(fp)
-    129c:	10800044 	addi	r2,r2,1
-    12a0:	e0bffc15 	stw	r2,-16(fp)
-    12a4:	e0bffc17 	ldw	r2,-16(fp)
-    12a8:	1080fa10 	cmplti	r2,r2,1000
-    12ac:	103fb41e 	bne	r2,zero,1180 <__alt_mem_Flash_flash_data+0xf4001180>
-				endSingleplayer();
-			}
-		}
 
 
 		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
-    12b0:	d1282317 	ldw	r4,-24436(gp)
-    12b4:	d1682017 	ldw	r5,-24448(gp)
-    12b8:	d0a82317 	ldw	r2,-24436(gp)
-    12bc:	10c00144 	addi	r3,r2,5
-    12c0:	d0a82017 	ldw	r2,-24448(gp)
-    12c4:	10800144 	addi	r2,r2,5
-    12c8:	d8000015 	stw	zero,0(sp)
-    12cc:	180d883a 	mov	r6,r3
-    12d0:	100f883a 	mov	r7,r2
-    12d4:	00026e80 	call	26e8 <VGA_box>
+    1178:	d1282317 	ldw	r4,-24436(gp)
+    117c:	d1682017 	ldw	r5,-24448(gp)
+    1180:	d0a82317 	ldw	r2,-24436(gp)
+    1184:	10c00144 	addi	r3,r2,5
+    1188:	d0a82017 	ldw	r2,-24448(gp)
+    118c:	10800144 	addi	r2,r2,5
+    1190:	d8000015 	stw	zero,0(sp)
+    1194:	180d883a 	mov	r6,r3
+    1198:	100f883a 	mov	r7,r2
+    119c:	00026e80 	call	26e8 <VGA_box>
 
 		if (first == 1) {
-    12d8:	d0a00017 	ldw	r2,-32768(gp)
-    12dc:	10800058 	cmpnei	r2,r2,1
-    12e0:	1000201e 	bne	r2,zero,1364 <Singleplayer+0x274>
+    11a0:	d0a00017 	ldw	r2,-32768(gp)
+    11a4:	10800058 	cmpnei	r2,r2,1
+    11a8:	1000201e 	bne	r2,zero,122c <Singleplayer+0x13c>
 			printf("FIRST");
-    12e4:	010000b4 	movhi	r4,2
-    12e8:	2131e604 	addi	r4,r4,-14440
-    12ec:	000307c0 	call	307c <printf>
+    11ac:	010000b4 	movhi	r4,2
+    11b0:	2131e604 	addi	r4,r4,-14440
+    11b4:	000307c0 	call	307c <printf>
 			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
-    12f0:	d0a82317 	ldw	r2,-24436(gp)
-    12f4:	10c02804 	addi	r3,r2,160
-    12f8:	d0a82417 	ldw	r2,-24432(gp)
-    12fc:	1885883a 	add	r2,r3,r2
-    1300:	d0a82315 	stw	r2,-24436(gp)
+    11b8:	d0a82317 	ldw	r2,-24436(gp)
+    11bc:	10c02804 	addi	r3,r2,160
+    11c0:	d0a82417 	ldw	r2,-24432(gp)
+    11c4:	1885883a 	add	r2,r3,r2
+    11c8:	d0a82315 	stw	r2,-24436(gp)
 			ALT_x2 += ALT_inc_x;
-    1304:	d0e82517 	ldw	r3,-24428(gp)
-    1308:	d0a82417 	ldw	r2,-24432(gp)
-    130c:	1885883a 	add	r2,r3,r2
-    1310:	d0a82515 	stw	r2,-24428(gp)
+    11cc:	d0e82517 	ldw	r3,-24428(gp)
+    11d0:	d0a82417 	ldw	r2,-24432(gp)
+    11d4:	1885883a 	add	r2,r3,r2
+    11d8:	d0a82515 	stw	r2,-24428(gp)
 			ALT_y += ALT_inc_y;
-    1314:	d0e82017 	ldw	r3,-24448(gp)
-    1318:	d0a82117 	ldw	r2,-24444(gp)
-    131c:	1885883a 	add	r2,r3,r2
-    1320:	d0a82015 	stw	r2,-24448(gp)
+    11dc:	d0e82017 	ldw	r3,-24448(gp)
+    11e0:	d0a82117 	ldw	r2,-24444(gp)
+    11e4:	1885883a 	add	r2,r3,r2
+    11e8:	d0a82015 	stw	r2,-24448(gp)
 
 			del_middenlijn();
-    1324:	00028940 	call	2894 <del_middenlijn>
+    11ec:	00028940 	call	2894 <del_middenlijn>
 			VGA_box (316, 0, 319, 239, groen); 					// rechts
-    1328:	0081a5c4 	movi	r2,1687
-    132c:	d8800015 	stw	r2,0(sp)
-    1330:	01004f04 	movi	r4,316
-    1334:	000b883a 	mov	r5,zero
-    1338:	01804fc4 	movi	r6,319
-    133c:	01c03bc4 	movi	r7,239
-    1340:	00026e80 	call	26e8 <VGA_box>
+    11f0:	0081a5c4 	movi	r2,1687
+    11f4:	d8800015 	stw	r2,0(sp)
+    11f8:	01004f04 	movi	r4,316
+    11fc:	000b883a 	mov	r5,zero
+    1200:	01804fc4 	movi	r6,319
+    1204:	01c03bc4 	movi	r7,239
+    1208:	00026e80 	call	26e8 <VGA_box>
 			VGA_box(300, 4, 305, 235, zwart);
-    1344:	d8000015 	stw	zero,0(sp)
-    1348:	01004b04 	movi	r4,300
-    134c:	01400104 	movi	r5,4
-    1350:	01804c44 	movi	r6,305
-    1354:	01c03ac4 	movi	r7,235
-    1358:	00026e80 	call	26e8 <VGA_box>
+    120c:	d8000015 	stw	zero,0(sp)
+    1210:	01004b04 	movi	r4,300
+    1214:	01400104 	movi	r5,4
+    1218:	01804c44 	movi	r6,305
+    121c:	01c03ac4 	movi	r7,235
+    1220:	00026e80 	call	26e8 <VGA_box>
 
 			first = 0;
-    135c:	d0200015 	stw	zero,-32768(gp)
-    1360:	00000c06 	br	1394 <Singleplayer+0x2a4>
+    1224:	d0200015 	stw	zero,-32768(gp)
+    1228:	00000c06 	br	125c <Singleplayer+0x16c>
 		} else {
 			ALT_x1 += ALT_inc_x;
-    1364:	d0e82317 	ldw	r3,-24436(gp)
-    1368:	d0a82417 	ldw	r2,-24432(gp)
-    136c:	1885883a 	add	r2,r3,r2
-    1370:	d0a82315 	stw	r2,-24436(gp)
+    122c:	d0e82317 	ldw	r3,-24436(gp)
+    1230:	d0a82417 	ldw	r2,-24432(gp)
+    1234:	1885883a 	add	r2,r3,r2
+    1238:	d0a82315 	stw	r2,-24436(gp)
 			ALT_x2 += ALT_inc_x;
-    1374:	d0e82517 	ldw	r3,-24428(gp)
-    1378:	d0a82417 	ldw	r2,-24432(gp)
-    137c:	1885883a 	add	r2,r3,r2
-    1380:	d0a82515 	stw	r2,-24428(gp)
+    123c:	d0e82517 	ldw	r3,-24428(gp)
+    1240:	d0a82417 	ldw	r2,-24432(gp)
+    1244:	1885883a 	add	r2,r3,r2
+    1248:	d0a82515 	stw	r2,-24428(gp)
 			ALT_y += ALT_inc_y;
-    1384:	d0e82017 	ldw	r3,-24448(gp)
-    1388:	d0a82117 	ldw	r2,-24444(gp)
-    138c:	1885883a 	add	r2,r3,r2
-    1390:	d0a82015 	stw	r2,-24448(gp)
+    124c:	d0e82017 	ldw	r3,-24448(gp)
+    1250:	d0a82117 	ldw	r2,-24444(gp)
+    1254:	1885883a 	add	r2,r3,r2
+    1258:	d0a82015 	stw	r2,-24448(gp)
 		}
 
 
 		//collision rand boven en onder
 		if ((ALT_y == pixel_buffer_y) || (ALT_y == 4)) {
-    1394:	d0e82017 	ldw	r3,-24448(gp)
-    1398:	d0a81c17 	ldw	r2,-24464(gp)
-    139c:	18800326 	beq	r3,r2,13ac <Singleplayer+0x2bc>
-    13a0:	d0a82017 	ldw	r2,-24448(gp)
-    13a4:	10800118 	cmpnei	r2,r2,4
-    13a8:	1000031e 	bne	r2,zero,13b8 <Singleplayer+0x2c8>
+    125c:	d0e82017 	ldw	r3,-24448(gp)
+    1260:	d0a81c17 	ldw	r2,-24464(gp)
+    1264:	18800326 	beq	r3,r2,1274 <Singleplayer+0x184>
+    1268:	d0a82017 	ldw	r2,-24448(gp)
+    126c:	10800118 	cmpnei	r2,r2,4
+    1270:	1000031e 	bne	r2,zero,1280 <Singleplayer+0x190>
 			ALT_inc_y = -(ALT_inc_y);
-    13ac:	d0a82117 	ldw	r2,-24444(gp)
-    13b0:	0085c83a 	sub	r2,zero,r2
-    13b4:	d0a82115 	stw	r2,-24444(gp)
+    1274:	d0a82117 	ldw	r2,-24444(gp)
+    1278:	0085c83a 	sub	r2,zero,r2
+    127c:	d0a82115 	stw	r2,-24444(gp)
 		}
 		//collision rand rechts en links
 		if ((ALT_x2 == pixel_buffer_x)) {
-    13b8:	d0e82517 	ldw	r3,-24428(gp)
-    13bc:	d0a81e17 	ldw	r2,-24456(gp)
-    13c0:	1880071e 	bne	r3,r2,13e0 <Singleplayer+0x2f0>
+    1280:	d0e82517 	ldw	r3,-24428(gp)
+    1284:	d0a81e17 	ldw	r2,-24456(gp)
+    1288:	1880071e 	bne	r3,r2,12a8 <Singleplayer+0x1b8>
 			ALT_inc_x = -(ALT_inc_x);
-    13c4:	d0a82417 	ldw	r2,-24432(gp)
-    13c8:	0085c83a 	sub	r2,zero,r2
-    13cc:	d0a82415 	stw	r2,-24432(gp)
+    128c:	d0a82417 	ldw	r2,-24432(gp)
+    1290:	0085c83a 	sub	r2,zero,r2
+    1294:	d0a82415 	stw	r2,-24432(gp)
 			deleteNummer();
-    13d0:	00029400 	call	2940 <deleteNummer>
+    1298:	00029400 	call	2940 <deleteNummer>
 			score3++;
-    13d4:	d0a81a17 	ldw	r2,-24472(gp)
-    13d8:	10800044 	addi	r2,r2,1
-    13dc:	d0a81a15 	stw	r2,-24472(gp)
+    129c:	d0a81a17 	ldw	r2,-24472(gp)
+    12a0:	10800044 	addi	r2,r2,1
+    12a4:	d0a81a15 	stw	r2,-24472(gp)
 
 		}
 
 		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, wit); // ball
-    13e0:	d1282317 	ldw	r4,-24436(gp)
-    13e4:	d1682017 	ldw	r5,-24448(gp)
-    13e8:	d0a82317 	ldw	r2,-24436(gp)
-    13ec:	11800144 	addi	r6,r2,5
-    13f0:	d0a82017 	ldw	r2,-24448(gp)
-    13f4:	10c00144 	addi	r3,r2,5
-    13f8:	00804034 	movhi	r2,256
-    13fc:	10bfffc4 	addi	r2,r2,-1
-    1400:	d8800015 	stw	r2,0(sp)
-    1404:	180f883a 	mov	r7,r3
-    1408:	00026e80 	call	26e8 <VGA_box>
+    12a8:	d1282317 	ldw	r4,-24436(gp)
+    12ac:	d1682017 	ldw	r5,-24448(gp)
+    12b0:	d0a82317 	ldw	r2,-24436(gp)
+    12b4:	11800144 	addi	r6,r2,5
+    12b8:	d0a82017 	ldw	r2,-24448(gp)
+    12bc:	10c00144 	addi	r3,r2,5
+    12c0:	00804034 	movhi	r2,256
+    12c4:	10bfffc4 	addi	r2,r2,-1
+    12c8:	d8800015 	stw	r2,0(sp)
+    12cc:	180f883a 	mov	r7,r3
+    12d0:	00026e80 	call	26e8 <VGA_box>
 
 		//links dood
 		if (ALT_x1 == 0) {
-    140c:	d0a82317 	ldw	r2,-24436(gp)
-    1410:	1000051e 	bne	r2,zero,1428 <Singleplayer+0x338>
+    12d4:	d0a82317 	ldw	r2,-24436(gp)
+    12d8:	1000051e 	bne	r2,zero,12f0 <Singleplayer+0x200>
 			leven--;
-    1414:	d0a00217 	ldw	r2,-32760(gp)
-    1418:	10bfffc4 	addi	r2,r2,-1
-    141c:	d0a00215 	stw	r2,-32760(gp)
+    12dc:	d0a00217 	ldw	r2,-32760(gp)
+    12e0:	10bfffc4 	addi	r2,r2,-1
+    12e4:	d0a00215 	stw	r2,-32760(gp)
 			gescoord(3);
-    1420:	010000c4 	movi	r4,3
-    1424:	0000c180 	call	c18 <gescoord>
+    12e8:	010000c4 	movi	r4,3
+    12ec:	0000c180 	call	c18 <gescoord>
 //				score3++;
 //			}
 
 		//collision linker balkje
 		//lange zijde
 		if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
-    1428:	d0a82317 	ldw	r2,-24436(gp)
-    142c:	10800558 	cmpnei	r2,r2,21
-    1430:	10000c1e 	bne	r2,zero,1464 <Singleplayer+0x374>
-    1434:	e0bffd17 	ldw	r2,-12(fp)
-    1438:	10c00017 	ldw	r3,0(r2)
-    143c:	d0a82017 	ldw	r2,-24448(gp)
-    1440:	1880080e 	bge	r3,r2,1464 <Singleplayer+0x374>
-    1444:	e0bffd17 	ldw	r2,-12(fp)
-    1448:	10800017 	ldw	r2,0(r2)
-    144c:	10800c84 	addi	r2,r2,50
-    1450:	d0e82017 	ldw	r3,-24448(gp)
-    1454:	1880030e 	bge	r3,r2,1464 <Singleplayer+0x374>
+    12f0:	d0a82317 	ldw	r2,-24436(gp)
+    12f4:	10800558 	cmpnei	r2,r2,21
+    12f8:	10000c1e 	bne	r2,zero,132c <Singleplayer+0x23c>
+    12fc:	e0bffd17 	ldw	r2,-12(fp)
+    1300:	10c00017 	ldw	r3,0(r2)
+    1304:	d0a82017 	ldw	r2,-24448(gp)
+    1308:	1880080e 	bge	r3,r2,132c <Singleplayer+0x23c>
+    130c:	e0bffd17 	ldw	r2,-12(fp)
+    1310:	10800017 	ldw	r2,0(r2)
+    1314:	10800c84 	addi	r2,r2,50
+    1318:	d0e82017 	ldw	r3,-24448(gp)
+    131c:	1880030e 	bge	r3,r2,132c <Singleplayer+0x23c>
 			ALT_inc_x = -(ALT_inc_x);
-    1458:	d0a82417 	ldw	r2,-24432(gp)
-    145c:	0085c83a 	sub	r2,zero,r2
-    1460:	d0a82415 	stw	r2,-24432(gp)
+    1320:	d0a82417 	ldw	r2,-24432(gp)
+    1324:	0085c83a 	sub	r2,zero,r2
+    1328:	d0a82415 	stw	r2,-24432(gp)
 		}
 		//boven
 		if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte){
-    1464:	d0a82317 	ldw	r2,-24436(gp)
-    1468:	10800608 	cmpgei	r2,r2,24
-    146c:	10000a1e 	bne	r2,zero,1498 <Singleplayer+0x3a8>
-    1470:	d0a82317 	ldw	r2,-24436(gp)
-    1474:	10800590 	cmplti	r2,r2,22
-    1478:	1000071e 	bne	r2,zero,1498 <Singleplayer+0x3a8>
-    147c:	e0bffd17 	ldw	r2,-12(fp)
-    1480:	10c00017 	ldw	r3,0(r2)
-    1484:	d0a82017 	ldw	r2,-24448(gp)
-    1488:	1880031e 	bne	r3,r2,1498 <Singleplayer+0x3a8>
+    132c:	d0a82317 	ldw	r2,-24436(gp)
+    1330:	10800608 	cmpgei	r2,r2,24
+    1334:	10000a1e 	bne	r2,zero,1360 <Singleplayer+0x270>
+    1338:	d0a82317 	ldw	r2,-24436(gp)
+    133c:	10800590 	cmplti	r2,r2,22
+    1340:	1000071e 	bne	r2,zero,1360 <Singleplayer+0x270>
+    1344:	e0bffd17 	ldw	r2,-12(fp)
+    1348:	10c00017 	ldw	r3,0(r2)
+    134c:	d0a82017 	ldw	r2,-24448(gp)
+    1350:	1880031e 	bne	r3,r2,1360 <Singleplayer+0x270>
 			ALT_inc_y = -(ALT_inc_y);
-    148c:	d0a82117 	ldw	r2,-24444(gp)
-    1490:	0085c83a 	sub	r2,zero,r2
-    1494:	d0a82115 	stw	r2,-24444(gp)
+    1354:	d0a82117 	ldw	r2,-24444(gp)
+    1358:	0085c83a 	sub	r2,zero,r2
+    135c:	d0a82115 	stw	r2,-24444(gp)
 		}
 		//onder
 		if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte + 50){
-    1498:	d0a82317 	ldw	r2,-24436(gp)
-    149c:	10800608 	cmpgei	r2,r2,24
-    14a0:	10000b1e 	bne	r2,zero,14d0 <Singleplayer+0x3e0>
-    14a4:	d0a82317 	ldw	r2,-24436(gp)
-    14a8:	10800590 	cmplti	r2,r2,22
-    14ac:	1000081e 	bne	r2,zero,14d0 <Singleplayer+0x3e0>
-    14b0:	e0bffd17 	ldw	r2,-12(fp)
-    14b4:	10800017 	ldw	r2,0(r2)
-    14b8:	10c00c84 	addi	r3,r2,50
-    14bc:	d0a82017 	ldw	r2,-24448(gp)
-    14c0:	1880031e 	bne	r3,r2,14d0 <Singleplayer+0x3e0>
+    1360:	d0a82317 	ldw	r2,-24436(gp)
+    1364:	10800608 	cmpgei	r2,r2,24
+    1368:	10000b1e 	bne	r2,zero,1398 <Singleplayer+0x2a8>
+    136c:	d0a82317 	ldw	r2,-24436(gp)
+    1370:	10800590 	cmplti	r2,r2,22
+    1374:	1000081e 	bne	r2,zero,1398 <Singleplayer+0x2a8>
+    1378:	e0bffd17 	ldw	r2,-12(fp)
+    137c:	10800017 	ldw	r2,0(r2)
+    1380:	10c00c84 	addi	r3,r2,50
+    1384:	d0a82017 	ldw	r2,-24448(gp)
+    1388:	1880031e 	bne	r3,r2,1398 <Singleplayer+0x2a8>
 			ALT_inc_y = -(ALT_inc_y);
-    14c4:	d0a82117 	ldw	r2,-24444(gp)
-    14c8:	0085c83a 	sub	r2,zero,r2
-    14cc:	d0a82115 	stw	r2,-24444(gp)
+    138c:	d0a82117 	ldw	r2,-24444(gp)
+    1390:	0085c83a 	sub	r2,zero,r2
+    1394:	d0a82115 	stw	r2,-24444(gp)
 		}
 
+		for (i = 0; i <= 999; i++) {
+    1398:	e03ffc15 	stw	zero,-16(fp)
+    139c:	00004906 	br	14c4 <Singleplayer+0x3d4>
 
+			if(score3 == i){
+    13a0:	d0e81a17 	ldw	r3,-24472(gp)
+    13a4:	e0bffc17 	ldw	r2,-16(fp)
+    13a8:	18803c1e 	bne	r3,r2,149c <Singleplayer+0x3ac>
+
+				if (score3 >= 0 && score3 <= 9){
+    13ac:	d0a81a17 	ldw	r2,-24472(gp)
+    13b0:	10000716 	blt	r2,zero,13d0 <Singleplayer+0x2e0>
+    13b4:	d0a81a17 	ldw	r2,-24472(gp)
+    13b8:	10800288 	cmpgei	r2,r2,10
+    13bc:	1000041e 	bne	r2,zero,13d0 <Singleplayer+0x2e0>
+					draw_number(i, 3);
+    13c0:	e13ffc17 	ldw	r4,-16(fp)
+    13c4:	014000c4 	movi	r5,3
+    13c8:	000297c0 	call	297c <draw_number>
+
+		for (i = 0; i <= 999; i++) {
+
+			if(score3 == i){
+
+				if (score3 >= 0 && score3 <= 9){
+    13cc:	00003306 	br	149c <Singleplayer+0x3ac>
+					draw_number(i, 3);
+				} else if (score3 >= 10 && score3 <= 99){
+    13d0:	d0a81a17 	ldw	r2,-24472(gp)
+    13d4:	10800290 	cmplti	r2,r2,10
+    13d8:	1000121e 	bne	r2,zero,1424 <Singleplayer+0x334>
+    13dc:	d0a81a17 	ldw	r2,-24472(gp)
+    13e0:	10801908 	cmpgei	r2,r2,100
+    13e4:	10000f1e 	bne	r2,zero,1424 <Singleplayer+0x334>
+					draw_number(i /10 , 2);
+    13e8:	e0fffc17 	ldw	r3,-16(fp)
+    13ec:	00800284 	movi	r2,10
+    13f0:	1885283a 	div	r2,r3,r2
+    13f4:	1009883a 	mov	r4,r2
+    13f8:	01400084 	movi	r5,2
+    13fc:	000297c0 	call	297c <draw_number>
+					draw_number(i %10, 3);
+    1400:	e0bffc17 	ldw	r2,-16(fp)
+    1404:	00c00284 	movi	r3,10
+    1408:	10c7283a 	div	r3,r2,r3
+    140c:	18c002a4 	muli	r3,r3,10
+    1410:	10c5c83a 	sub	r2,r2,r3
+    1414:	1009883a 	mov	r4,r2
+    1418:	014000c4 	movi	r5,3
+    141c:	000297c0 	call	297c <draw_number>
+
+			if(score3 == i){
+
+				if (score3 >= 0 && score3 <= 9){
+					draw_number(i, 3);
+				} else if (score3 >= 10 && score3 <= 99){
+    1420:	00001e06 	br	149c <Singleplayer+0x3ac>
+					draw_number(i /10 , 2);
+					draw_number(i %10, 3);
+				} else if (score3 >= 100 && score3 <= 999){
+    1424:	d0a81a17 	ldw	r2,-24472(gp)
+    1428:	10801910 	cmplti	r2,r2,100
+    142c:	10001b1e 	bne	r2,zero,149c <Singleplayer+0x3ac>
+    1430:	d0a81a17 	ldw	r2,-24472(gp)
+    1434:	1080fa08 	cmpgei	r2,r2,1000
+    1438:	1000181e 	bne	r2,zero,149c <Singleplayer+0x3ac>
+					draw_number(i /100 , 1);
+    143c:	e0fffc17 	ldw	r3,-16(fp)
+    1440:	00801904 	movi	r2,100
+    1444:	1885283a 	div	r2,r3,r2
+    1448:	1009883a 	mov	r4,r2
+    144c:	01400044 	movi	r5,1
+    1450:	000297c0 	call	297c <draw_number>
+					draw_number(i /10 %10, 2);
+    1454:	e0fffc17 	ldw	r3,-16(fp)
+    1458:	00800284 	movi	r2,10
+    145c:	1885283a 	div	r2,r3,r2
+    1460:	00c00284 	movi	r3,10
+    1464:	10c7283a 	div	r3,r2,r3
+    1468:	18c002a4 	muli	r3,r3,10
+    146c:	10c5c83a 	sub	r2,r2,r3
+    1470:	1009883a 	mov	r4,r2
+    1474:	01400084 	movi	r5,2
+    1478:	000297c0 	call	297c <draw_number>
+					draw_number(i %10, 3);
+    147c:	e0bffc17 	ldw	r2,-16(fp)
+    1480:	00c00284 	movi	r3,10
+    1484:	10c7283a 	div	r3,r2,r3
+    1488:	18c002a4 	muli	r3,r3,10
+    148c:	10c5c83a 	sub	r2,r2,r3
+    1490:	1009883a 	mov	r4,r2
+    1494:	014000c4 	movi	r5,3
+    1498:	000297c0 	call	297c <draw_number>
+				}
+			}
+			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
+    149c:	d0a81a17 	ldw	r2,-24472(gp)
+    14a0:	1080f9e0 	cmpeqi	r2,r2,999
+    14a4:	1000021e 	bne	r2,zero,14b0 <Singleplayer+0x3c0>
+    14a8:	d0a00217 	ldw	r2,-32760(gp)
+    14ac:	1000021e 	bne	r2,zero,14b8 <Singleplayer+0x3c8>
+				score3 =0;
+    14b0:	d0281a15 	stw	zero,-24472(gp)
+				endSingleplayer();
+    14b4:	0000fb80 	call	fb8 <endSingleplayer>
+		//onder
+		if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte + 50){
+			ALT_inc_y = -(ALT_inc_y);
+		}
+
+		for (i = 0; i <= 999; i++) {
+    14b8:	e0bffc17 	ldw	r2,-16(fp)
+    14bc:	10800044 	addi	r2,r2,1
+    14c0:	e0bffc15 	stw	r2,-16(fp)
+    14c4:	e0bffc17 	ldw	r2,-16(fp)
+    14c8:	1080fa10 	cmplti	r2,r2,1000
+    14cc:	103fb41e 	bne	r2,zero,13a0 <__alt_mem_Flash_flash_data+0xf40013a0>
+				score3 =0;
+				endSingleplayer();
+			}
+		}
 
 		OSTimeDly(1);
     14d0:	01000044 	movi	r4,1

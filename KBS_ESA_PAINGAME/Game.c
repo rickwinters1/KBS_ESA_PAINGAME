@@ -358,26 +358,7 @@ void Singleplayer(void* pdata){
 
 		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
 
-		for (i = 0; i <= 999; i++) {
 
-			if(score3 == i){
-
-				if (score3 >= 0 && score3 <= 9){
-					draw_number(i, 3);
-				} else if (score3 >= 10 && score3 <= 99){
-					draw_number(i /10 , 2);
-					draw_number(i %10, 3);
-				} else if (score3 >= 100 && score3 <= 999){
-					draw_number(i /100 , 1);
-					draw_number(i /10 %10, 2);
-					draw_number(i %10, 3);
-				}
-			}
-			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
-				score3 =0;
-				endSingleplayer();
-			}
-		}
 
 
 		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
@@ -439,7 +420,26 @@ void Singleplayer(void* pdata){
 			ALT_inc_y = -(ALT_inc_y);
 		}
 
+		for (i = 0; i <= 999; i++) {
 
+			if(score3 == i){
+
+				if (score3 >= 0 && score3 <= 9){
+					draw_number(i, 3);
+				} else if (score3 >= 10 && score3 <= 99){
+					draw_number(i /10 , 2);
+					draw_number(i %10, 3);
+				} else if (score3 >= 100 && score3 <= 999){
+					draw_number(i /100 , 1);
+					draw_number(i /10 %10, 2);
+					draw_number(i %10, 3);
+				}
+			}
+			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
+				score3 =0;
+				endSingleplayer();
+			}
+		}
 
 		OSTimeDly(1);
 
