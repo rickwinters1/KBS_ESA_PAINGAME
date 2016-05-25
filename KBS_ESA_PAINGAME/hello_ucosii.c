@@ -6,6 +6,7 @@ OS_EVENT* menuSem;
 OS_EVENT* gameSem;
 
 OS_FLAG_GRP *Flags;
+OS_FLAG_GRP *Flags_Games;
 
 OS_EVENT* MailBox;
 OS_EVENT* MailBox2;
@@ -67,13 +68,15 @@ int main(void)
 {
 	INT8U err;
 	OSInit();
-	int counter = 0x50000;				// 1/(50 MHz) x (0x960000) ~= 200 msec
+	int counter = 0x50500;				// 1/(50 MHz) x (0x960000) ~= 200 msec
 	*(interval_timer_ptr + 0x2) = (counter & 0xFFFF);
 	*(interval_timer_ptr + 0x3) = (counter >> 16) & 0xFFFF;
 
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
-	Flags = OSFlagCreate(Game_Flag + C1_Flag + C2_Flag, &err);
+	Flags = OSFlagCreate(C1_Flag + C2_Flag, &err);
+	Flags_Games = OSFlagCreate(Game_Flag + Singleplayer_Flag, &err);
+
 
 	gameSem = OSSemCreate(0);
 	controllerSem = OSSemCreate(0);
@@ -165,7 +168,7 @@ void draw_number(int nummer, int ID){
 	int X = checkIDScore(ID);
 
 	if(nummer == 1){
-		VGA_box(X + 5, 20, X+7, 60, wit);
+		VGA_box(X + 9, 20, X+12, 60, wit);
 	}else if(nummer == 2){
 		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
 		VGA_box(X + 18, 22, X+ 20, 38, wit);			//lijn naar beneden

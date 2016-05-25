@@ -9,6 +9,7 @@ OS_EVENT* MailBox2;
 
 
 OS_FLAG_GRP *Flags;
+OS_FLAG_GRP *Flags_Games;
 
 
 
@@ -54,8 +55,10 @@ void controllers(void* pdata) {
 		}
 
 		if(ID == 1){
+			OSFlagPend(Flags, C1_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 			OSMboxPost(MailBox, (void*)&balkje);
 		}else if(ID == 2){
+			OSFlagPend(Flags, C2_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 			OSMboxPost(MailBox2, (void*)&balkje);
 		}
 
@@ -79,7 +82,7 @@ int controller(int ID) {
 	KEY_value = alt_up_parallel_port_read_data(KEY_ptr); // read the pushbutton KEY values
 	gpio_values = alt_up_parallel_port_read_data(gpio_dev);
 
-	//printf("SW_value is: %d\n", SW_value);
+	//printf("gpio_value is: %d\n", gpio_values);
 
 	if (ID == 2) {
 		if (KEY_value != 0) {

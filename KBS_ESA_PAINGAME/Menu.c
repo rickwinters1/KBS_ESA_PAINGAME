@@ -6,6 +6,8 @@ OS_EVENT* menuSem;
 OS_EVENT* gameSem;
 OS_EVENT* controllerSem;
 OS_FLAG_GRP *Flags;
+OS_FLAG_GRP *Flags_Games;
+
 
 #define Menu_Flag 0x01
 #define Game_Flag 0x02
@@ -93,7 +95,8 @@ void selecteerMenu(void *pdata){
 				clearScreen();
 				clearText();
 				printf("start Singleplayer\n");
-				OSFlagPost(Flags, Singleplayer_Flag + C1_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags,C1_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_CLR, &err);
 				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 		} else if (gameModeMenu == 2){
@@ -108,7 +111,8 @@ void selecteerMenu(void *pdata){
 				clearScreen();
 				clearText();
 				printf("start game\n");
-				OSFlagPost(Flags, Game_Flag + C1_Flag + C2_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags, C1_Flag + C2_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags_Games,Game_Flag, OS_FLAG_CLR, &err);
 				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 
@@ -161,11 +165,15 @@ void tekenBox2(int Links, int Boven, int Rechts, int Onder, short Kleur){
 	VGA_box(Links, Boven, Rechts, Onder, Kleur);
 }
 
-void teken_menu(){
+void teken_menu(int ID){
 	VGA_text (xMenu, yMenu, "Singleplayer");
 	VGA_text (xMenu, yMenu + 4, "Multiplayer");
 	VGA_text (xMenu, yMenu+8, "Highscores");
 	VGA_text (xMenu, yMenu+12, "Tutorial");
-	VGA_box(xLinks*4, xBoven*4 + 16, xRechts*4, xOnder*4 + 16, rood);
+	if(ID == 1){
+		VGA_box(xLinks*4, xBoven*4, xRechts*4, xOnder*4, rood);
+	}else if(ID == 2){
+		VGA_box(xLinks*4, xBoven*4 + 16, xRechts*4, xOnder*4 + 16, rood);
+	}
 
 }
