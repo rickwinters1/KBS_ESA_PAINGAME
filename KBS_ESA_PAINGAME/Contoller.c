@@ -10,6 +10,7 @@ OS_EVENT* MailBox2;
 
 OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
+OS_FLAG_GRP *Flags_Tutorial;
 
 
 

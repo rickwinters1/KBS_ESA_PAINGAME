@@ -7,6 +7,7 @@ OS_EVENT* gameSem;
 
 OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
+OS_FLAG_GRP *Flags_Tutorial;
 
 OS_EVENT* MailBox;
 OS_EVENT* MailBox2;
@@ -18,11 +19,11 @@ extern volatile int timeout = 0;							// used to synchronize with the timer
 volatile int * interval_timer_ptr = (int *) 0x10002000;	// internal timer base address
 
 /* Definition of Task Stacks */
-#define   TASK_STACKSIZE       2048
+#define   TASK_STACKSIZE       2049
 OS_STK    controller1_stk[TASK_STACKSIZE];
 OS_STK    controller2_stk[TASK_STACKSIZE];
-OS_STK    Game_stk[TASK_STACKSIZE];
-OS_STK    Singleplayer_stk[TASK_STACKSIZE];
+OS_STK    Game_stk[TASK_STACKSIZE + 10000];
+OS_STK    Singleplayer_stk[TASK_STACKSIZE + 10000];
 OS_STK	  menu_stk[TASK_STACKSIZE];
 OS_STK	  menu_stk2[TASK_STACKSIZE];
 OS_STK	  Tutorial_stk[TASK_STACKSIZE];
@@ -79,7 +80,8 @@ int main(void)
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
 	Flags = OSFlagCreate(C1_Flag + C2_Flag, &err);
-	Flags_Games = OSFlagCreate(Game_Flag + Singleplayer_Flag + Tutorial_Flag, &err);
+	Flags_Games = OSFlagCreate(Game_Flag + Singleplayer_Flag, &err);
+	Flags_Tutorial = OSFlagCreate(Tutorial_Flag, &err);
 
 
 	gameSem = OSSemCreate(0);

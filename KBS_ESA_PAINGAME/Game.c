@@ -10,6 +10,7 @@ OS_EVENT* MailBox2;
 
 OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
+OS_FLAG_GRP *Flags_Tutorial;
 
 
 #define Menu_Flag 0x01
@@ -103,9 +104,14 @@ void Game(void* pdata) {
 		draw_middenlijn();
 		if (check == 1) {
 			del_middenlijn();
+
+			VGA_box(300, balkje2->Hoogte, 305, balkje2->Hoogte + 50, blauw);
+
 			VGA_text(20, 20, "Houdt de knop ingedrukt om te spelen");
 			OSTimeDlyHMSM(0, 1, 0, 0);
 			VGA_text(20, 20, "                                    ");
+
+
 
 			del_number(1);
 			del_number(2);
@@ -303,6 +309,7 @@ void endSingleplayer(){
 	VGA_text(35, 25, "         ");
 
 
+	VGA_text(6,5, "           ");
 
 
 	teken_menu(1);
@@ -325,7 +332,7 @@ void endSingleplayer(){
 
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
-	OSFlagPost(Flags_Games, Singleplayer_Flag + Tutorial_Flag, OS_FLAG_SET, &err);
+	OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
 
 }
 
@@ -424,6 +431,11 @@ void Singleplayer(void* pdata){
 			ALT_inc_y = -(ALT_inc_y);
 		}
 
+
+		sprintf(levens, "LEVENS: %d", leven);
+		VGA_text(6,5, levens);
+		OSTimeDly(1);
+
 		for (i = 0; i <= 999; i++) {
 
 			if(score3 == i){
@@ -442,16 +454,13 @@ void Singleplayer(void* pdata){
 			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
 				leven = 0;
 				score3 =0;
-				sprintf(levens, "LEVENS: %d", leven);
-				VGA_text(6,5, levens);
+
 				endSingleplayer();
 			}
 		}
 
 
-		sprintf(levens, "LEVENS: %d", leven);
-		VGA_text(6,5, levens);
-		OSTimeDly(1);
+
 
 
 	}
@@ -484,12 +493,12 @@ void endTutorial(){
 
 	VGA_text(35, 25, "Einde Tutorial");
 	OSTimeDlyHMSM(0, 0, 40, 0);
-	VGA_text(35, 25, "               ");
+	VGA_text(35, 25, "              ");
 
 
 
 
-	teken_menu(1);
+	teken_menu(4);
 
 	VGA_box (316, 4, 319, 235, zwart); 					// singleplayer/tutorial balk weghalen voor de zekerheid
 
@@ -506,7 +515,7 @@ void endTutorial(){
 
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
-	OSFlagPost(Flags_Games, Tutorial_Flag, OS_FLAG_SET, &err);
+	OSFlagPost(Flags_Tutorial, Tutorial_Flag, OS_FLAG_SET, &err);
 
 }
 
@@ -528,19 +537,21 @@ void Tutorial(void* pdata){
 	int count;
 	int q;
 	Balk * balkje;
-	Balk * balkje2;
-	
-	VGA_box (316, 0, 319, 239, groen); 					// rechts
 	
 	while (1) {
-		OSFlagPend(Flags, Tutorial_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
+		OSFlagPend(Flags_Tutorial, Tutorial_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 
 		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
 
+		printf("TUTORIAL SET\n");
+
 		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
 
-		TutUitleg();
+		tutorialUitleg();
 		
+		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
+
 		if (first == 1) {
 			printf("FIRST");
 			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
@@ -560,7 +571,6 @@ void Tutorial(void* pdata){
 		
 		
 
-		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
 
 
 		//collision rand boven en onder
@@ -600,7 +610,7 @@ void Tutorial(void* pdata){
 		}
 
 		
-		if (controller(3) == 1) {
+		if (controller(3) == 3) {
 			endTutorial();
 		}
 
@@ -611,83 +621,5 @@ void Tutorial(void* pdata){
 	
 }
 
-static void nummer1(int q){
 
-	VGA_box(X + 5, 20, X+7, 60, wit);
-}
-
-static void nummer2(int q){
-	VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-	VGA_box(X + 18, 22, X+ 20, 38, wit);			//lijn naar beneden
-	VGA_box(X, 38, X+ 20, 40, wit);					//lijn naar links
-	VGA_box(X, 40, X+ 2, 58, wit);					//lijn naar beneden
-	VGA_box(X, 58, X+ 20, 60, wit);					//lijn naar rechts
-}
-
-static void nummer3(int q){
-	VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-	VGA_box(X + 18, 22, X+ 20, 60, wit);			//rechter lijn
-	VGA_box(X, 39, X+ 20, 41, wit);					//midden lijn
-	VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
-}
-
-static void nummer4(int q){
-		VGA_box(X, 20, X+2, 40, wit);					//linkse lijn
-		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
-		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
-}
-
-static void nummer5(int q){
-		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-		VGA_box(X, 22, X+ 2, 38, wit);					//lijn naar beneden
-		VGA_box(X, 38, X+ 20, 40, wit);					//lijn naar links
-		VGA_box(X + 18, 40, X+ 20, 58, wit);			//lijn naar beneden
-		VGA_box(X, 58, X+ 20, 60, wit);					//lijn naar rechts
-}
-
-static void nummer6(int q){
-		VGA_box(X, 20, X+2, 60, wit);					//lijn links
-		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
-		VGA_box(X + 18, 40, X+ 20, 58, wit);			//lijn rechts
-		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
-}
-
-static void nummer7(int q){
-		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
-		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-}
-
-static void nummer8(int q){
-		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
-		VGA_box(X, 20, X+2, 60, wit);					//lijn links
-		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
-		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
-}
-
-static void nummer9(int q){
-		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
-		VGA_box(X, 20, X+2, 40, wit);					//linkse lijn
-		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-		VGA_box(X, 39, X + 20, 41, wit);				//middelste lijn
-		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
-}
-
-static void nummer0(int q){
-		VGA_box(X + 18, 20, X + 20, 60, wit);			//rechtse lijn
-		VGA_box(X, 20, X+2, 60, wit);					//lijn links
-		VGA_box(X, 20, X+ 20, 22, wit);					//bovenste lijn
-		VGA_box(X, 58, X+ 20, 60, wit);					//onderste lijn
-}
-
-void(*nummer[])(void) = { nummer0, nummer1, nummer2, nummer3, nummer4, nummer5, nummer6, nummer7, nummer8, nummer9 };
-
-void exec(int value)
-{
-	if (value) {
-		exec(value / 10);
-		nummer[value % 10]();
-	}
-}
 

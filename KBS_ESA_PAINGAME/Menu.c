@@ -7,6 +7,8 @@ OS_EVENT* gameSem;
 OS_EVENT* controllerSem;
 OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
+OS_FLAG_GRP *Flags_Tutorial;
+
 
 
 #define Menu_Flag 0x01
@@ -141,7 +143,7 @@ void selecteerMenu(void *pdata){
 				clearText();
 				printf("Start Tutorial\n");
 				OSFlagPost(Flags, C1_Flag, OS_FLAG_CLR, &err);
-				OSFlagPost(Flags_Games,Tutorial_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags_Tutorial,Tutorial_Flag, OS_FLAG_CLR, &err);
 				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 		}
@@ -184,6 +186,8 @@ void teken_menu(int ID){
 		VGA_box(xLinks*4, xBoven*4, xRechts*4, xOnder*4, rood);
 	}else if(ID == 2){
 		VGA_box(xLinks*4, xBoven*4 + 16, xRechts*4, xOnder*4 + 16, rood);
+	}else if(ID == 4){
+		VGA_box(xLinks*4, xBoven*4 + 48, xRechts*4, xOnder*4 + 48, rood);
 	}
 
 }
