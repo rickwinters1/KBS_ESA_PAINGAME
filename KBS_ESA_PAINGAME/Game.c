@@ -471,10 +471,21 @@ void tutorialUitleg(){
 	INT8U err;
 	
 	VGA_text(10, 5, "Er zijn twee soorten spellen: Singleplayer en Multiplayer.");
-	VGA_text(10, 6, "In Singleplayer speel je tegen de computer, waarbij je zoveel mogelijk");
-	VGA_text(10, 7, "aantal punten moet bereiken door de bal tegen de muur te kaatsen.");
-	VGA_text(10, 8, "In Multiplayer gaat het er om dat je de bal in het doel van de tegenstander");
-	VGA_text(10, 9, "krijgt. Het doel bevindt zich achter het balkje van de tegenstander.");
+	VGA_text(10, 7, "In Singleplayer speel je tegen de computer, waarbij je");
+	VGA_text(10, 8, "zoveel mogelijk aantal punten moet bereiken door de bal");
+	VGA_text(10, 9, "tegen de muur te kaatsen. Hierbij heb je 3 levens");
+	VGA_text(10, 11, "In Multiplayer gaat het er om dat je de bal in het doel");
+	VGA_text(10, 12, "van de tegenstander krijgt. Het doel bevindt zich achter");
+	VGA_text(10, 13, "het balkje van de tegenstander. Wanneer je scoort krijg je");
+	VGA_text(10, 14, "1 punt."):
+	
+	VGA_text(10, 38, "De besturing gaat als volgt:"):
+	VGA_text(10, 40, "De linker balk wordt bestuurd door het op en neer bewegen"):
+	VGA_text(10, 41, "van switch 17. Bij de multiplayer wordt ook nog vereist om"):
+	VGA_text(10, 42, "de linker knop in te houden, anders ben je af. Dit geldt ook"):
+	VGA_text(10, 43, "voor de rechter balk."):
+	VGA_text(10, 45, "De rechter balk wordt bestuurd KEY3 en KEY2. KEY3 = omhoog,"):
+	VGA_text(10, 46, "KEY2 = omlaag."):
 }
 
 void endTutorial(){
@@ -488,6 +499,17 @@ void endTutorial(){
 	VGA_text(10, 7, "                                                                              ");
 	VGA_text(10, 8, "                                                                              ");
 	VGA_text(10, 9, "                                                                              ");
+	VGA_text(10, 11, "                                                                              ");
+	VGA_text(10, 12, "                                                                              ");
+	VGA_text(10, 13, "                                                                              ");
+	VGA_text(10, 14, "                                                                              ");
+	VGA_text(10, 38, "                                                                              ");
+	VGA_text(10, 40, "                                                                              ");
+	VGA_text(10, 41, "                                                                              ");
+	VGA_text(10, 42, "                                                                              ");
+	VGA_text(10, 43, "                                                                              ");
+	VGA_text(10, 45, "                                                                              ");
+	VGA_text(10, 46, "                                                                              ");
 
 	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
 
