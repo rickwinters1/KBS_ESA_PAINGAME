@@ -458,33 +458,56 @@ void Singleplayer(void* pdata){
 	
 }
 
-void TutUitleg(){
-	
+void tutorialUitleg(){
 	INT8U err;
 	
-	VGA_text(10, 10, "Het doel van het spel is om de bal");
-	VGA_text(10, 11, "te kaatsen richting de tegenstander.");
-	VGA_text(10, 12, "Bij Singleplayer speel je tegen de");
-	VGA_text(10, 13, "computer, waarbij je zoveel mogelijk");
-	VGA_text(10, 14, "aantal punten moet bereiken door de bal");
-	VGA_text(10, 15, "tegen de muur te kaatsen.");
-	OSTimeDlyHMSM(0, 5, 0, 0);
-	VGA_text(10, 10, "                                         ");
-	VGA_text(10, 11, "                                         ");	
-	VGA_text(10, 12, "                                         ");
-	VGA_text(10, 13, "                                         ");
-	VGA_text(10, 14, "                                         ");
-	VGA_text(10, 15, "                                         ");
-	OSTimeDlyHMSM(0, 2, 0, 0);
-	VGA_text(10, 10, "In Multiplayer gaat het er om dat je");
-	VGA_text(10, 11, "de bal in het doel van de tegenstander");
-	VGA_text(10, 12, "krijgt. Het doel bevindt zich achter het");
-	VGA_text(10, 13, "balkje van de tegenstander.");
-	OSTimeDlyHMSM(0, 5, 0, 0);
-	VGA_text(10, 10, "                                         ");
-	VGA_text(10, 11, "                                         ");	
-	VGA_text(10, 12, "                                         ");
-	VGA_text(10, 13, "                                         ");
+	VGA_text(10, 5, "Er zijn twee soorten spellen: Singleplayer en Multiplayer.");
+	VGA_text(10, 6, "In Singleplayer speel je tegen de computer, waarbij je zoveel mogelijk");
+	VGA_text(10, 7, "aantal punten moet bereiken door de bal tegen de muur te kaatsen.");
+	VGA_text(10, 8, "In Multiplayer gaat het er om dat je de bal in het doel van de tegenstander");
+	VGA_text(10, 9, "krijgt. Het doel bevindt zich achter het balkje van de tegenstander.");
+}
+
+void endTutorial(){
+	INT8U err;
+
+	printf("end Tutorial\n");
+
+	//clearScreen();
+	VGA_text(10, 5, "                                                                              ");
+	VGA_text(10, 6, "                                                                              ");
+	VGA_text(10, 7, "                                                                              ");
+	VGA_text(10, 8, "                                                                              ");
+	VGA_text(10, 9, "                                                                              ");
+
+	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
+
+	VGA_text(35, 25, "Einde Tutorial");
+	OSTimeDlyHMSM(0, 0, 40, 0);
+	VGA_text(35, 25, "               ");
+
+
+
+
+	teken_menu(1);
+
+	VGA_box (316, 4, 319, 235, zwart); 					// singleplayer/tutorial balk weghalen voor de zekerheid
+
+	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
+
+	ALT_x1 = 0;
+	ALT_x2 = 165;
+	ALT_y = 100;
+	ALT_inc_x = -1;
+	ALT_inc_y = 1;
+
+	first = 1;
+
+	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
+
+	OSFlagPost(Flags_Games, Tutorial_Flag, OS_FLAG_SET, &err);
+
 }
 
 void Tutorial(void* pdata){
@@ -518,36 +541,27 @@ void Tutorial(void* pdata){
 
 		TutUitleg();
 		
-//		if (check == 1) {
-//			del_middenlijn();
-//			VGA_text(20, 20, "Houdt de knop ingedrukt om te spelen");
-//			OSTimeDlyHMSM(0, 1, 0, 0);
-//			VGA_text(20, 20, "                                    ");
-//
-//			del_number(1);
-//			del_number(2);
-//
-//			score3 = 0;
-//
-//			i = 0;
-//
-//			check = 0;
-//		}
-		
-
-		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
-
 		if (first == 1) {
+			printf("FIRST");
 			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
 			ALT_y += ALT_inc_y;
+
+			del_middenlijn();
+			VGA_box (316, 0, 319, 239, groen); 					// rechts
+			VGA_box(300, 4, 305, 235, zwart);
+
 			first = 0;
 		} else {
 			ALT_x1 += ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
 			ALT_y += ALT_inc_y;
 		}
-		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, wit); // ball
+		
+		
+
+		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
 
 		//collision rand boven en onder
 		if ((ALT_y == pixel_buffer_y) || (ALT_y == 4)) {
@@ -559,6 +573,8 @@ void Tutorial(void* pdata){
 
 		}
 
+		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, wit); // ball
+		
 		//links dood
 		if (ALT_x1 == 0) {
 			gescoord(3);
@@ -585,7 +601,7 @@ void Tutorial(void* pdata){
 
 		
 		if (controller(3) == 1) {
-			endSingleplayer();
+			endTutorial();
 		}
 
 		OSTimeDly(1);
