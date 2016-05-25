@@ -15,6 +15,7 @@ OS_FLAG_GRP *Flags_Games;
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
 #define Singleplayer_Flag 0x20
+#define Tutorial_Flag 0x40
 
 #define Zwart  0x000000
 #define Wit  0xffffff
@@ -133,6 +134,15 @@ void selecteerMenu(void *pdata){
 				eenkeer = 0;
 				changed = 1;
 
+			}
+			
+			if(controller(ID) == 2){
+				clearScreen();
+				clearText();
+				printf("Start Tutorial\n");
+				OSFlagPost(Flags, C1_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags_Games,Tutorial_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 		}
 

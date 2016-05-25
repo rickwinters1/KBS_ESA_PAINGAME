@@ -448,6 +448,143 @@ void Singleplayer(void* pdata){
 	
 }
 
+void TutUitleg(){
+	
+	INT8U err;
+	
+	VGA_text(10, 10, "Het doel van het spel is om de bal");
+	VGA_text(10, 11, "te kaatsen richting de tegenstander.");
+	VGA_text(10, 12, "Bij Singleplayer speel je tegen de");
+	VGA_text(10, 13, "computer, waarbij je zoveel mogelijk");
+	VGA_text(10, 14, "aantal punten moet bereiken door de bal");
+	VGA_text(10, 15, "tegen de muur te kaatsen.");
+	OSTimeDlyHMSM(0, 10, 0, 0);
+	VGA_text(10, 10, "                                         ");
+	VGA_text(10, 11, "                                         ");	
+	VGA_text(10, 12, "                                         ");
+	VGA_text(10, 13, "                                         ");
+	VGA_text(10, 14, "                                         ");
+	VGA_text(10, 15, "                                         ");
+	OSTimeDlyHMSM(0, 5, 0, 0);
+	VGA_text(10, 10, "In Multiplayer gaat het er om dat je");
+	VGA_text(10, 11, "de bal in het doel van de tegenstander");
+	VGA_text(10, 12, "krijgt. Het doel bevindt zich achter het");
+	VGA_text(10, 13, "balkje van de tegenstander.");
+	OSTimeDlyHMSM(0, 10, 0, 0);
+	VGA_text(10, 10, "                                         ");
+	VGA_text(10, 11, "                                         ");	
+	VGA_text(10, 12, "                                         ");
+	VGA_text(10, 13, "                                         ");
+}
+
+void Tutorial(void* pdata){
+	
+	ALT_x1 = 0;
+	ALT_x2 = 165;
+	ALT_y = 100;
+	ALT_inc_x = 1;
+	ALT_inc_y = 1;
+
+	pixel_buffer_x = 315;
+	pixel_buffer_y = 230;
+	
+	INT8U err;
+	int i;
+	int hoogte;
+	int ID;
+	int count;
+	int q;
+	Balk * balkje;
+	Balk * balkje2;
+	
+	VGA_box (316, 0, 319, 239, groen); 					// rechts
+	
+	while (1) {
+		OSFlagPend(Flags, Tutorial_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
+
+		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
+
+		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
+
+		TutUitleg();
+		
+//		if (check == 1) {
+//			del_middenlijn();
+//			VGA_text(20, 20, "Houdt de knop ingedrukt om te spelen");
+//			OSTimeDlyHMSM(0, 1, 0, 0);
+//			VGA_text(20, 20, "                                    ");
+//
+//			del_number(1);
+//			del_number(2);
+//
+//			score3 = 0;
+//
+//			i = 0;
+//
+//			check = 0;
+//		}
+		
+
+		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
+		if (first == 1) {
+			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
+			ALT_x2 += ALT_inc_x;
+			ALT_y += ALT_inc_y;
+			first = 0;
+		} else {
+			ALT_x1 += ALT_inc_x;
+			ALT_x2 += ALT_inc_x;
+			ALT_y += ALT_inc_y;
+		}
+		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, wit); // ball
+
+		//collision rand boven en onder
+		if ((ALT_y == pixel_buffer_y) || (ALT_y == 4)) {
+			ALT_inc_y = -(ALT_inc_y);
+		}
+		//collision rand rechts en links
+		if ((ALT_x2 == pixel_buffer_x)) {
+			ALT_inc_x = -(ALT_inc_x);
+
+		}
+
+		//links dood
+		if (ALT_x1 == 0) {
+			gescoord(3);
+		}
+
+		//kaats tegen muur, score erbij
+//			if (ALT_x2 == pixel_buffer_x) {
+//				score3++;
+//			}
+
+		//collision linker balkje
+		//lange zijde
+		if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
+			ALT_inc_x = -(ALT_inc_x);
+		}
+		//boven
+		if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte){
+			ALT_inc_y = -(ALT_inc_y);
+		}
+		//onder
+		if((ALT_x1 < 24 && ALT_x1 > 21) && ALT_y == balkje->Hoogte + 50){
+			ALT_inc_y = -(ALT_inc_y);
+		}
+
+		
+		if (controller(3) == 1) {
+			endSingleplayer();
+		}
+
+		OSTimeDly(1);
+
+
+	}
+	
+}
+
 static void nummer1(int q){
 
 	VGA_box(X + 5, 20, X+7, 60, wit);

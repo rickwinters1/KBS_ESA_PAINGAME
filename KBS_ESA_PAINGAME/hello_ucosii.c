@@ -25,6 +25,7 @@ OS_STK    Game_stk[TASK_STACKSIZE];
 OS_STK    Singleplayer_stk[TASK_STACKSIZE];
 OS_STK	  menu_stk[TASK_STACKSIZE];
 OS_STK	  menu_stk2[TASK_STACKSIZE];
+OS_STK	  Tutorial_stk[TASK_STACKSIZE];
 
 
 /* Definition of Task Priorities */
@@ -34,6 +35,7 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 #define Game_PRIORITY      			6
 #define menu_PRIORITY		  		9
 #define Singleplayer_PRIORITY		7
+#define Tutorial_PRIORITY 			8
 
 
 //Flags
@@ -43,6 +45,7 @@ OS_STK	  menu_stk2[TASK_STACKSIZE];
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
 #define Singleplayer_Flag 0x20
+#define Tutorial_Flag 0x40
 
 
 #define zwart  0x000000
@@ -58,6 +61,7 @@ void menu(void* pdata);
 void selecteerMenu(void *pdata);
 void Game(void* pdata);
 void Singleplayer(void* pdata);
+void Tutorial(void* pdata);
 
 
 void * Messages[500];
@@ -75,7 +79,7 @@ int main(void)
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
 	Flags = OSFlagCreate(C1_Flag + C2_Flag, &err);
-	Flags_Games = OSFlagCreate(Game_Flag + Singleplayer_Flag, &err);
+	Flags_Games = OSFlagCreate(Game_Flag + Singleplayer_Flag + Tutorial_Flag, &err);
 
 
 	gameSem = OSSemCreate(0);
@@ -97,6 +101,7 @@ int main(void)
 	OSTaskCreate(controllers,(void*) 2,&controller2_stk[TASK_STACKSIZE-1],controller2_PRIORITY);
 	OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
 	OSTaskCreate(Singleplayer,(void*) 0, &Singleplayer_stk[TASK_STACKSIZE-1],Singleplayer_PRIORITY);
+	OSTaskCreate(Tutorial,(void*) 0, &Tutorial_stk[TASK_STACKSIZE-1],Tutorial_PRIORITY);
 
 
 	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
