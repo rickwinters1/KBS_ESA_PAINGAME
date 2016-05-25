@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "includes.h"
+#include <string.h>
 
 OS_EVENT* gameSem;
 OS_EVENT* controllerSem;
@@ -17,6 +18,7 @@ OS_FLAG_GRP *Flags_Games;
 #define C2_Flag 0x08
 #define Menu2_Flag 0x10
 #define Singleplayer_Flag 0x20
+#define Tutorial_Flag 0x40
 
 
 #define zwart  0x000000
@@ -323,7 +325,7 @@ void endSingleplayer(){
 
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
-	OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
+	OSFlagPost(Flags_Games, Singleplayer_Flag + Tutorial_Flag, OS_FLAG_SET, &err);
 
 }
 
@@ -346,6 +348,8 @@ void Singleplayer(void* pdata){
 	int q;
 	Balk * balkje;
 	
+	char levens[10];
+
 	score3 = 0;
 	
 
@@ -436,11 +440,17 @@ void Singleplayer(void* pdata){
 				}
 			}
 			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
+				leven = 0;
 				score3 =0;
+				sprintf(levens, "LEVENS: %d", leven);
+				VGA_text(6,5, levens);
 				endSingleplayer();
 			}
 		}
 
+
+		sprintf(levens, "LEVENS: %d", leven);
+		VGA_text(6,5, levens);
 		OSTimeDly(1);
 
 
@@ -458,19 +468,19 @@ void TutUitleg(){
 	VGA_text(10, 13, "computer, waarbij je zoveel mogelijk");
 	VGA_text(10, 14, "aantal punten moet bereiken door de bal");
 	VGA_text(10, 15, "tegen de muur te kaatsen.");
-	OSTimeDlyHMSM(0, 10, 0, 0);
+	OSTimeDlyHMSM(0, 5, 0, 0);
 	VGA_text(10, 10, "                                         ");
 	VGA_text(10, 11, "                                         ");	
 	VGA_text(10, 12, "                                         ");
 	VGA_text(10, 13, "                                         ");
 	VGA_text(10, 14, "                                         ");
 	VGA_text(10, 15, "                                         ");
-	OSTimeDlyHMSM(0, 5, 0, 0);
+	OSTimeDlyHMSM(0, 2, 0, 0);
 	VGA_text(10, 10, "In Multiplayer gaat het er om dat je");
 	VGA_text(10, 11, "de bal in het doel van de tegenstander");
 	VGA_text(10, 12, "krijgt. Het doel bevindt zich achter het");
 	VGA_text(10, 13, "balkje van de tegenstander.");
-	OSTimeDlyHMSM(0, 10, 0, 0);
+	OSTimeDlyHMSM(0, 5, 0, 0);
 	VGA_text(10, 10, "                                         ");
 	VGA_text(10, 11, "                                         ");	
 	VGA_text(10, 12, "                                         ");
