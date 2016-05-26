@@ -473,19 +473,19 @@ void tutorialUitleg(){
 	VGA_text(10, 5, "Er zijn twee soorten spellen: Singleplayer en Multiplayer.");
 	VGA_text(10, 7, "In Singleplayer speel je tegen de computer, waarbij je");
 	VGA_text(10, 8, "zoveel mogelijk aantal punten moet bereiken door de bal");
-	VGA_text(10, 9, "tegen de muur te kaatsen. Hierbij heb je 3 levens");
+	VGA_text(10, 9, "tegen de muur te kaatsen. Hierbij heb je 3 levens.");
 	VGA_text(10, 11, "In Multiplayer gaat het er om dat je de bal in het doel");
 	VGA_text(10, 12, "van de tegenstander krijgt. Het doel bevindt zich achter");
 	VGA_text(10, 13, "het balkje van de tegenstander. Wanneer je scoort krijg je");
-	VGA_text(10, 14, "1 punt."):
+	VGA_text(10, 14, "1 punt.");
 	
-	VGA_text(10, 38, "De besturing gaat als volgt:"):
-	VGA_text(10, 40, "De linker balk wordt bestuurd door het op en neer bewegen"):
-	VGA_text(10, 41, "van switch 17. Bij de multiplayer wordt ook nog vereist om"):
-	VGA_text(10, 42, "de linker knop in te houden, anders ben je af. Dit geldt ook"):
-	VGA_text(10, 43, "voor de rechter balk."):
-	VGA_text(10, 45, "De rechter balk wordt bestuurd KEY3 en KEY2. KEY3 = omhoog,"):
-	VGA_text(10, 46, "KEY2 = omlaag."):
+	VGA_text(10, 38, "De besturing gaat als volgt:");
+	VGA_text(10, 40, "De linker balk wordt bestuurd door het op en neer bewegen");
+	VGA_text(10, 41, "van switch 17. Bij de multiplayer wordt ook nog vereist om");
+	VGA_text(10, 42, "de linker knop in te houden, anders ben je af. Dit geldt ook");
+	VGA_text(10, 43, "voor de rechter knop voor de rechter balk.");
+	VGA_text(10, 45, "De rechter balk wordt bestuurd KEY3 en KEY2. KEY3 = omlaag,");
+	VGA_text(10, 46, "KEY2 = omhoog.");
 }
 
 void endTutorial(){
@@ -565,7 +565,7 @@ void Tutorial(void* pdata){
 
 		balkje = (Balk*) OSMboxPend(MailBox, 0, &err);
 
-		printf("TUTORIAL SET\n");
+		//printf("TUTORIAL SET\n");
 
 		//printf("ID is: %d\tHoogte is: %d\n", balkje->ID, balkje->Hoogte);
 

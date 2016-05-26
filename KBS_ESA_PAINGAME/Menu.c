@@ -110,7 +110,7 @@ void selecteerMenu(void *pdata){
 				eenkeer = 0;
 				changed = 1;
 			}
-			if(controller(ID) == 2){
+			if(controller(ID) == 2 || controller(ID) == 1){
 				clearScreen();
 				clearText();
 				printf("start game\n");

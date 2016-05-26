@@ -19,11 +19,12 @@ extern volatile int timeout = 0;							// used to synchronize with the timer
 volatile int * interval_timer_ptr = (int *) 0x10002000;	// internal timer base address
 
 /* Definition of Task Stacks */
-#define   TASK_STACKSIZE       2049
+#define   TASK_STACKSIZE       	2049
+#define	  TASK_GAME			   	10000
 OS_STK    controller1_stk[TASK_STACKSIZE];
 OS_STK    controller2_stk[TASK_STACKSIZE];
-OS_STK    Game_stk[TASK_STACKSIZE + 10000];
-OS_STK    Singleplayer_stk[TASK_STACKSIZE + 10000];
+OS_STK    Game_stk[TASK_GAME];
+OS_STK    Singleplayer_stk[TASK_GAME];
 OS_STK	  menu_stk[TASK_STACKSIZE];
 OS_STK	  menu_stk2[TASK_STACKSIZE];
 OS_STK	  Tutorial_stk[TASK_STACKSIZE];
