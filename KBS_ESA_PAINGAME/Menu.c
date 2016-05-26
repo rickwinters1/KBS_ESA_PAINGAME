@@ -18,6 +18,7 @@ OS_FLAG_GRP *Flags_Tutorial;
 #define Menu2_Flag 0x10
 #define Singleplayer_Flag 0x20
 #define Tutorial_Flag 0x40
+#define Highscores_Flag 0x80
 
 #define Zwart  0x000000
 #define Wit  0xffffff
@@ -125,8 +126,14 @@ void selecteerMenu(void *pdata){
 				VGA_box(xLinks*4, xBoven*4 + 32, xRechts*4, xOnder*4 + 32, rood);
 				VGA_text (xMenu, yMenu +  8, "Highscores");
 				eenkeer = 0;
-				changed = 1;
-
+				changed = 1;				
+			}
+			if(controller(ID) == 2){
+				clearScreen();
+				clearText();
+				printf("Start Highscores\n");
+				OSFlagPost(Flags,Highscores_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 		} else if (gameModeMenu == 4){
 			if(eenkeer == 1){

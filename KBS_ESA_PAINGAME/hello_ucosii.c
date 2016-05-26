@@ -28,6 +28,7 @@ OS_STK    Singleplayer_stk[TASK_GAME];
 OS_STK	  menu_stk[TASK_STACKSIZE];
 OS_STK	  menu_stk2[TASK_STACKSIZE];
 OS_STK	  Tutorial_stk[TASK_STACKSIZE];
+OS_STK    Highscores_stk[TASK_STACKSIZE];
 
 
 /* Definition of Task Priorities */
@@ -38,6 +39,7 @@ OS_STK	  Tutorial_stk[TASK_STACKSIZE];
 #define menu_PRIORITY		  		9
 #define Singleplayer_PRIORITY		7
 #define Tutorial_PRIORITY 			8
+#define Highscores_PRIORITY			10
 
 
 //Flags
@@ -48,6 +50,7 @@ OS_STK	  Tutorial_stk[TASK_STACKSIZE];
 #define Menu2_Flag 0x10
 #define Singleplayer_Flag 0x20
 #define Tutorial_Flag 0x40
+#define Highscores_Flag 0x80
 
 
 #define zwart  0x000000
@@ -64,6 +67,7 @@ void selecteerMenu(void *pdata);
 void Game(void* pdata);
 void Singleplayer(void* pdata);
 void Tutorial(void* pdata);
+void Highscores(void* pdata);
 
 
 void * Messages[500];
@@ -80,7 +84,7 @@ int main(void)
 
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
-	Flags = OSFlagCreate(C1_Flag + C2_Flag, &err);
+	Flags = OSFlagCreate(C1_Flag + C2_Flag + Highscores_Flag, &err);
 	Flags_Games = OSFlagCreate(Game_Flag + Singleplayer_Flag, &err);
 	Flags_Tutorial = OSFlagCreate(Tutorial_Flag, &err);
 

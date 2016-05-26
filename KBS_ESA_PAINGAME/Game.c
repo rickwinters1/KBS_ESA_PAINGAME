@@ -20,6 +20,7 @@ OS_FLAG_GRP *Flags_Tutorial;
 #define Menu2_Flag 0x10
 #define Singleplayer_Flag 0x20
 #define Tutorial_Flag 0x40
+#define Highscores_Flag 0x80
 
 
 #define zwart  0x000000
@@ -639,6 +640,66 @@ void Tutorial(void* pdata){
 		OSTimeDly(1);
 
 
+	}
+	
+}
+
+void endHighscores(){
+	INT8U err;
+
+	printf("end Highscores\n");
+
+	//clearScreen();
+
+	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
+
+	VGA_text(35, 25, "Einde Highscores");
+	OSTimeDlyHMSM(0, 0, 40, 0);
+	VGA_text(35, 25, "                  ");
+
+
+
+
+	teken_menu(4);
+
+	VGA_box (316, 4, 319, 235, zwart); 					// singleplayer/tutorial balk weghalen voor de zekerheid
+
+	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
+
+	ALT_x1 = 0;
+	ALT_x2 = 165;
+	ALT_y = 100;
+	ALT_inc_x = -1;
+	ALT_inc_y = 1;
+
+	first = 1;
+
+	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
+
+	OSFlagPost(Flags, Highscores_Flag, OS_FLAG_SET, &err);
+
+}
+
+void Highscores(void* pdata){
+	
+	INT8U err;
+	int i;
+	int ID;
+	int count;
+	int q;
+	
+	while(1){
+		
+		VGA_text(35, 15, "Highscores");
+		
+		
+		if (controller(3) == 3) {
+			endHighscores();
+		}
+		
+		OSTimeDly(1);
+		
 	}
 	
 }
