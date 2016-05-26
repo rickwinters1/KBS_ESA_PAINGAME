@@ -6,6 +6,14 @@
 
 #define MAX_SUBDIRECTORIES 20
 
+char highscores[5][20] = {
+			{""},
+			{""},
+			{""},
+			{""},
+			{""},
+};
+
 
 /********************************************************************************
  * This program demonstrates use of the SD Card reader
@@ -85,15 +93,10 @@ void read_file()
 	short int Read;
 	Read = alt_up_sd_card_fopen("hoi.txt", false);
 
-	int i;
+	int i = 0;
+	int j;
 
-	char highscores[5][20] = {
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-	};
+
 
 	char buffer[1] = "";
 	char c = 1;
@@ -101,14 +104,19 @@ void read_file()
 	c = alt_up_sd_card_read(Read);
 
 	while (c != -1){
-//		if(c == ','){		//check voor komma
-//			i++;
-//		}
-		sprintf(buffer, "%c", c);
-		strcat(highscores[i], buffer);
+		if(c == '|'){		//check voor komma
+			i++;
+		}else{
+			sprintf(buffer, "%c", c);
+			strcat(highscores[i], buffer);
+		}
 		c = alt_up_sd_card_read(Read);		//lees volgende char
 	}
-	printf("%s highscores print", highscores[1]);
+
+
+	for(j = 0; j < 5; j++){
+		printf("nummer is : %d data :%s\n",j , highscores[j]);
+	}
 	alt_up_sd_card_fclose(Read);						//sluit het bestand
 }
 
