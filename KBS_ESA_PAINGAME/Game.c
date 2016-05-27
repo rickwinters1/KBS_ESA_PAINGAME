@@ -313,6 +313,19 @@ void endSingleplayer(){
 	VGA_text(6,5, "           ");
 
 
+	/*
+	if(score3 > highscore[0][5]){
+		// newHighscore functie
+		newHighscore(5); // score is groter dan highscore nummer 5, dus hij komt op die positie.
+	}
+	VGA_text(1, 1, "/\\"); = dakje omhoog
+	VGA_text(1, 2, "\\/"); = dakje omlaag
+	
+	knop links is bevestig van alle 3 letters in 1 keer
+	knop rechts is letter naar rechts, ook naar bevestig, eenmaal op bevestig en druk nogmaals op rechts, opnieuw bij de meeste linkse letter.
+	*/
+	
+	
 	teken_menu(1);
 
 	VGA_box (316, 4, 319, 235, zwart); 					// singleplayer balk weghalen voor de zekerheid
@@ -358,7 +371,7 @@ void Singleplayer(void* pdata){
 	
 	char levens[10];
 
-	score3 = 0;
+	//score3 = 0;
 	
 
 	while (1) {
