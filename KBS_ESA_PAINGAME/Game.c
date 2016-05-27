@@ -216,10 +216,10 @@ void gescoord(int ID){
 		ALT_inc_x = -1;
 		if(random == 1){
 			ALT_inc_y = -1;
-			random == 0;
+			random = 0;
 		}else if(random == 0){
 			ALT_inc_y = 1;
-			random == 1;
+			random = 1;
 		}
 	}else if(ID == 2){
 		VGA_text(30, 25, "Speler 2 heeft gescoord!");
@@ -581,7 +581,6 @@ void Tutorial(void* pdata){
 
 
 		if (first == 1) {
-			printf("FIRST");
 			ALT_x1 = 160 + ALT_x1 + ALT_inc_x;
 			ALT_x2 += ALT_inc_x;
 			ALT_y += ALT_inc_y;
