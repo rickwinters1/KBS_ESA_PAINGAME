@@ -24,82 +24,15 @@ char highscores[5][20] = {
  * 	-- Prints out the file listing to the terminal window
 ********************************************************************************/
 
-// find_files will print out the list of files in the current path,
-// then recursively call itself on any subdirectories it finds.
-// It is limited to directories containing MAX_SUBDIRECTORIES or fewer
-// subdirectories and a maximium path length of 104 characters (including /'s)
-void find_files (char* path){
-	char filepath [90];
-	char filename [15];
-	char fullpath [104];
-	char* folders [MAX_SUBDIRECTORIES];
-	int num_dirs = 0;
-	short int file;
-	short int attributes;
-	bool foundAll;
-
-	//copy the path name to local memory
-	strcpy (filepath, path);
-
-	foundAll = (alt_up_sd_card_find_first(filepath,filename) == 0 ? false : true);
-
-	//output the current directory
-	printf("/%s\n",filepath);
-
-	//loop through the directory tree
-	while (!foundAll){
-		strcpy (fullpath,filepath);
-		//remove the '.' character from the filepath (foo/bar/. -> foo/bar/)
-		fullpath [strlen(filepath)-1] = '\0';
-		strcat (fullpath,filename);
-
-		file = alt_up_sd_card_fopen (fullpath, false);
-		attributes = alt_up_sd_card_get_attributes (file);
-
-		if (file != -1)
-			alt_up_sd_card_fclose(file);
-
-		//print the file name, unless it's a directory or mount point
-		if ( (attributes != -1) && !(attributes & 0x0018)){
-			printf("/%s\n",fullpath);
-		}
-
-		//if a directory is found, allocate space and save its name for later
-		if ((attributes != -1) && (attributes & 0x0010)){
-			folders [num_dirs] = malloc (15*sizeof(char));
-			strcpy(folders[num_dirs],filename);
-			num_dirs++;
-		}
-
-		foundAll = (alt_up_sd_card_find_next(filename) == 0 ? false : true);
-	}
-
-	//second loop to open any directories found and call find_files() on them
-	int i;
-	for (i=0; i<num_dirs; i++){
-
-		strcpy (fullpath,filepath);
-		fullpath [strlen(filepath)-1] = '\0';
-		strcat (fullpath,folders[i]);
-		strcat (fullpath, "/.");
-		find_files (fullpath);
-		free(folders[i]);
-	}
-
-	return;
-}
 void read_file()
 {
 	short int Read;
 	Read = alt_up_sd_card_fopen("hoi.txt", false);
 
 	int i = 0;
-	int j;
-
-
 
 	char buffer[1] = "";
-	char c = 1;
+	short int c = 1;
 
 	c = alt_up_sd_card_read(Read);
 
@@ -113,10 +46,11 @@ void read_file()
 		c = alt_up_sd_card_read(Read);		//lees volgende char
 	}
 
-
+	int j;
 	for(j = 0; j < 5; j++){
-		printf("nummer is : %d data :%s\n",j , highscores[j]);
+		printf("Number is : %d data :%s\n",j , highscores[j]);
 	}
+
 	alt_up_sd_card_fclose(Read);						//sluit het bestand
 }
 
@@ -125,15 +59,18 @@ void write_file(char input[]){
 	Write = alt_up_sd_card_fopen("hoi.txt", false);
 	int i = 0;
 	bool writing;
-	if(Write == -1){
-		printf("Can't open");
+	if(Write < 0){
+		printf("Can't open\n");
+	}else{
+		while(input[i] != '\0'){
+			writing = alt_up_sd_card_write(Write, input[i]);
+			printf("%c", input[i]);
+			i++;
+		}
+		alt_up_sd_card_fclose(Write);
+		printf("\nFile is geschreven\n");
 	}
-	while(input[i] != '\0'){
-		writing = alt_up_sd_card_write(Write, input[i]);
-		printf("%c", input[i]);
-		i++;
-	}
-	printf("\nFile is geschreven\n");
+
 }
 
 
@@ -161,16 +98,10 @@ int main (void){
 		}
 
 
- 		char input[20];
- 		strcpy(input, "Hoi 005");
+ 		char input[25];
+ 		strcpy(input, "Hoi 005|DOEI 004|GAY 003");
 
-		//Call find_files on the root directory
-
-		//find_files (".");
-
-
-
- 		write_file(input);
+ 		//write_file(input);
 
  		read_file();
 	}
