@@ -8,6 +8,7 @@ OS_EVENT* controllerSem;
 OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
 OS_FLAG_GRP *Flags_Tutorial;
+OS_FLAG_GRP *Flags_Highscores;
 
 
 
@@ -132,7 +133,7 @@ void selecteerMenu(void *pdata){
 				clearScreen();
 				clearText();
 				printf("Start Highscores\n");
-				OSFlagPost(Flags,Highscores_Flag, OS_FLAG_CLR, &err);
+				OSFlagPost(Flags_Highscores, Highscores_Flag, OS_FLAG_CLR, &err);
 				OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_SET, &err);
 			}
 		} else if (gameModeMenu == 4){
@@ -193,8 +194,11 @@ void teken_menu(int ID){
 		VGA_box(xLinks*4, xBoven*4, xRechts*4, xOnder*4, rood);
 	}else if(ID == 2){
 		VGA_box(xLinks*4, xBoven*4 + 16, xRechts*4, xOnder*4 + 16, rood);
+	}else if(ID == 3){
+		VGA_box(xLinks*4, xBoven*4 + 32, xRechts*4, xOnder*4 + 32, rood);
 	}else if(ID == 4){
 		VGA_box(xLinks*4, xBoven*4 + 48, xRechts*4, xOnder*4 + 48, rood);
 	}
+
 
 }

@@ -11,7 +11,7 @@ OS_EVENT* MailBox2;
 OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
 OS_FLAG_GRP *Flags_Tutorial;
-
+OS_FLAG_GRP *Flags_Highscores;
 
 #define Menu_Flag 0x01
 #define Game_Flag 0x02
@@ -651,7 +651,6 @@ void endHighscores(){
 
 	//clearScreen();
 
-	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
 
 	VGA_text(35, 25, "Einde Highscores");
 	OSTimeDlyHMSM(0, 0, 40, 0);
@@ -660,7 +659,7 @@ void endHighscores(){
 
 
 
-	teken_menu(4);
+	teken_menu(3);
 
 	VGA_box (316, 4, 319, 235, zwart); 					// singleplayer/tutorial balk weghalen voor de zekerheid
 
@@ -677,7 +676,7 @@ void endHighscores(){
 
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
-	OSFlagPost(Flags, Highscores_Flag, OS_FLAG_SET, &err);
+	OSFlagPost(Flags_Highscores, Highscores_Flag, OS_FLAG_SET, &err);
 
 }
 
@@ -690,7 +689,7 @@ void Highscores(void* pdata){
 	int q;
 	
 	while(1){
-		
+		OSFlagPend(Flags_Highscores, Highscores_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 		VGA_text(35, 15, "Highscores");
 		
 		

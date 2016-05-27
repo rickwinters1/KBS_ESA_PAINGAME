@@ -120,17 +120,21 @@ void read_file()
 	alt_up_sd_card_fclose(Read);						//sluit het bestand
 }
 
-//void write_file(char input[]){
-//	short int Write;
-//	Write = alt_up_sd_card_fopen("hoi.txt", false);
-//	int i = 0;
-//
-//	while(i != 20){
-//		alt_up_sd_card_write(Write, input[i]);
-//		i++;
-//	}
-//	printf("File is geschreven");
-//}
+void write_file(char input[]){
+	short int Write;
+	Write = alt_up_sd_card_fopen("hoi.txt", false);
+	int i = 0;
+	bool writing;
+	if(Write == -1){
+		printf("Can't open");
+	}
+	while(input[i] != '\0'){
+		writing = alt_up_sd_card_write(Write, input[i]);
+		printf("%c", input[i]);
+		i++;
+	}
+	printf("\nFile is geschreven\n");
+}
 
 
 int main (void){
@@ -157,11 +161,18 @@ int main (void){
 		}
 
 
+ 		char input[20];
+ 		strcpy(input, "Hoi 005");
+
 		//Call find_files on the root directory
 
 		//find_files (".");
 
-		read_file();
+
+
+ 		write_file(input);
+
+ 		read_file();
 	}
 
 	return 0;

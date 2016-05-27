@@ -8,6 +8,8 @@ OS_EVENT* gameSem;
 OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
 OS_FLAG_GRP *Flags_Tutorial;
+OS_FLAG_GRP *Flags_Highscores;
+
 
 OS_EVENT* MailBox;
 OS_EVENT* MailBox2;
@@ -39,7 +41,7 @@ OS_STK    Highscores_stk[TASK_STACKSIZE];
 #define menu_PRIORITY		  		9
 #define Singleplayer_PRIORITY		7
 #define Tutorial_PRIORITY 			8
-#define Highscores_PRIORITY			10
+#define Highscores_PRIORITY			13
 
 
 //Flags
@@ -84,9 +86,10 @@ int main(void)
 
 	*(interval_timer_ptr + 1) = 0x7;	// STOP = 0, START = 1, CONT = 1, ITO = 1
 
-	Flags = OSFlagCreate(C1_Flag + C2_Flag + Highscores_Flag, &err);
+	Flags = OSFlagCreate(C1_Flag + C2_Flag, &err);
 	Flags_Games = OSFlagCreate(Game_Flag + Singleplayer_Flag, &err);
 	Flags_Tutorial = OSFlagCreate(Tutorial_Flag, &err);
+	Flags_Highscores = OSFlagCreate(Highscores_Flag, &err);
 
 
 	gameSem = OSSemCreate(0);
@@ -109,6 +112,7 @@ int main(void)
 	OSTaskCreate(Game,(void*) 0, &Game_stk[TASK_STACKSIZE-1],Game_PRIORITY);
 	OSTaskCreate(Singleplayer,(void*) 0, &Singleplayer_stk[TASK_STACKSIZE-1],Singleplayer_PRIORITY);
 	OSTaskCreate(Tutorial,(void*) 0, &Tutorial_stk[TASK_STACKSIZE-1],Tutorial_PRIORITY);
+	OSTaskCreate(Highscores,(void*) 0, &Highscores_stk[TASK_STACKSIZE-1],Highscores_PRIORITY);
 
 
 	OSTaskCreate(menu, (void*) 2, &menu_stk[TASK_STACKSIZE-1],menu_PRIORITY);
