@@ -488,7 +488,7 @@ void tutorialUitleg(){
 	VGA_text(10, 45, "De rechter balk wordt bestuurd KEY3 en KEY2. KEY3 = omlaag,");
 	VGA_text(10, 46, "KEY2 = omhoog.");
 	
-	tutorialUitleg();
+	terugMenu();
 }
 
 void endTutorial(){
@@ -513,6 +513,9 @@ void endTutorial(){
 	VGA_text(10, 43, "                                                                              ");
 	VGA_text(10, 45, "                                                                              ");
 	VGA_text(10, 46, "                                                                              ");
+	
+	VGA_text(63, 56, "              ");
+	VGA_text(63, 57, "               ");
 
 	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
 
@@ -653,6 +656,15 @@ void endHighscores(){
 
 	//clearScreen();
 
+	VGA_text(35, 18, "                 ");
+	VGA_text(35, 20, "                 ");
+	VGA_text(35, 22, "                 ");
+	VGA_text(35, 24, "                 ");
+	VGA_text(35, 26, "                 ");
+	
+	VGA_text(63, 56, "              ");
+	VGA_text(63, 57, "               ");
+	
 	VGA_text(35, 15, "                          ");
 	VGA_text(35, 25, "Einde Highscores");
 	OSTimeDlyHMSM(0, 0, 40, 0);
@@ -701,7 +713,7 @@ void Highscores(void* pdata){
 		VGA_text(35, 24, "4. <nummer 4>");
 		VGA_text(35, 26, "5. <nummer 5>");
 		
-		terugMenu
+		terugMenu();
 		
 		
 		if (controller(3) == 3) {
@@ -718,8 +730,8 @@ void terugMenu(){
 	
 	INT8U err;
 	
-	VGA_text(63, 57, "Rechter knop =");
-	VGA_text(63, 58, "terug naar menu");
+	VGA_text(63, 56, "Rechter knop =");
+	VGA_text(63, 57, "terug naar menu");
 	
 }
 
