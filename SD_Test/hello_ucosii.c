@@ -14,16 +14,6 @@ char highscores[5][20] = {
 			{""},
 };
 
-
-/********************************************************************************
- * This program demonstrates use of the SD Card reader
- *
- * It:
- *  -- Detects if a properly-formatted SD Card is present
- * 	-- Recursively searches the directory tree for files
- * 	-- Prints out the file listing to the terminal window
-********************************************************************************/
-
 void read_file()
 {
 	short int Read;
@@ -51,7 +41,7 @@ void read_file()
 		printf("Number is : %d data :%s\n",j , highscores[j]);
 	}
 
-	alt_up_sd_card_fclose(Read);						//sluit het bestand
+	//alt_up_sd_card_fclose(Read);						//sluit het bestand
 }
 
 void write_file(char input[]){
@@ -70,6 +60,58 @@ void write_file(char input[]){
 		alt_up_sd_card_fclose(Write);
 		printf("\nFile is geschreven\n");
 	}
+
+}
+
+void sorteer(){
+	int score3 = 102;
+	int i, j, k;
+	int hoogste;
+
+	char letter1, letter2, letter3;
+	char letters[4] = {'A','B','C'};
+	char cijfers[4];
+
+	cijfers[0] = score3 /100;
+	cijfers[1] = score3 /10 %10;
+	cijfers[3] = score3 %10;
+
+	char nieuw[20] = "";
+
+	for(i = 0; i < 5; i++){
+		hoogste = ((highscores[i][4] - '0') *100) +
+				   ((highscores[i][5] - '0') *10) +
+				   (highscores[i][6] - '0');
+		if(hoogste < score3){
+
+			schuifScores(i);
+			printf("score = hoger dan %de score\n", i);
+			for(j = 0; j < 3; j++){
+				highscores[i][j] = letters[j];
+			}
+			for(k = 0; k < 3; k++){
+				highscores[i][4 + k] = cijfers[k] + '0';
+			}
+			write_file(highscores);
+			break;
+		}
+
+		else{
+			printf("score is niet hoger\n");
+		}
+
+
+	}
+	read_file();
+
+}
+
+void schuifScores(int nummer){
+	int i;
+	for(i = 5; i > nummer; i--){
+		strcpy(highscores[i], highscores[i-1]);
+	}
+
 
 }
 
@@ -98,12 +140,14 @@ int main (void){
 		}
 
 
- 		char input[25];
- 		strcpy(input, "Hoi 005|DOEI 004|GAY 003");
+ 		char input[50];
+ 		strcpy(input, "HOI 125|DOE 100|GAY 075|PIT 002|KUT 001|");
 
- 		//write_file(input);
+ 		write_file(input);
 
  		read_file();
+
+ 		//sorteer();
 	}
 
 	return 0;
