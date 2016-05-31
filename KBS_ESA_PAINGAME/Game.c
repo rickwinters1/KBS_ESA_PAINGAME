@@ -12,6 +12,7 @@ OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
 OS_FLAG_GRP *Flags_Tutorial;
 OS_FLAG_GRP *Flags_Highscores;
+OS_FLAG_GRP *Flags_newHighscores;
 
 #define Menu_Flag 0x01
 #define Game_Flag 0x02
@@ -21,6 +22,7 @@ OS_FLAG_GRP *Flags_Highscores;
 #define Singleplayer_Flag 0x20
 #define Tutorial_Flag 0x40
 #define Highscores_Flag 0x80
+#define newHighscores_Flag 0x100
 
 
 #define zwart  0x000000
@@ -40,7 +42,8 @@ int ALT_inc_y;
 int pixel_buffer_x;
 int pixel_buffer_y;
 
-int score1, score2, score3 = 0;
+int score1, score2 = 0;
+int score3;
 int first = 1;
 int check = 1;
 int random;
@@ -296,12 +299,20 @@ void endGame(int ID) {
 
 }
 
+void dakjeOmhoog(int omhoogX, int omhoogY){
+	VGA_text(omhoogX, omhoogY, "/\\"); //= dakje omhoog
+}
+
+void dakjeOmlaag(int omlaagX, int omlaagY){
+	VGA_text(omlaagX, omlaagY, "\\/"); //= dakje omlaag
+}
+
 void endSingleplayer(){
 	INT8U err;
 
 	printf("end Singleplayer\n");
 
-	//clearScreen();
+	clearScreen();
 
 	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
 
@@ -313,17 +324,16 @@ void endSingleplayer(){
 	VGA_text(6,5, "           ");
 
 
-	/*
-	if(score3 > highscore[0][5]){
-		// newHighscore functie
-		newHighscore(5); // score is groter dan highscore nummer 5, dus hij komt op die positie.
-	}
-	VGA_text(1, 1, "/\\"); = dakje omhoog
-	VGA_text(1, 2, "\\/"); = dakje omlaag
 	
-	knop links is bevestig van alle 3 letters in 1 keer
-	knop rechts is letter naar rechts, ook naar bevestig, eenmaal op bevestig en druk nogmaals op rechts, opnieuw bij de meeste linkse letter.
-	*/
+	if(score3 > 0){
+		clearScreen();
+		newHighscores();
+	}
+
+	
+	//knop links is bevestig van alle 3 letters in 1 keer
+	//knop rechts is letter naar rechts, ook naar bevestig, eenmaal op bevestig en druk nogmaals op rechts, opnieuw bij de meeste linkse letter.
+	
 	
 	
 	teken_menu(1);
@@ -371,7 +381,7 @@ void Singleplayer(void* pdata){
 	
 	char levens[10];
 
-	//score3 = 0;
+	score3 = 0;
 	
 
 	while (1) {
@@ -657,6 +667,62 @@ void Tutorial(void* pdata){
 		OSTimeDly(1);
 
 
+	}
+	
+}
+
+void newHighscores(){
+	INT8U err;
+	char a = 'A';
+	char b = 'B';
+	char c = 'C';
+	
+	while(1){
+		//flag shit
+		VGA_text(35, 15, "New Highscore!");
+		
+		dakjeOmhoog(20, 30);
+		VGA_text(20, 35, a);
+		dakjeOmlaag(20, 40);
+		
+		dakjeOmhoog(30, 30);
+		VGA_text(30, 35, b);
+		dakjeOmlaag(30, 40);
+		
+		dakjeOmhoog(40, 30);
+		VGA_text(40, 35, c);
+		dakjeOmlaag(40, 40);
+		
+		VGA_text(50, 35, "Bevestig");
+		
+
+
+						
+		if (controller(3) == 3) {
+			//save highscores naar SD kaart
+			
+			teken_menu(3);
+
+			VGA_box (316, 4, 319, 235, zwart); 					// singleplayer/tutorial balk weghalen voor de zekerheid
+
+			VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+
+
+			ALT_x1 = 0;
+			ALT_x2 = 165;
+			ALT_y = 100;
+			ALT_inc_x = -1;
+			ALT_inc_y = 1;
+
+			first = 1;
+
+			OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
+
+			OSFlagPost(Flags_Highscores, Highscores_Flag, OS_FLAG_SET, &err);
+		}
+		
+		OSTimeDly(1);
+		
 	}
 	
 }

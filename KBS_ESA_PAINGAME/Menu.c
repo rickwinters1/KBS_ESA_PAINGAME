@@ -9,6 +9,7 @@ OS_FLAG_GRP *Flags;
 OS_FLAG_GRP *Flags_Games;
 OS_FLAG_GRP *Flags_Tutorial;
 OS_FLAG_GRP *Flags_Highscores;
+OS_FLAG_GRP *Flags_newHighscores;
 
 
 
@@ -20,6 +21,7 @@ OS_FLAG_GRP *Flags_Highscores;
 #define Singleplayer_Flag 0x20
 #define Tutorial_Flag 0x40
 #define Highscores_Flag 0x80
+#define newHighscores_Flag 0x100
 
 #define Zwart  0x000000
 #define Wit  0xffffff
