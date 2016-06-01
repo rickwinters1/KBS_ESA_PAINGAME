@@ -64,7 +64,7 @@ void write_file(char input[]){
 }
 
 void sorteer(){
-	int score3 = 102;
+	int score3 = 80;
 	int i, j, k;
 	int hoogste;
 
@@ -72,11 +72,22 @@ void sorteer(){
 	char letters[4] = {'A','B','C'};
 	char cijfers[4];
 
-	cijfers[0] = score3 /100;
-	cijfers[1] = score3 /10 %10;
-	cijfers[3] = score3 %10;
+	if(score3 < 100){
+		cijfers[0] = 0;
+		cijfers[1] = score3 / 10;
+		cijfers[2] = score3 %10;
+	}else if(score3 < 10){
+		cijfers[0] = 0;
+		cijfers[1] = 0;
+		cijfers[2] = score3;
+	}else{
+		cijfers[0] = score3 /100;
+		cijfers[1] = score3 /10 %10;
+		cijfers[3] = score3 %10;
+	}
 
-	char nieuw[20] = "";
+
+	char buffer[20] = "";
 
 	for(i = 0; i < 5; i++){
 		hoogste = ((highscores[i][4] - '0') *100) +
@@ -87,11 +98,17 @@ void sorteer(){
 			schuifScores(i);
 			printf("score = hoger dan %de score\n", i);
 			for(j = 0; j < 3; j++){
-				highscores[i][j] = letters[j];
+				buffer[j] = letters[j];
 			}
 			for(k = 0; k < 3; k++){
-				highscores[i][4 + k] = cijfers[k] + '0';
+				buffer[k + 4] = cijfers[k] + '0';
 			}
+			buffer[8] = "|";
+
+			strcpy(highscores[i], buffer);
+
+			//[i] = buffer;
+
 			write_file(highscores);
 			break;
 		}
@@ -143,11 +160,11 @@ int main (void){
  		char input[50];
  		strcpy(input, "HOI 125|DOE 100|GAY 075|PIT 002|KUT 001|");
 
- 		write_file(input);
+ 		//write_file(input);
 
  		read_file();
 
- 		//sorteer();
+ 		sorteer();
 	}
 
 	return 0;

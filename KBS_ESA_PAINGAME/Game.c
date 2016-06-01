@@ -43,7 +43,7 @@ int pixel_buffer_x;
 int pixel_buffer_y;
 
 int score1, score2 = 0;
-int score3;
+int score3 = 0;
 int first = 1;
 int check = 1;
 int random;
@@ -324,40 +324,42 @@ void endSingleplayer(){
 
 	VGA_text(6,5, "           ");
 
-
+	printf("Score is: %d", score3);
 	
 	if(score3 > 0){
+
 		clearScreen();
-		newHighscores();
+		OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
+		OSFlagPost(Flags_newHighscores, newHighscores_Flag, OS_FLAG_CLR, &err);
 	} else {
-
 	
-	//knop links is bevestig van alle 3 letters in 1 keer
-	//knop rechts is letter naar rechts, ook naar bevestig, eenmaal op bevestig en druk nogmaals op rechts, opnieuw bij de meeste linkse letter.
+
+		//knop links is bevestig van alle 3 letters in 1 keer
+		//knop rechts is letter naar rechts, ook naar bevestig, eenmaal op bevestig en druk nogmaals op rechts, opnieuw bij de meeste linkse letter.
+
+
+
+		teken_menu(1);
+
+		VGA_box (316, 4, 319, 235, zwart); 					// singleplayer balk weghalen voor de zekerheid
+
+		VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
+		deleteNummer();
+
+
+		ALT_x1 = 0;
+		ALT_x2 = 165;
+		ALT_y = 100;
+		ALT_inc_x = -1;
+		ALT_inc_y = 1;
 	
+		leven = beginLevens;
+		score3 = 0;
+		first = 1;
 	
+		OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 	
-	teken_menu(1);
 
-	VGA_box (316, 4, 319, 235, zwart); 					// singleplayer balk weghalen voor de zekerheid
-
-	VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
-	deleteNummer();
-
-
-	ALT_x1 = 0;
-	ALT_x2 = 165;
-	ALT_y = 100;
-	ALT_inc_x = -1;
-	ALT_inc_y = 1;
-
-	leven = beginLevens;
-	score3 = 0;
-	first = 1;
-
-	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
-
-	OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
 	}
 
 }
@@ -383,7 +385,6 @@ void Singleplayer(void* pdata){
 	
 	char levens[10];
 
-	score3 = 0;
 	
 
 	while (1) {
@@ -478,9 +479,6 @@ void Singleplayer(void* pdata){
 				}
 			}
 			if((score3 == 999) || (leven == 0)){ // max score of geen levens meer, spel eindigt.
-				leven = 0;
-				score3 =0;
-
 				endSingleplayer();
 			}
 		}
@@ -673,18 +671,18 @@ void Tutorial(void* pdata){
 	
 }
 
-void newHighscores(){
+void newHighscores(void *pdata){
 	INT8U err;
 	char a = 'A';
 	char b = 'B';
 	char c = 'C';
 	newHighscoreSelect = 1;
-	
 	while(1){
-		//flag shit
+		OSFlagPend(Flags_newHighscores, newHighscores_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
+
 		VGA_text(35, 15, "New Highscore!");
 		
-		if (controller(ID) == 2){
+		if (controller(3) == 2){
 			newHighscoreSelect++;
 			VGA_box(16 * 4, 35 * 4, 20 * 4, 39 * 4, zwart);
 			VGA_box(26 * 4, 35 * 4, 30 * 4, 39 * 4, zwart);
@@ -694,37 +692,37 @@ void newHighscores(){
 			newHighscoreSelect = 1;
 		}
 		
-		if(controller(ID) == 1 && newHighscoreSelect == 1){
-			if(a == 'Z' && controller(ID) == 1){
+		if(controller(2) == 1 && newHighscoreSelect == 1){
+			if(a == 'Z' && controller(2) == 1){
 				a = 'A';
 			}
 			a++;
-		} else if (controller(ID) == 0 && newHighscoreSelect == 1){
-			if (a == 'A' && controller(ID) == 0){
+		} else if (controller(2) == 0 && newHighscoreSelect == 1){
+			if (a == 'A' && controller(2) == 0){
 				a = 'Z';
 			}
 			a--;
 		}
 		
-		if (controller(ID) == 1 && newHighscoreSelect == 2){
-			if(b == 'Z' && controller(ID) == 1){
+		if (controller(2) == 1 && newHighscoreSelect == 2){
+			if(b == 'Z' && controller(2) == 1){
 				b = 'A';
 			}
 			b++;
-		} else if (controller(ID) == 0 && newHighscoreSelect == 2){
-			if(b == 'A' && controller(ID) == 0){
+		} else if (controller(2) == 0 && newHighscoreSelect == 2){
+			if(b == 'A' && controller(2) == 0){
 				b = 'Z';
 			}
 			b--;
 		}
 		
-		if (controller(ID) == 1 && newHighscoreSelect == 3){
-			if(c == 'Z' && controller(ID) == 1){
+		if (controller(2) == 1 && newHighscoreSelect == 3){
+			if(c == 'Z' && controller(2) == 1){
 				c = 'A';
 			}
 			c++;
-		} else if (controller(ID) == 0 && newHighscoreSelect == 3){
-			if(c == 'A' && controller(ID) == 1){
+		} else if (controller(2) == 0 && newHighscoreSelect == 3){
+			if(c == 'A' && controller(2) == 1){
 				c = 'Z';
 			}
 			c--;
@@ -755,7 +753,7 @@ void newHighscores(){
 
 
 					//controller(3) == 3 ??	
-		if (controller(ID) == 2 && newHighscoreSelect == 4) {
+		if (controller(3) == 2 && newHighscoreSelect == 4) {
 			//save highscores naar SD kaart
 			
 			teken_menu(3);
