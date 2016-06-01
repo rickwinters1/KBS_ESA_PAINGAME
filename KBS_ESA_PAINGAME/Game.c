@@ -49,6 +49,7 @@ int check = 1;
 int random;
 int X;
 int leven = beginLevens;
+int newHighscoreSelect;
 
 typedef struct balk {
 	int Hoogte;
@@ -328,7 +329,7 @@ void endSingleplayer(){
 	if(score3 > 0){
 		clearScreen();
 		newHighscores();
-	}
+	} else {
 
 	
 	//knop links is bevestig van alle 3 letters in 1 keer
@@ -357,6 +358,7 @@ void endSingleplayer(){
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
 	OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
+	}
 
 }
 
@@ -676,29 +678,84 @@ void newHighscores(){
 	char a = 'A';
 	char b = 'B';
 	char c = 'C';
+	newHighscoreSelect = 1;
 	
 	while(1){
 		//flag shit
 		VGA_text(35, 15, "New Highscore!");
 		
+		if (controller(ID) == 2){
+			newHighscoreSelect++;
+			VGA_box(16 * 4, 35 * 4, 20 * 4, 39 * 4, zwart);
+			VGA_box(26 * 4, 35 * 4, 30 * 4, 39 * 4, zwart);
+			VGA_box(36 * 4, 35 * 4, 40 * 4, 39 * 4, zwart);
+		}
+		if (newHighscoreSelect >= 5){
+			newHighscoreSelect = 1;
+		}
+		
+		if(controller(ID) == 1 && newHighscoreSelect == 1){
+			if(a == 'Z' && controller(ID) == 1){
+				a = 'A';
+			}
+			a++;
+		} else if (controller(ID) == 0 && newHighscoreSelect == 1){
+			if (a == 'A' && controller(ID) == 0){
+				a = 'Z';
+			}
+			a--;
+		}
+		
+		if (controller(ID) == 1 && newHighscoreSelect == 2){
+			if(b == 'Z' && controller(ID) == 1){
+				b = 'A';
+			}
+			b++;
+		} else if (controller(ID) == 0 && newHighscoreSelect == 2){
+			if(b == 'A' && controller(ID) == 0){
+				b = 'Z';
+			}
+			b--;
+		}
+		
+		if (controller(ID) == 1 && newHighscoreSelect == 3){
+			if(c == 'Z' && controller(ID) == 1){
+				c = 'A';
+			}
+			c++;
+		} else if (controller(ID) == 0 && newHighscoreSelect == 3){
+			if(c == 'A' && controller(ID) == 1){
+				c = 'Z';
+			}
+			c--;
+		}		
+		
+		if (newHighscoreSelect == 1){
+			VGA_box(16 * 4, 35 * 4, 20 * 4, 39 * 4, geel);
+		} else if (newHighscoreSelect == 2){
+			VGA_box(26 * 4, 35 * 4, 30 * 4, 39 * 4, geel);
+		} else if (newHighscoreSelect == 3){
+			VGA_box(36 * 4, 35 * 4, 40 * 4, 39 * 4, geel);
+		}
+		
 		dakjeOmhoog(20, 30);
-		VGA_text(20, 35, a);
+		VGA_text(16 + 4, 35, a);
 		dakjeOmlaag(20, 40);
 		
 		dakjeOmhoog(30, 30);
-		VGA_text(30, 35, b);
+		VGA_text(26 + 4, 35, b);
 		dakjeOmlaag(30, 40);
 		
 		dakjeOmhoog(40, 30);
-		VGA_text(40, 35, c);
+		VGA_text(36 + 4, 35, c);
 		dakjeOmlaag(40, 40);
 		
 		VGA_text(50, 35, "Bevestig");
 		
 
 
-						
-		if (controller(3) == 3) {
+					//controller(3) == 3 ??	
+		if (controller(ID) == 2 && newHighscoreSelect == 4) {
 			//save highscores naar SD kaart
 			
 			teken_menu(3);
