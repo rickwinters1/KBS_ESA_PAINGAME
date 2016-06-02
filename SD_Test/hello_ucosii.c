@@ -14,6 +14,10 @@ char highscores[5][20] = {
 			{""},
 };
 
+char a[2];
+char b[2];
+char c[2];
+
 void read_file()
 {
 	short int Read;
@@ -67,12 +71,20 @@ void write_file(char input[]){
 }
 
 void sorteer(){
-	int score3 = 86;
+	int score3 = 200;
 	int i, j, k, l, o;
 	int hoogste;
 
 	char letter1, letter2, letter3;
-	char letters[4] = {'B','A','C'};
+	a[0] = 'A';
+	a[1] = '\0';
+
+	b[0] = 'B';
+	b[1] = '\0';
+
+	c[0] = 'T';
+	c[1] = '\0';
+
 	char cijfers[4];
 
 	if(score3 < 100){
@@ -101,9 +113,9 @@ void sorteer(){
 
 			schuifScores(i);
 			printf("score = hoger dan %de score\n", i);
-			for(j = 0; j < 3; j++){
-				buffer[j] = letters[j];
-			}
+			buffer[0] = a[0];
+			buffer[1] = b[0];
+			buffer[2] = c[0];
 			buffer[3] = ' ';
 			for(k = 4; k < 7; k++){
 				buffer[k] = cijfers[k - 4] + '0';

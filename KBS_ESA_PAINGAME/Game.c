@@ -332,15 +332,14 @@ void endSingleplayer(){
 
 	VGA_text(6,5, "           ");
 
-	printf("Score is: %d", score3);
-	
 	if(score3 > 0){
 
 		clearScreen();
-		OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
 		OSFlagPost(Flags_newHighscores, newHighscores_Flag, OS_FLAG_CLR, &err);
+		OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
+
 	} else {
-	
+
 
 		//knop links is bevestig van alle 3 letters in 1 keer
 		//knop rechts is letter naar rechts, ook naar bevestig, eenmaal op bevestig en druk nogmaals op rechts, opnieuw bij de meeste linkse letter.
@@ -699,9 +698,9 @@ void endNewHighscores(){
 	VGA_text(35, 25, "                           ");
 
 
+	score3 = 0;
 
-
-	teken_menu(3);
+	teken_menu(1);
 
 	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
