@@ -54,6 +54,10 @@ int newHighscoreSelect;
 int oneTime = 1;
 int verandert;
 
+char a[2];
+char b[2];
+char c[2];
+
 typedef struct balk {
 	int Hoogte;
 } Balk;
@@ -172,7 +176,7 @@ void Game(void* pdata) {
 
 			//collision linker balkje
 			//lange zijde
-			if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte - 6 && ALT_y < balkje->Hoogte + 50)){
+			if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte - 6 && ALT_y < balkje->Hoogte + 50) || (ALT_y + 5 > balkje->Hoogte && ALT_x1 == 21) ){
 				ALT_inc_x = -(ALT_inc_x);
 			}
 			//boven
@@ -182,7 +186,7 @@ void Game(void* pdata) {
 
 			//collision rechter balkje
 			//lange zijde
-			if(ALT_x2 == 299 && (ALT_y > balkje2->Hoogte - 6 && ALT_y < balkje2->Hoogte + 50)){
+			if(ALT_x2 == 299 && (ALT_y > balkje2->Hoogte - 6 && ALT_y < balkje2->Hoogte + 50) || (ALT_y + 5 > balkje2->Hoogte && ALT_x2 == 21) ){
 				ALT_inc_x = -(ALT_inc_x);
 			}
 			//boven
@@ -688,9 +692,14 @@ void clearHighscoreText(){
 
 void newHighscores(void *pdata){
 	INT8U err;
-	char a = 'A';
-	char b = 'B';
-	char c = 'C';
+	a[0] = 'A';
+	a[1] = '\0';
+
+	b[0] = 'B';
+	b[1] = '\0';
+
+	c[0] = 'C';
+	c[1] = '\0';
 	newHighscoreSelect = 1;
 	
 	while(1){
@@ -714,39 +723,39 @@ void newHighscores(void *pdata){
 		}
 
 		if(controller(2) == 1 && newHighscoreSelect == 1){
-			if(a > 'Z' && controller(2) == 1){
-				a = 'A';
+			if(a[0] > 'Z' && controller(2) == 1){
+				a[0] = 'A';
 			}
-			a++;
+			a[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 1){
-			if (a < 'A' && controller(2) == 0){
-				a = 'Z';
+			if (a[0] < 'A' && controller(2) == 0){
+				a[0] = 'Z';
 			}
-			a--;
+			a[0]--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 2){
-			if(b > 'Z' && controller(2) == 1){
-				b = 'A';
+			if(b[0] > 'Z' && controller(2) == 1){
+				b[0] = 'A';
 			}
-			b++;
+			b[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 2){
-			if(b < 'A' && controller(2) == 0){
-				b = 'Z';
+			if(b[0] < 'A' && controller(2) == 0){
+				b[0] = 'Z';
 			}
-			b--;
+			b[0]--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 3){
-			if(c > 'Z' && controller(2) == 1){
-				c = 'A';
+			if(c[0] > 'Z' && controller(2) == 1){
+				c[0] = 'A';
 			}
-			c++;
+			c[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 3){
-			if(c < 'A' && controller(2) == 1){
-				c = 'Z';
+			if(c[0] < 'A' && controller(2) == 1){
+				c[0] = 'Z';
 			}
-			c--;
+			c[0]--;
 		}		
 		
 		if (newHighscoreSelect == 1){

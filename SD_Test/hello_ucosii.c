@@ -67,12 +67,12 @@ void write_file(char input[]){
 }
 
 void sorteer(){
-	int score3 = 185;
-	int i, j, k, l;
+	int score3 = 86;
+	int i, j, k, l, o;
 	int hoogste;
 
 	char letter1, letter2, letter3;
-	char letters[4] = {'A','B','C'};
+	char letters[4] = {'B','A','C'};
 	char cijfers[4];
 
 	if(score3 < 100){
@@ -91,6 +91,7 @@ void sorteer(){
 
 
 	char buffer[30] = "";
+	char input[50] = "";
 
 	for(i = 0; i < 5; i++){
 		hoogste = ((highscores[i][4] - '0') *100) +
@@ -112,12 +113,15 @@ void sorteer(){
 				highscores[i][l] = buffer[l];
 			}
 
+			for(o = 0; o <5; o++){
+				strcat(highscores[o], "|");
+				strcat(input, highscores[o]);
+			}
 
-
-			printf("%s\n", buffer);
+			printf("%s\nde uiteindelijke string!\n", input);
 			//[i] = buffer;
 
-			//write_file(buffer);
+			write_file(input);
 			break;
 		}
 
@@ -170,7 +174,7 @@ int main (void){
 
 // 		read_file();
 //
- 		write_file(input);
+ 		//write_file(input);
 
  		read_file();
 
