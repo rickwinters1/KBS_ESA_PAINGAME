@@ -723,36 +723,36 @@ void newHighscores(void *pdata){
 		}
 
 		if(controller(2) == 1 && newHighscoreSelect == 1){
-			if(a[0] > 'Z' && controller(2) == 1){
+			if(a[0] >= '[' && controller(2) == 1){
 				a[0] = 'A';
 			}
 			a[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 1){
-			if (a[0] < 'A' && controller(2) == 0){
+			if (a[0] <= '@' && controller(2) == 0){
 				a[0] = 'Z';
 			}
 			a[0]--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 2){
-			if(b[0] > 'Z' && controller(2) == 1){
+			if(b[0] >= '[' && controller(2) == 1){
 				b[0] = 'A';
 			}
 			b[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 2){
-			if(b[0] < 'A' && controller(2) == 0){
+			if(b[0] <= '@' && controller(2) == 0){
 				b[0] = 'Z';
 			}
 			b[0]--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 3){
-			if(c[0] > 'Z' && controller(2) == 1){
+			if(c[0] >= '[' && controller(2) == 1){
 				c[0] = 'A';
 			}
 			c[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 3){
-			if(c[0] < 'A' && controller(2) == 1){
+			if(c[0] <= 'A' && controller(2) == 1){
 				c[0] = 'Z';
 			}
 			c[0]--;
