@@ -176,7 +176,7 @@ void Game(void* pdata) {
 
 			//collision linker balkje
 			//lange zijde
-			if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte - 6 && ALT_y < balkje->Hoogte + 50) || (ALT_y + 5 > balkje->Hoogte && ALT_x1 == 21) ){
+			if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte - 6 && ALT_y < balkje->Hoogte + 50) || ((ALT_y + 5 > balkje->Hoogte && ALT_y < balkje->Hoogte +5) && ALT_x1 == 21) ){
 				ALT_inc_x = -(ALT_inc_x);
 			}
 			//boven
@@ -186,7 +186,7 @@ void Game(void* pdata) {
 
 			//collision rechter balkje
 			//lange zijde
-			if(ALT_x2 == 299 && (ALT_y > balkje2->Hoogte - 6 && ALT_y < balkje2->Hoogte + 50) || (ALT_y + 5 > balkje2->Hoogte && ALT_x2 == 21) ){
+			if(ALT_x2 == 299 && (ALT_y > balkje2->Hoogte - 6 && ALT_y < balkje2->Hoogte + 50) || ((ALT_y + 5 > balkje2->Hoogte && ALT_y < balkje2->Hoogte +5) && ALT_x2 == 299) ){
 				ALT_inc_x = -(ALT_inc_x);
 			}
 			//boven
@@ -824,7 +824,7 @@ void newHighscores(void *pdata){
 
 			OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 
-			OSFlagPost(Flags_Highscores, Highscores_Flag, OS_FLAG_SET, &err);
+			OSFlagPost(Flags_newHighscores, newHighscores_Flag, OS_FLAG_SET, &err);
 		}
 		
 		OSTimeDly(20);
