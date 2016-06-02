@@ -51,7 +51,8 @@ int X;
 int leven = beginLevens;
 int newHighscoreSelect;
 
-
+int oneTime = 1;
+int verandert;
 
 typedef struct balk {
 	int Hoogte;
@@ -698,10 +699,10 @@ void newHighscores(void *pdata){
 		VGA_text(35, 15, "New Highscore!");
 		
 		if (controller(3) == 3){
-			if(changed != 0){
+			if(verandert != 0){
 				newHighscoreSelect++;
-				eenkeer = 1;
-				changed=0;
+				oneTime = 1;
+				verandert = 0;
 				VGA_box(19 *4, 34 * 4, 21 * 4, 36 * 4, zwart);
 				VGA_box(29 * 4, 34 * 4, 31 * 4, 36 * 4, zwart);
 				VGA_box(39 * 4, 34 * 4, 41 * 4, 36 * 4, zwart);
@@ -749,28 +750,28 @@ void newHighscores(void *pdata){
 		}		
 		
 		if (newHighscoreSelect == 1){
-			if(eenkeer == 1){
+			if(oneTime == 1){
 				VGA_box(19 *4, 34 * 4, 21 * 4, 36 * 4, geel);
-				eenkeer = 0;
-				changed = 1;
+				oneTime = 0;
+				verandert = 1;
 			}
 		} else if (newHighscoreSelect == 2){
-			if(eenkeer == 1){
+			if(oneTime == 1){
 				VGA_box(29 * 4, 34 * 4, 31 * 4, 36 * 4, geel);
-				eenkeer = 0;
-				changed = 1;
+				oneTime = 0;
+				verandert = 1;
 			}
 		} else if (newHighscoreSelect == 3){
-			if(eenkeer == 1){
+			if(oneTime == 1){
 				VGA_box(39 * 4, 34 * 4, 41 * 4, 36 * 4, geel);
-				eenkeer = 0;
-				changed = 1;
+				oneTime = 0;
+				verandert = 1;
 			}
 		} else if (newHighscoreSelect == 4){
-			if(eenkeer == 1){
+			if(oneTime == 1){
 				VGA_box(49 * 4, 34 * 4, 59 * 4, 36 * 4, geel);
-				eenkeer = 0;
-				changed = 1;
+				oneTime = 0;
+				verandert = 1;
 			}
 		}
 		
