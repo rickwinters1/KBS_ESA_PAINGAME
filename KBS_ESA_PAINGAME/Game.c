@@ -51,6 +51,8 @@ int X;
 int leven = beginLevens;
 int newHighscoreSelect;
 
+
+
 typedef struct balk {
 	int Hoogte;
 } Balk;
@@ -793,7 +795,7 @@ void newHighscores(void *pdata){
 			//save highscores naar SD kaart
 			
 			VGA_box(48 * 4, 33 * 4, 60 * 4, 37 * 4, zwart); //omdat je alleen terug kan op bevestig, moet daar het gele selecteer gebied zitten, dus die schrijven we alleen weg.
-			clearHighscoreText()
+			clearHighscoreText();
 			
 			teken_menu(3);
 
