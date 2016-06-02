@@ -19,7 +19,10 @@ void read_file()
 	short int Read;
 	Read = alt_up_sd_card_fopen("hoi.txt", false);
 
+	bzero(highscores, 200);
+
 	int i = 0;
+	int k = 0;
 
 	char buffer[1] = "";
 	short int c = 1;
@@ -41,7 +44,7 @@ void read_file()
 		printf("Number is : %d data :%s\n",j , highscores[j]);
 	}
 
-	//alt_up_sd_card_fclose(Read);						//sluit het bestand
+	alt_up_sd_card_fclose(Read);						//sluit het bestand
 }
 
 void write_file(char input[]){
@@ -64,8 +67,8 @@ void write_file(char input[]){
 }
 
 void sorteer(){
-	int score3 = 80;
-	int i, j, k;
+	int score3 = 185;
+	int i, j, k, l;
 	int hoogste;
 
 	char letter1, letter2, letter3;
@@ -80,14 +83,14 @@ void sorteer(){
 		cijfers[0] = 0;
 		cijfers[1] = 0;
 		cijfers[2] = score3;
-	}else{
+	}else if(score3 > 100){
 		cijfers[0] = score3 /100;
 		cijfers[1] = score3 /10 %10;
-		cijfers[3] = score3 %10;
+		cijfers[2] = score3 %10;
 	}
 
 
-	char buffer[20] = "";
+	char buffer[30] = "";
 
 	for(i = 0; i < 5; i++){
 		hoogste = ((highscores[i][4] - '0') *100) +
@@ -100,16 +103,21 @@ void sorteer(){
 			for(j = 0; j < 3; j++){
 				buffer[j] = letters[j];
 			}
-			for(k = 0; k < 3; k++){
-				buffer[k + 4] = cijfers[k] + '0';
+			buffer[3] = ' ';
+			for(k = 4; k < 7; k++){
+				buffer[k] = cijfers[k - 4] + '0';
 			}
-			buffer[8] = "|";
 
-			strcpy(highscores[i], buffer);
+			for(l = 0; l < 8; l++){
+				highscores[i][l] = buffer[l];
+			}
 
+
+
+			printf("%s\n", buffer);
 			//[i] = buffer;
 
-			write_file(highscores);
+			//write_file(buffer);
 			break;
 		}
 
@@ -125,10 +133,10 @@ void sorteer(){
 
 void schuifScores(int nummer){
 	int i;
+
 	for(i = 5; i > nummer; i--){
 		strcpy(highscores[i], highscores[i-1]);
 	}
-
 
 }
 
@@ -158,9 +166,11 @@ int main (void){
 
 
  		char input[50];
- 		strcpy(input, "HOI 125|DOE 100|GAY 075|PIT 002|KUT 001|");
+ 		strcpy(input, "HOI 125|MIK 100|GAY 075|PIT 002|KUT 001|");
 
- 		//write_file(input);
+// 		read_file();
+//
+ 		write_file(input);
 
  		read_file();
 
