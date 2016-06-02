@@ -671,81 +671,117 @@ void Tutorial(void* pdata){
 	
 }
 
+void clearHighscoreText(){
+	
+	VGA_text(20, 35, "  ");
+	VGA_text(30, 35, "  ");
+	VGA_text(40, 35, "  ");
+	VGA_text(50, 35, "           ");
+	
+	VGA_text(20, 30, "                                                                        ");
+	VGA_text(20, 40, "                                                                        ");
+	
+}
+
 void newHighscores(void *pdata){
 	INT8U err;
 	char a = 'A';
 	char b = 'B';
 	char c = 'C';
 	newHighscoreSelect = 1;
+	
 	while(1){
 		OSFlagPend(Flags_newHighscores, newHighscores_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 
 		VGA_text(35, 15, "New Highscore!");
 		
-		if (controller(3) == 2){
-			newHighscoreSelect++;
-			VGA_box(16 * 4, 35 * 4, 20 * 4, 39 * 4, zwart);
-			VGA_box(26 * 4, 35 * 4, 30 * 4, 39 * 4, zwart);
-			VGA_box(36 * 4, 35 * 4, 40 * 4, 39 * 4, zwart);
-		}
-		if (newHighscoreSelect >= 5){
+		if (controller(3) == 3){
+			if(changed != 0){
+				newHighscoreSelect++;
+				eenkeer = 1;
+				changed=0;
+				VGA_box(19 *4, 34 * 4, 21 * 4, 36 * 4, zwart);
+				VGA_box(29 * 4, 34 * 4, 31 * 4, 36 * 4, zwart);
+				VGA_box(39 * 4, 34 * 4, 41 * 4, 36 * 4, zwart);
+				VGA_box(49 * 4, 34 * 4, 59 * 4, 36 * 4, zwart);
+			}			
+			if (newHighscoreSelect >= 5){
 			newHighscoreSelect = 1;
+			}
 		}
-		
+
 		if(controller(2) == 1 && newHighscoreSelect == 1){
-			if(a == 'Z' && controller(2) == 1){
+			if(a > 'Z' && controller(2) == 1){
 				a = 'A';
 			}
 			a++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 1){
-			if (a == 'A' && controller(2) == 0){
+			if (a < 'A' && controller(2) == 0){
 				a = 'Z';
 			}
 			a--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 2){
-			if(b == 'Z' && controller(2) == 1){
+			if(b > 'Z' && controller(2) == 1){
 				b = 'A';
 			}
 			b++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 2){
-			if(b == 'A' && controller(2) == 0){
+			if(b < 'A' && controller(2) == 0){
 				b = 'Z';
 			}
 			b--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 3){
-			if(c == 'Z' && controller(2) == 1){
+			if(c > 'Z' && controller(2) == 1){
 				c = 'A';
 			}
 			c++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 3){
-			if(c == 'A' && controller(2) == 1){
+			if(c < 'A' && controller(2) == 1){
 				c = 'Z';
 			}
 			c--;
 		}		
 		
 		if (newHighscoreSelect == 1){
-			VGA_box(16 * 4, 35 * 4, 20 * 4, 39 * 4, geel);
+			if(eenkeer == 1){
+				VGA_box(19 *4, 34 * 4, 21 * 4, 36 * 4, geel);
+				eenkeer = 0;
+				changed = 1;
+			}
 		} else if (newHighscoreSelect == 2){
-			VGA_box(26 * 4, 35 * 4, 30 * 4, 39 * 4, geel);
+			if(eenkeer == 1){
+				VGA_box(29 * 4, 34 * 4, 31 * 4, 36 * 4, geel);
+				eenkeer = 0;
+				changed = 1;
+			}
 		} else if (newHighscoreSelect == 3){
-			VGA_box(36 * 4, 35 * 4, 40 * 4, 39 * 4, geel);
+			if(eenkeer == 1){
+				VGA_box(39 * 4, 34 * 4, 41 * 4, 36 * 4, geel);
+				eenkeer = 0;
+				changed = 1;
+			}
+		} else if (newHighscoreSelect == 4){
+			if(eenkeer == 1){
+				VGA_box(49 * 4, 34 * 4, 59 * 4, 36 * 4, geel);
+				eenkeer = 0;
+				changed = 1;
+			}
 		}
 		
 		dakjeOmhoog(20, 30);
-		VGA_text(16 + 4, 35, a);
+		VGA_text(20, 35, a);
 		dakjeOmlaag(20, 40);
 		
 		dakjeOmhoog(30, 30);
-		VGA_text(26 + 4, 35, b);
+		VGA_text(30, 35, b);
 		dakjeOmlaag(30, 40);
 		
 		dakjeOmhoog(40, 30);
-		VGA_text(36 + 4, 35, c);
+		VGA_text(40, 35, c);
 		dakjeOmlaag(40, 40);
 		
 		VGA_text(50, 35, "Bevestig");
@@ -755,6 +791,9 @@ void newHighscores(void *pdata){
 					//controller(3) == 3 ??	
 		if (controller(3) == 2 && newHighscoreSelect == 4) {
 			//save highscores naar SD kaart
+			
+			VGA_box(48 * 4, 33 * 4, 60 * 4, 37 * 4, zwart); //omdat je alleen terug kan op bevestig, moet daar het gele selecteer gebied zitten, dus die schrijven we alleen weg.
+			clearHighscoreText()
 			
 			teken_menu(3);
 
@@ -776,7 +815,7 @@ void newHighscores(void *pdata){
 			OSFlagPost(Flags_Highscores, Highscores_Flag, OS_FLAG_SET, &err);
 		}
 		
-		OSTimeDly(1);
+		OSTimeDly(20);
 		
 	}
 	
