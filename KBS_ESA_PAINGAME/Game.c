@@ -50,6 +50,7 @@ int random;
 int X;
 int leven = beginLevens;
 int newHighscoreSelect;
+int textWeg;
 
 int oneTime = 1;
 int verandert;
@@ -678,6 +679,36 @@ void Tutorial(void* pdata){
 	
 }
 
+void endNewHighscores(){
+	
+	INT8U err;
+
+	printf("end newHighscores\n");
+
+	//clearScreen();
+	
+	for (textWeg = 0; textWeg < 60; textWeg++){
+	VGA_text(1, textWeg, "                                                                                ");
+	}
+	
+
+	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
+
+	VGA_text(35, 25, "Einde Nieuwe Highscores");
+	OSTimeDlyHMSM(0, 0, 40, 0);
+	VGA_text(35, 25, "                           ");
+
+
+
+
+	teken_menu(3);
+
+	OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
+
+	OSFlagPost(Flags_newHighscores, newHighscores_Flag, OS_FLAG_SET, &err);
+	
+}
+
 void clearHighscoreText(){
 	
 	VGA_text(20, 35, "  ");
@@ -712,10 +743,10 @@ void newHighscores(void *pdata){
 				newHighscoreSelect++;
 				oneTime = 1;
 				verandert = 0;
-				VGA_box(19 *4, 34 * 4, 21 * 4, 36 * 4, zwart);
-				VGA_box(29 * 4, 34 * 4, 31 * 4, 36 * 4, zwart);
-				VGA_box(39 * 4, 34 * 4, 41 * 4, 36 * 4, zwart);
-				VGA_box(49 * 4, 34 * 4, 59 * 4, 36 * 4, zwart);
+				VGA_box(19 *4, 34 * 4, 22 * 4, 37 * 4, zwart);
+				VGA_box(29 * 4, 34 * 4, 32 * 4, 37 * 4, zwart);
+				VGA_box(39 * 4, 34 * 4, 42 * 4, 37 * 4, zwart);
+				VGA_box(49 * 4, 34 * 4, 59 * 4, 37 * 4, zwart);
 			}			
 			if (newHighscoreSelect >= 5){
 			newHighscoreSelect = 1;
@@ -724,61 +755,61 @@ void newHighscores(void *pdata){
 
 		if(controller(2) == 1 && newHighscoreSelect == 1){
 			if(a[0] >= '[' && controller(2) == 1){
-				a[0] = 'A';
+				a[0] = '@';
 			}
 			a[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 1){
 			if (a[0] <= '@' && controller(2) == 0){
-				a[0] = 'Z';
+				a[0] = '[';
 			}
 			a[0]--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 2){
 			if(b[0] >= '[' && controller(2) == 1){
-				b[0] = 'A';
+				b[0] = '@';
 			}
 			b[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 2){
 			if(b[0] <= '@' && controller(2) == 0){
-				b[0] = 'Z';
+				b[0] = '[';
 			}
 			b[0]--;
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 3){
 			if(c[0] >= '[' && controller(2) == 1){
-				c[0] = 'A';
+				c[0] = '@';
 			}
 			c[0]++;
 		} else if (controller(2) == 0 && newHighscoreSelect == 3){
-			if(c[0] <= 'A' && controller(2) == 1){
-				c[0] = 'Z';
+			if(c[0] <= '@' && controller(2) == 1){
+				c[0] = '[';
 			}
 			c[0]--;
 		}		
 		
 		if (newHighscoreSelect == 1){
 			if(oneTime == 1){
-				VGA_box(19 *4, 34 * 4, 21 * 4, 36 * 4, geel);
+				VGA_box(19 *4, 34 * 4, 22 * 4, 37 * 4, geel);
 				oneTime = 0;
 				verandert = 1;
 			}
 		} else if (newHighscoreSelect == 2){
 			if(oneTime == 1){
-				VGA_box(29 * 4, 34 * 4, 31 * 4, 36 * 4, geel);
+				VGA_box(29 * 4, 34 * 4, 32 * 4, 37 * 4, geel);
 				oneTime = 0;
 				verandert = 1;
 			}
 		} else if (newHighscoreSelect == 3){
 			if(oneTime == 1){
-				VGA_box(39 * 4, 34 * 4, 41 * 4, 36 * 4, geel);
+				VGA_box(39 * 4, 34 * 4, 42 * 4, 37 * 4, geel);
 				oneTime = 0;
 				verandert = 1;
 			}
 		} else if (newHighscoreSelect == 4){
 			if(oneTime == 1){
-				VGA_box(49 * 4, 34 * 4, 59 * 4, 36 * 4, geel);
+				VGA_box(49 * 4, 34 * 4, 59 * 4, 37 * 4, geel);
 				oneTime = 0;
 				verandert = 1;
 			}
@@ -807,24 +838,8 @@ void newHighscores(void *pdata){
 			VGA_box(48 * 4, 33 * 4, 60 * 4, 37 * 4, zwart); //omdat je alleen terug kan op bevestig, moet daar het gele selecteer gebied zitten, dus die schrijven we alleen weg.
 			clearHighscoreText();
 			
-			teken_menu(3);
+			endNewHighscores();
 
-			VGA_box (316, 4, 319, 235, zwart); 					// singleplayer/tutorial balk weghalen voor de zekerheid
-
-			VGA_box(ALT_x1, ALT_y, ALT_x1 + 5, ALT_y + 5, zwart); // erase
-
-
-			ALT_x1 = 0;
-			ALT_x2 = 165;
-			ALT_y = 100;
-			ALT_inc_x = -1;
-			ALT_inc_y = 1;
-
-			first = 1;
-
-			OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
-
-			OSFlagPost(Flags_newHighscores, newHighscores_Flag, OS_FLAG_SET, &err);
 		}
 		
 		OSTimeDly(20);
