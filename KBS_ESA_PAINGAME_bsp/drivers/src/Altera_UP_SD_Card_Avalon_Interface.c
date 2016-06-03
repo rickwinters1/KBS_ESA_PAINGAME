@@ -1782,6 +1782,23 @@ bool alt_up_sd_card_write(short int file_handle, char byte_of_data)
                         active_files[file_handle].current_sector_in_cluster = active_files[file_handle].current_sector_in_cluster + 1;
                         data_sector = data_sector + 1;
                     }
+                }else{
+                	// Go to the next cluster.
+					unsigned short int next_cluster;
+					if (get_cluster_flag(active_files[file_handle].current_cluster_index, &next_cluster))
+					{
+						if (next_cluster < 0x0000fff8)
+						{
+							active_files[file_handle].current_cluster_index = next_cluster;
+							active_files[file_handle].current_sector_in_cluster = 0;
+							data_sector = boot_sector_data.data_sector_offset + (active_files[file_handle].current_cluster_index - 2)*boot_sector_data.sectors_per_cluster +
+									active_files[file_handle].current_sector_in_cluster;
+						}
+					}
+					else
+					{
+						return false;
+					}
                 }
             }
 			else

@@ -180,17 +180,7 @@ int main (void){
 			return -1;
 		}
 
-
- 		char input[50];
- 		strcpy(input, "HOI 125|MIK 100|GAY 075|PIT 002|KUT 001|");
-
-// 		read_file();
-//
- 		//write_file(input);
-
  		read_file();
-
- 		sorteer();
 	}
 
 	return 0;

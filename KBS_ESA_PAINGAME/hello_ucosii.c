@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "includes.h"
+#include "Altera_UP_SD_Card_Avalon_Interface.h"
 
 OS_EVENT* controllerSem;
 OS_EVENT* menuSem;
@@ -97,6 +98,29 @@ int main(void)
 	Flags_Highscores = OSFlagCreate(Highscores_Flag, &err);
 	Flags_newHighscores = OSFlagCreate(newHighscores_Flag, &err);
 
+	alt_up_sd_card_dev * sd_card;
+	sd_card = alt_up_sd_card_open_dev("/dev/SD_Card");
+
+ 	 if (sd_card!=NULL){
+		if (alt_up_sd_card_is_Present()){
+			printf("An SD Card was found!\n");
+
+		}
+		else {
+			printf("No SD Card Found. \n Exiting the program.");
+			return -1;
+		}
+
+ 		if (alt_up_sd_card_is_FAT16()){
+			printf("FAT-16 partiton found!\n");
+		}
+		else{
+			printf("No FAT-16 partition found - Exiting!\n");
+			return -1;
+		}
+
+ 		read_file();
+	}
 
 	gameSem = OSSemCreate(0);
 	controllerSem = OSSemCreate(0);

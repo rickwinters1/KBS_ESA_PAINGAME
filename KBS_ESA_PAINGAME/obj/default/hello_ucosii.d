@@ -13,7 +13,11 @@ obj/default/hello_ucosii.o: hello_ucosii.c \
  C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_llist.h \
  C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/priv/alt_alarm.h \
  C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//UCOSII/inc/ucos_ii.h \
- C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/os_cpu.h
+ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/os_cpu.h \
+ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//drivers/inc/Altera_UP_SD_Card_Avalon_Interface.h \
+ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_dev.h \
+ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_llist.h \
+ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/priv/alt_dev_llist.h
 
 C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/includes.h:
 
@@ -44,3 +48,11 @@ C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc
 C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//UCOSII/inc/ucos_ii.h:
 
 C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/os_cpu.h:
+
+C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//drivers/inc/Altera_UP_SD_Card_Avalon_Interface.h:
+
+C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_dev.h:
+
+C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/sys/alt_llist.h:
+
+C:/Users/rickert/Documents/GitHub/KBS_ESA_PAINGAME/KBS_ESA_PAINGAME_bsp//HAL/inc/priv/alt_dev_llist.h:
