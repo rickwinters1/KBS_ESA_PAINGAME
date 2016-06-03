@@ -667,7 +667,7 @@ void VGAtextClear(){
 	int clear;
 	
 	for (clear = 0; clear < 60; clear++){
-		VGA_text(1, clear, "                                                                       ");
+		VGA_text(1, clear, "                                                                                              ");
 	}
 }
 
@@ -1040,16 +1040,7 @@ void endHighscores(){
 
 	//clearScreen();
 
-	VGA_text(35, 18, "                 ");
-	VGA_text(35, 20, "                 ");
-	VGA_text(35, 22, "                 ");
-	VGA_text(35, 24, "                 ");
-	VGA_text(35, 26, "                 ");
-	
-	VGA_text(63, 56, "              ");
-	VGA_text(63, 57, "               ");
-	
-	VGA_text(35, 15, "                          ");
+	VGAtextClear();
 	VGA_text(35, 25, "Einde Highscores");
 	OSTimeDlyHMSM(0, 0, 40, 0);
 	VGA_text(35, 25, "                  ");
