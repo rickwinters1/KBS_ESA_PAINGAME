@@ -72,6 +72,7 @@ char highscores[5][20] = {
 char a[2];
 char b[2];
 char c[2];
+int laagste;
 
 typedef struct balk {
 	int Hoogte;
@@ -193,7 +194,12 @@ void sorteer(){
 
 	}
 	read_file();
+}
 
+void laagst(){
+	laagste = ((highscores[4][4] - '0') *100) +
+			   ((highscores[4][5] - '0') *10) +
+			   (highscores[4][6] - '0');
 }
 void schuifScores(int nummer){
 	int i;
@@ -473,11 +479,15 @@ void endGame(int ID) {
 }
 
 void dakjeOmhoog(int omhoogX, int omhoogY){
-	VGA_text(omhoogX, omhoogY, "/\\"); //= dakje omhoog
+	char buffer[10];
+	sprintf(buffer,"%c", 30);
+	VGA_text(omhoogX, omhoogY + 2, buffer); //= dakje omhoog
 }
 
 void dakjeOmlaag(int omlaagX, int omlaagY){
-	VGA_text(omlaagX, omlaagY, "\\/"); //= dakje omlaag
+	char buffer[10];
+	sprintf(buffer,"%c", 31);
+	VGA_text(omlaagX, omlaagY - 2, buffer); //= dakje omlaag
 }
 
 void endSingleplayer(){
@@ -498,7 +508,9 @@ void endSingleplayer(){
 
 	leven = beginLevens;
 
-	if(score3 > 0){
+	laagst();
+
+	if(score3 > laagste){
 
 		clearScreen();
 		OSFlagPost(Flags_newHighscores, newHighscores_Flag, OS_FLAG_CLR, &err);
@@ -529,7 +541,9 @@ void endSingleplayer(){
 		leven = beginLevens;
 		score3 = 0;
 		first = 1;
-	
+
+		OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
+
 		OSFlagPost(Flags, Menu_Flag + Menu2_Flag, OS_FLAG_CLR, &err);
 	
 
@@ -874,9 +888,9 @@ void endNewHighscores(){
 
 	OSFlagPost(Flags, C1_Flag, OS_FLAG_SET, &err);
 
-	VGA_text(35, 25, "Einde Nieuwe Highscores");
+	VGA_text(25, 25, "Einde Nieuwe Highscores");
 	OSTimeDlyHMSM(0, 0, 40, 0);
-	VGA_text(35, 25, "                           ");
+	VGA_text(25, 25, "                           ");
 
 
 	score3 = 0;
@@ -916,7 +930,7 @@ void newHighscores(void *pdata){
 	while(1){
 		OSFlagPend(Flags_newHighscores, newHighscores_Flag, OS_FLAG_WAIT_CLR_ANY, 0, &err);
 
-		VGA_text(35, 15, "New Highscore!");
+		VGA_text(35, 18, "New Highscore!");
 		
 		if (controller(3) == 3){
 			if(verandert != 0){
@@ -934,39 +948,45 @@ void newHighscores(void *pdata){
 		}
 
 		if(controller(2) == 1 && newHighscoreSelect == 1){
-			if(a[0] >= '[' && controller(2) == 1){
+			if(a[0] >= 'Z' && controller(2) == 1){
 				a[0] = '@';
 			}
 			a[0]++;
+			OSTimeDly(10);
 		} else if (controller(2) == 0 && newHighscoreSelect == 1){
-			if (a[0] <= '@' && controller(2) == 0){
+			if (a[0] <= 'A' && controller(2) == 0){
 				a[0] = '[';
 			}
 			a[0]--;
+			OSTimeDly(10);
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 2){
-			if(b[0] >= '[' && controller(2) == 1){
+			if(b[0] >= 'Z' && controller(2) == 1){
 				b[0] = '@';
 			}
 			b[0]++;
+			OSTimeDly(10);
 		} else if (controller(2) == 0 && newHighscoreSelect == 2){
-			if(b[0] <= '@' && controller(2) == 0){
+			if(b[0] <= 'A' && controller(2) == 0){
 				b[0] = '[';
 			}
 			b[0]--;
+			OSTimeDly(10);
 		}
 		
 		if (controller(2) == 1 && newHighscoreSelect == 3){
-			if(c[0] >= '[' && controller(2) == 1){
+			if(c[0] >= 'Z' && controller(2) == 1){
 				c[0] = '@';
 			}
 			c[0]++;
+			OSTimeDly(10);
 		} else if (controller(2) == 0 && newHighscoreSelect == 3){
-			if(c[0] <= '@' && controller(2) == 1){
+			if(c[0] <= 'A' && controller(2) == 0){
 				c[0] = '[';
 			}
 			c[0]--;
+			OSTimeDly(10);
 		}		
 		
 		if (newHighscoreSelect == 1){
