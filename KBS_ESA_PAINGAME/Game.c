@@ -59,6 +59,7 @@ int textWeg;
 
 int oneTime = 1;
 int verandert;
+int tutorialText = 0;
 
 char highscores[5][20] = {
 			{""},
@@ -673,42 +674,37 @@ void VGAtextClear(){
 
 void tutorialUitleg(){
 	INT8U err;
-	int tutorialText;
-	tutorialText = 0;
 	
+
+
 	if(controller(3) == 2){
 		tutorialText++;
+		OSTimeDly(20);
+		VGAtextClear();
 		if (tutorialText >= 7){
 			tutorialText = 0;
 		}
 	}
 	
 	if(tutorialText == 0){
-		VGAtextClear();
 		VGA_text(10, 5, ""); // niks
 	} else if (tutorialText == 1){
-		VGAtextClear();
 		VGA_text(10, 38, "De besturing is als volgt:");	
 	} else if (tutorialText == 2){
-		VGAtextClear();
 		VGA_text(10, 40, "De linker balk wordt bestuurd door het op en neer bewegen");
 		VGA_text(10, 41, "van switch 17. Bij de multiplayer wordt ook nog vereist om");
 		VGA_text(10, 42, "de linker knop in te houden, anders ben je af. Dit geldt ook");
 		VGA_text(10, 43, "voor de rechter knop voor de rechter balk.");
 	} else if (tutorialText == 3){
-		VGAtextClear();
 		VGA_text(10, 45, "De rechter balk wordt bestuurd KEY3 en KEY2. KEY3 = omlaag,");
 		VGA_text(10, 46, "KEY2 = omhoog.");	
 	} else if (tutorialText == 4){
-		VGAtextClear();
 		VGA_text(10, 5, "Dit spel heeft een Singleplayer en een Multiplayer.");
 	} else if (tutorialText == 5){
-		VGAtextClear();
 		VGA_text(10, 7, "In Singleplayer speel je tegen de computer, waarbij je");
 		VGA_text(10, 8, "zoveel mogelijk aantal punten moet bereiken door de bal");
 		VGA_text(10, 9, "tegen de muur te kaatsen. Hierbij heb je 3 levens.");		
 	} else if (tutorialText == 6){
-		VGAtextClear();
 		VGA_text(10, 11, "In Multiplayer gaat het er om dat je de bal in het doel");
 		VGA_text(10, 12, "van de tegenstander krijgt. Het doel bevindt zich achter");
 		VGA_text(10, 13, "het balkje van de tegenstander. Wanneer je scoort krijg je");
