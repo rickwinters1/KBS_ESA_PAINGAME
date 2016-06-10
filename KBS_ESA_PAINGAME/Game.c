@@ -32,7 +32,7 @@ OS_FLAG_GRP *Flags_newHighscores;
 
 #define zwart  0x000000
 #define wit  0xffffff
-#define geel 0xffff00
+#define geel 0xFCA1
 #define rood 0xf800
 #define blauw 0x0000ff
 #define groen 0x0697
@@ -81,7 +81,7 @@ typedef struct balk {
 void read_file()
 {
 	short int Read;
-	Read = alt_up_sd_card_fopen("hoi.txt", false);
+	Read = alt_up_sd_card_fopen("score.txt", false);
 
 	bzero(highscores, 200);
 
@@ -112,7 +112,7 @@ void read_file()
 }
 void write_file(char input[]){
 	short int Write;
-	Write = alt_up_sd_card_fopen("hoi.txt", false);
+	Write = alt_up_sd_card_fopen("score.txt", false);
 	int i = 0;
 	bool writing;
 	if(Write < 0){
@@ -510,12 +510,13 @@ void endSingleplayer(){
 
 	laagst();
 
+	deleteNummer();
+
 	if(score3 > laagste){
 
 		clearScreen();
 		OSFlagPost(Flags_newHighscores, newHighscores_Flag, OS_FLAG_CLR, &err);
 		OSFlagPost(Flags_Games, Singleplayer_Flag, OS_FLAG_SET, &err);
-
 	} else {
 
 
@@ -633,7 +634,7 @@ void Singleplayer(void* pdata){
 
 		//collision linker balkje
 		//lange zijde
-		if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
+		if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50) || ((ALT_y + 5 > balkje->Hoogte && ALT_y < balkje->Hoogte +5) && ALT_x1 == 21)){
 			ALT_inc_x = -(ALT_inc_x);
 		}
 		//boven
@@ -849,7 +850,7 @@ void Tutorial(void* pdata){
 
 		//collision linker balkje
 		//lange zijde
-		if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50)){
+		if(ALT_x1 == 21 && (ALT_y > balkje->Hoogte && ALT_y < balkje->Hoogte + 50) || ((ALT_y + 5 > balkje->Hoogte && ALT_y < balkje->Hoogte +5) && ALT_x1 == 21)){
 			ALT_inc_x = -(ALT_inc_x);
 		}
 		//boven
@@ -1038,7 +1039,8 @@ void newHighscores(void *pdata){
 
 			VGA_box(48 * 4, 33 * 4, 60 * 4, 37 * 4, zwart); //omdat je alleen terug kan op bevestig, moet daar het gele selecteer gebied zitten, dus die schrijven we alleen weg.
 			clearHighscoreText();
-			
+			deleteNummer();
+
 			endNewHighscores();
 
 		}
